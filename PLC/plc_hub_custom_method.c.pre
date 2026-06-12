@@ -1,0 +1,273 @@
+#include "plc_hub_custom_method.h"
+
+// 包含使用模块 xxx_xxx_upper.h
+
+
+#define NEW_UP_FRAME_LENGTH   13  // 上传帧长度
+#define NEW_DOWN_FRAME_LENGTH 14  // 下发帧长度
+
+ 
+#define  PLC_HUB_RECV_LEN   28
+
+/***************************************************************************************
+*函    数:  void PLC_ReadCustomData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*功    能:  读取PLC上传数据，从队列数据自动匹配协议
+*参    数:  根据配置COM端口，自动匹配对应队列
+*作    者:  shiquan.zhao
+*修改时间:
+*返 回 值: 无
+*备    注：自定义协议接收
+****************************************************************************************/
+static void PLC_Hub_CustomReadData(USART_STRU *Serial,QUEUE *QUEUE_com)
+{
+    u8 dat=0,readstatus=0;
+
+    if((Serial->recv_complete_bit & 0x8000) == 0)
+    {
+        while(1)
+        {
+            readstatus = FIFO_ComQueueOut(QUEUE_com,&dat);
+
+            if(readstatus == FIFO_OK)
+            {
+                Serial->the_over_time =0;
+                if(Serial->step==0)
+                {
+                    if(dat == 0xEE)                         // 起始码
+                    {
+                        Serial->step++;
+                        Serial->recv_pbuffer[0] = dat;
+                        Serial->count = 1;
+                    }
+                }
+                else if(Serial->step== 1)
+                {
+                    if(dat == 0x55)                         // 总长度
+                    {
+                        Serial->step++;
+                        Serial->recv_pbuffer[1] = dat;
+                        Serial->count = 2;
+
+                    }
+                    else if(dat == 0xEE)                         // 功能码
+                    {
+                   Serial->recv_pbuffer[0] = dat;
+                   Serial->count = 1;
+                    }                    
+                    else
+                    {
+                        Serial->step =0;
+                    }
+                }
+                else if (Serial->step == 2)
+                {   
+                    Serial->step++;
+                    // 读取长度字节
+                    Serial->recv_pbuffer[2]=dat;
+                    Serial->count=3;
+                    // 检查长度是否有效
+//                    if (dat !=NEW_DOWN_FRAME_LENGTH)
+//                    {
+//                        Serial->step=0;
+//                    }
+                    
+                }
+                
+                else
+                {
+                    Serial->recv_pbuffer[Serial->count++] = dat;
+                    if(Serial->count>=Serial->recv_pbuffer[2])
+                    {
+                        Serial->recv_complete_bit=Serial->count;
+                        Serial->recv_complete_bit |= 0x8000;
+
+                        Serial->step = 0;
+                        Serial->count = 0;
+                        return;
+                    }
+                }
+            }
+            else if(readstatus == FIFO_ERROR_EMPTY)
+            {
+                Serial->the_over_time++;
+                if(Serial->the_over_time>=10)
+                {
+                    Serial->the_over_time =0;
+                    Serial->step = 0;
+                    Serial->count = 0;
+                }
+                return ;
+            }
+        }
+
+    }
+}
+
+
+/***************************************************************************************
+*函    数: void PLC_Hub_CustomTX_Mesg_Ask(void)
+*功    能: HUB发送给PLC的数据处理
+*参    数:
+*作    者: shiquan.zhao
+*修改时间:
+*返 回 值:    无
+*备    注： 匹配旧协议
+*
+****************************************************************************************/
+void PLC_Hub_CustomTX_Mesg_Ask(void)
+{
+    // float temp_sped=0;
+    // u16 u16_temp_val=0;
+    u8 upload_frame[NEW_UP_FRAME_LENGTH] = {0};
+
+    if(PLC_TO_HUB_Mesg_Stru.commun_port == NULL)
+    {
+        return;
+    }
+
+    upload_frame[0] = 0xEE;                                     // 帧头
+    upload_frame[1] = 0x66;
+    upload_frame[2] = NEW_UP_FRAME_LENGTH;                      // 总长度
+    upload_frame[3]  =0x01;                                     // 命令码
+    upload_frame[4]  =0;                                        //预留
+    upload_frame[5]  = PLC_TO_HUB_Mesg_Stru.inputL_state;
+    upload_frame[6]  = PLC_TO_HUB_Mesg_Stru.inputH_state;
+    upload_frame[7]  = PLC_TO_HUB_Mesg_Stru.output_state;
+    upload_frame[8]  = PLC_TO_HUB_Mesg_Stru.ctrl_state;
+    upload_frame[9]  = PLC_TO_HUB_Mesg_Stru.set_music_id;
+    upload_frame[10] = 0;            //RFID当前位置，预留
+    upload_frame[11] = 0;            //RFID当前位置，预留
+    upload_frame[12] = Bsp_XorCheck(upload_frame,12);
+  
+
+    Bsp_Usart_Usr_SendArray(PLC_TO_HUB_Mesg_Stru.commun_port, upload_frame,upload_frame[2]);
+
+}
+
+/***************************************************************************************
+*函    数: void PLC_Hub_CustomRX_Task(void)
+*功    能: 根据从队列获取的数据，进行数据校验
+*参    数: 根据配置COM端口，自动匹配对应队列
+*作    者:  shiquan.zhao
+*修改时间:
+*返 回 值: 无
+****************************************************************************************/
+void PLC_Hub_CustomRX_Task(void)
+{
+    USART_STRU *Serial;
+    QUEUE *QUEUE_com;
+    u8 tem8_val=0;
+
+
+    if(PLC_TO_HUB_Mesg_Stru.commun_port == USART1)
+    {
+        Serial    = &Usart1_Serial_Stru;
+        QUEUE_com = &COM1_Serial;
+    }
+    else if(PLC_TO_HUB_Mesg_Stru.commun_port == USART2)
+    {
+        Serial    = &Usart2_Serial_Stru;
+        QUEUE_com = &COM2_Serial;
+    }
+    else if(PLC_TO_HUB_Mesg_Stru.commun_port == USART3)
+    {
+        Serial    = &Usart3_Serial_Stru;
+        QUEUE_com = &COM3_Serial;
+    }
+    else if(PLC_TO_HUB_Mesg_Stru.commun_port == UART4)
+    {
+        Serial    = &Usart4_Serial_Stru;
+        QUEUE_com = &COM4_Serial;
+    }
+    else if(PLC_TO_HUB_Mesg_Stru.commun_port == UART5)
+    {
+        Serial    = &Usart5_Serial_Stru;
+        QUEUE_com = &COM5_Serial;
+    }
+    else
+    {
+        return;
+    }
+
+    PLC_Hub_CustomReadData(Serial,QUEUE_com);                   // 自定义解码
+
+    if(Serial->recv_complete_bit & 0x8000)
+    {
+
+        tem8_val = Bsp_XorCheck(Serial->recv_pbuffer,NEW_DOWN_FRAME_LENGTH-1);
+
+        // 结束码
+        if(Serial->recv_pbuffer[NEW_DOWN_FRAME_LENGTH-1] == tem8_val )
+        {
+            
+                Parse_NewProtocol_Down_Frame(Serial->recv_pbuffer);
+           
+
+        }
+            Serial->recv_complete_bit=0;
+    }
+
+}
+
+
+static void Parse_NewProtocol_Down_Frame(u8 *frame)
+{
+    // 验证帧长度
+    if(frame[2] != NEW_DOWN_FRAME_LENGTH) {
+        return;
+    }
+    
+    // 验证命令码
+    if(frame[3] != 0x01) {  // 常规指令
+        return;
+    }
+    
+    // 解析灯状态
+    PLC_TO_HUB_Mesg_Stru.light_cmd = frame[4];
+    
+    // 解析控制位
+    PLC_TO_HUB_Mesg_Stru.ctrl_cmd = frame[5];
+    
+    // 解析播放ID
+    PLC_TO_HUB_Mesg_Stru.set_music_id = frame[6];
+    
+    // 解析功能码
+    PLC_TO_HUB_Mesg_Stru.function_Code = ((u16)frame[7] |
+                                         (u16)frame[8]<<8);  
+    // 注意: data8也是功能码，与data7相同
+
+    // 解析功能值（低字节在前）
+    PLC_TO_HUB_Mesg_Stru.function_value = (u32)frame[9] | 
+                                         ((u32)frame[10] << 8) | 
+                                         ((u32)frame[11] << 16) | 
+                                         ((u32)frame[12] << 24);
+
+    if(PLC_TO_HUB_Mesg_Stru.function_Code != 0)
+    {
+        process_function_code(PLC_TO_HUB_Mesg_Stru.function_Code,
+                                PLC_TO_HUB_Mesg_Stru.function_value);
+    }
+}
+
+
+static void process_function_code(u16 code,u32 value)
+{
+    switch (code)
+    {
+    case 0:   //功能码位0，无效，不处理
+        break;
+        
+    case 1:
+        //设置当前位置
+        break;
+
+    case 2:
+        //设置写卡位置
+        break;
+
+    default:
+        break;
+    }
+}
+
+

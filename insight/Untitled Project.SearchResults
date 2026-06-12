@@ -1,0 +1,5 @@
+---- TBF_CAN_ID Matches (4 in 2 files) ----
+Encoder_tbf_method.c (c:\users\administrator\desktop\从板程序_iap_潜叉-2026年3月19日093734\encoder):        case 0x180+TBF_CAN_ID:
+Encoder_tbf_method.c (c:\users\administrator\desktop\从板程序_iap_潜叉-2026年3月19日093734\encoder):        case 0x180+TBF_CAN_ID+1:
+Encoder_tbf_method.c (c:\users\administrator\desktop\从板程序_iap_潜叉-2026年3月19日093734\encoder):            i =RxMessage->StdId - (0x180+TBF_CAN_ID);
+Encoder_tbf_method.h (c:\users\administrator\desktop\从板程序_iap_潜叉-2026年3月19日093734\encoder):#define    TBF_CAN_ID    3//起始can id

@@ -1,0 +1,287 @@
+#define CONFIG_ARGUMENT_GLOBALS
+#include "bsp_loading_dependency.h"
+#include "delay.h"
+
+// 底层基础
+#include "bsp_can_dependency.h"
+#include "bsp_gpio_dependency.h"
+#include "bsp_time_dependency.h"
+#include "bsp_usart_dependency.h"
+
+
+// 包含使用模块 xxx_xxx_upper.h
+
+#include "magnet_sensor_upper.h"
+#include "plc_hub_upper.h"
+#include "rfid_upper.h"
+#include "obs_area_upper.h"
+#include "motor_upper.h"
+
+
+#include "public_def_type.h"
+
+
+/* CAN接收完成处理*/
+void(*CAN_RX_Complete_Process[CAN_RX_API_LEN])(CanRxMsg* RxMessage);
+
+
+
+/**
+  * 函数功能: 参数配置加载
+  * 返 回 值: 无
+  * 说    明:
+*/
+void Bsp_Loading_Config_Parameters(void)
+{
+
+
+	//-------------------------COM端口配置----------------------------
+        /*****************  HUB与PLC通信******************/
+	PLC_TO_HUB_Mesg_Stru.device_type = EM_DEVICE_DEV_HOST_MCU;  // 设备参数配置
+	PLC_TO_HUB_Mesg_Stru.set_type 	 =0x01;						// 单向差速轮
+	PLC_TO_HUB_Mesg_Stru.set_wheel_cir  =0.47124F;				// 轮周长m =PI*D
+	PLC_TO_HUB_Mesg_Stru.set_gear_ratio =30.0F;					// 行走齿轮比
+	PLC_TO_HUB_Mesg_Stru.set_walk_locat_sped =10;				// 精准停车速度 *0.01F
+	
+	// 左右轮距0.26m, 轮直径0.15m
+    Motor_Walk_Stru.set_motor_ratio =PLC_TO_HUB_Mesg_Stru.set_gear_ratio/PLC_TO_HUB_Mesg_Stru.set_wheel_cir;	
+//    Motor_Walk_Stru.set_motor_ratio =63.6618F;					// 转速比--最高速1.17m/s  =Kx/(PI*D)--30速比
+//	Motor_Walk_Stru.set_motor_ratio =42.4412F;					// 转速比--最高速1.17m/s  =Kx/(PI*D)--20速度
+	Motor_Walk_Stru.agv_pid_val.ukp = 0.002F;
+    Motor_Walk_Stru.agv_pid_val.uki = 0;    					//
+	Motor_Walk_Stru.agv_pid_val.ukd = 0;
+    Motor_Walk_Stru.agv_pid_val.throsd =0.6f;             		// 转向阀值-0.5
+	/***************************************************/
+
+
+	/*****************RFID传感器*******************/
+	RFID_Upper_Mesg_Stru.rfid_type = EM_DEVICE_DEV_RFID_LG;     // 设备参数配置
+	/***************************************************/
+
+    /*****************壁障器-传感器****************/
+    //OBS_Mesg_Stru.device_type = EM_DEVICE_DEV_OBS_XS_RS485;       //  设备参数配置
+    OBS_Mesg_Stru.device_type = EM_DEVICE_DEV_OBS_SICK_IO;               //  设备参数配置
+    /***************************************************/
+
+    //--------------------------COM end--------------------------
+
+
+    //----------------CAN端口配置-------------------------
+
+    /**************走形传感器配置 ****************/
+    Magnet_Upper_Stru.device_type  = EM_DEVICE_DEV_MAGNET_LG;           // 设备参数配置
+    Magnet_Upper_Stru.can_com_type = EM_SET_PORT_CAN;                   // 端口通信模式
+    Magnet_Upper_Stru.id_number    = 1;                                 // 传感器数量
+    /*************************************************/
+
+
+    /******************行走驱动器********************/
+    Motor_Walk_Stru.device_type   = EM_DEVICE_DEV_WHEEL_XS;
+    Motor_Walk_Stru.can_com_type  = EM_SET_PORT_CAN;                    // 端口通信模式
+    Motor_Walk_Stru.device_adr    = 0x01;
+    /************************************************/
+
+	//----------------CAN end-----------------------------
+	
+	
+    //以下为具体参数配置
+
+    /*-------------------------------PLC与HUB通信---------------------------------*/
+    if(PLC_TO_HUB_Mesg_Stru.device_type == EM_DEVICE_DEV_HOST_MCU)
+    {
+        PLC_TO_HUB_Mesg_Stru.commun_ask_mode = EM_DEV_ASK_AUTO;    //主动上传模式
+        PLC_TO_HUB_Mesg_Stru.commun_port   = USART3;				// 映射
+        PLC_TO_HUB_Mesg_Stru.baud_rate      = 115200;
+        PLC_TO_HUB_Mesg_Stru.wordlength     = USART_WordLength_8b;  // 数据长度
+        PLC_TO_HUB_Mesg_Stru.parity         = USART_Parity_No; 		// 无校验
+
+        Bsp_Usart_Config_Init(PLC_TO_HUB_Mesg_Stru.commun_port, PLC_TO_HUB_Mesg_Stru.baud_rate,
+                              PLC_TO_HUB_Mesg_Stru.wordlength, PLC_TO_HUB_Mesg_Stru.parity);
+    }
+	
+	/*--------------------------------RFID通信---------------------------------------*/
+    switch(RFID_Upper_Mesg_Stru.rfid_type)
+    {
+        case EM_DEVICE_DEV_RFID_LG:
+            RFID_Upper_Mesg_Stru.commun_ask_mode 	= EM_DEV_ASK_HAND; 		//	应答模式
+            RFID_Upper_Mesg_Stru.can_com_type   	= EM_SET_PORT_COM; 		//	端口通信模式
+            RFID_Upper_Mesg_Stru.rfid_mode      	= RFID_READ_ONLY_MODE;	//	初始状态为读卡模式
+
+            if(RFID_Upper_Mesg_Stru.can_com_type == EM_SET_PORT_COM)
+            {
+                RFID_Upper_Mesg_Stru.commun_port    = USART1;
+                RFID_Upper_Mesg_Stru.baud_rate 		= 115200;
+                RFID_Upper_Mesg_Stru.wordlength 	= USART_WordLength_8b;
+                RFID_Upper_Mesg_Stru.parity 		= USART_Parity_No;
+
+                Bsp_Usart_Config_Init(RFID_Upper_Mesg_Stru.commun_port, RFID_Upper_Mesg_Stru.baud_rate,
+                                      RFID_Upper_Mesg_Stru.wordlength, RFID_Upper_Mesg_Stru.parity);
+            }
+
+            break;
+		/*
+        case RFID_BJF:
+            RFID_Upper_Mesg_Stru.commun_ask_mode = EM_DEV_ASK_HAND; //应答模式
+            RFID_Upper_Mesg_Stru.can_com_type   = EM_SET_PORT_COM; //端口通信模式
+            RFID_Upper_Mesg_Stru.rfid_mode      =  RFID_READ_ONLY_MODE;//初始状态为读卡模式
+
+            if(RFID_Upper_Mesg_Stru.can_com_type == EM_SET_PORT_COM)
+            {
+                RFID_Upper_Mesg_Stru.commun_port    = USART1;
+                RFID_Upper_Mesg_Stru.baud_rate = 38400;
+                RFID_Upper_Mesg_Stru.wordlength = USART_WordLength_8b;
+                RFID_Upper_Mesg_Stru.parity = USART_Parity_No;
+
+                Bsp_Usart_Config_Init(RFID_Upper_Mesg_Stru.commun_port, RFID_Upper_Mesg_Stru.baud_rate,
+                                      RFID_Upper_Mesg_Stru.wordlength, RFID_Upper_Mesg_Stru.parity);
+            }
+            break;
+
+        case RFID_CK:
+            RFID_Upper_Mesg_Stru.commun_ask_mode = EM_DEV_ASK_HAND; //应答模式
+            RFID_Upper_Mesg_Stru.can_com_type   = EM_SET_PORT_COM; //端口通信模式
+            RFID_Upper_Mesg_Stru.rfid_mode      =  RFID_READ_ONLY_MODE;
+
+            if(RFID_Upper_Mesg_Stru.can_com_type == EM_SET_PORT_COM)
+            {
+                RFID_Upper_Mesg_Stru.commun_port    = USART2;
+                RFID_Upper_Mesg_Stru.baud_rate      = 9600;
+                RFID_Upper_Mesg_Stru.wordlength     = USART_WordLength_8b;
+                RFID_Upper_Mesg_Stru.parity         = USART_Parity_No;
+
+                Bsp_Usart_Config_Init(RFID_Upper_Mesg_Stru.commun_port, RFID_Upper_Mesg_Stru.baud_rate,
+                                      RFID_Upper_Mesg_Stru.wordlength, RFID_Upper_Mesg_Stru.parity);
+            }
+            break;
+
+        case RFID_XMZ:
+            RFID_Upper_Mesg_Stru.commun_ask_mode = EM_DEV_ASK_HAND; //应答模式
+            RFID_Upper_Mesg_Stru.can_com_type   = EM_SET_PORT_COM; //端口通信模式
+            RFID_Upper_Mesg_Stru.rfid_mode      =  RFID_READ_ONLY_MODE;
+
+            if(RFID_Upper_Mesg_Stru.can_com_type == EM_SET_PORT_COM)
+            {
+                RFID_Upper_Mesg_Stru.commun_port    = USART2;
+                RFID_Upper_Mesg_Stru.baud_rate      = 38400;
+                RFID_Upper_Mesg_Stru.wordlength     = USART_WordLength_8b;
+                RFID_Upper_Mesg_Stru.parity         = USART_Parity_No;
+
+                Bsp_Usart_Config_Init(RFID_Upper_Mesg_Stru.commun_port, RFID_Upper_Mesg_Stru.baud_rate,
+                                      RFID_Upper_Mesg_Stru.wordlength, RFID_Upper_Mesg_Stru.parity);
+            }
+            break;*/
+
+        default:
+            break;
+
+    }
+    //---------------------------避障器通信-------------------------------
+    switch(OBS_Mesg_Stru.device_type)
+    {
+        default:
+            break;
+            
+        case EM_DEVICE_DEV_OBS_SICK_IO:
+            OBS_Mesg_Stru.can_com_type    = EM_SET_PORT_NONE;        //端口通信模式
+            OBS_Mesg_Stru.device_adr      = 0x01;                   //设备地址
+            break;
+            
+        case EM_DEVICE_DEV_OBS_XS_RS485:
+            OBS_Mesg_Stru.commun_ask_mode = EM_DEV_ASK_HAND;        //应答模式
+            OBS_Mesg_Stru.can_com_type    = EM_SET_PORT_COM;        //端口通信模式
+            OBS_Mesg_Stru.device_adr      = 0x01;                   //设备地址
+
+            if(OBS_Mesg_Stru.can_com_type == EM_SET_PORT_COM)
+            {
+                OBS_Mesg_Stru.commun_port   = UART5;
+                OBS_Mesg_Stru.baud_rate 	= 115200;
+                OBS_Mesg_Stru.wordlength 	= USART_WordLength_8b;
+                OBS_Mesg_Stru.parity 		= USART_Parity_No;
+
+                Bsp_Usart_Config_Init(OBS_Mesg_Stru.commun_port, OBS_Mesg_Stru.baud_rate,
+                                      OBS_Mesg_Stru.wordlength, OBS_Mesg_Stru.parity);
+            }
+			break;
+		
+	}
+	
+	if(Magnet_Upper_Stru.device_type || Motor_Walk_Stru.device_type)
+	{
+		CAN1_Init(4);                                       			// 2M/4=500K
+	}
+	
+	//---------------------------------行走驱动器控制---------------------
+	switch(Motor_Walk_Stru.device_type)
+	{
+		default:
+			break;
+		case EM_DEVICE_DEV_WHEEL_XS:
+			if( Motor_Walk_Stru.can_com_type == EM_SET_PORT_CAN)		//	CAN通信
+            {
+                Motor_Walk_Stru.commun_ask_mode   = EM_DEV_ASK_HAND;	//	问答模式
+                CAN_RX_Complete_Process[0] = Motor_UpperRX_CAN_Handler_Task;
+            }
+			break;
+	}
+	//--------------------------------end---------------------------------------------
+	
+	
+    /*  ----------------------------走形传感器通信-----------------------------*/
+    switch(Magnet_Upper_Stru.device_type)
+    {
+		case EM_DEVICE_DEV_MAGNET_LG:											// 里格走形传感器
+			if( Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN)				// CAN通信
+            {
+                Magnet_Upper_Stru.commun_ask_mode   = EM_DEV_CANOPEN;			// 问答模式
+                CAN_RX_Complete_Process[1] = MAGNET_UpperRX_CAN_Handler_Task;
+            }
+			break;
+        /*case MAGNET_TPYE_MPLS:
+            if( Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN)		//CAN通信
+            {
+                Magnet_Upper_Stru.commun_ask_mode   = MAGNET_ASK_HAND;//问答模式
+
+                CAN1_Init(4);                                       	// 2M/4=500K
+                CAN_RX_Complete_Process[0] = MAGNET_UpperRX_CAN_Handler_Task;
+            }
+            else if( Magnet_Upper_Stru.can_com_type == EM_SET_PORT_COM)//485通信
+            {
+                Magnet_Upper_Stru.commun_ask_mode   = MAGNET_ASK_HAND;//问答模式
+
+                Magnet_Upper_Stru.commun_port   = UART5;// 映射
+                Magnet_Upper_Stru.baud_rate     = 115200;
+                Magnet_Upper_Stru.wordlength    = USART_WordLength_8b;
+                Magnet_Upper_Stru.parity        = USART_Parity_No;
+                Bsp_Usart_Config_Init(Magnet_Upper_Stru.commun_port, Magnet_Upper_Stru.baud_rate,
+                                      Magnet_Upper_Stru.wordlength, Magnet_Upper_Stru.parity);
+            }
+
+            break;
+        case EM_DEVICE_DEV_MAGNET_XS:
+            if( Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN)       //CANOPEN通信
+            {
+                Magnet_Upper_Stru.commun_ask_mode   = EM_DEV_CANOPEN;    //CANOPEN模式
+
+                CAN1_Init(4);                                            // 2M/4=500K
+                CAN_RX_Complete_Process[0] = MAGNET_UpperRX_CAN_Handler_Task;
+            }
+            else if( Magnet_Upper_Stru.can_com_type == EM_SET_PORT_COM) //485通信
+            {
+                Magnet_Upper_Stru.commun_ask_mode   = MAGNET_ASK_HAND;   //问答模式
+
+                Magnet_Upper_Stru.commun_port   = UART5;// 映射
+                Magnet_Upper_Stru.baud_rate     = 115200;
+                Magnet_Upper_Stru.wordlength    = USART_WordLength_8b;
+                Magnet_Upper_Stru.parity        = USART_Parity_No;
+                Bsp_Usart_Config_Init(Magnet_Upper_Stru.commun_port, Magnet_Upper_Stru.baud_rate,
+                                      Magnet_Upper_Stru.wordlength, Magnet_Upper_Stru.parity);
+            }
+            break;*/
+        default:
+            break;
+
+    }
+	
+    
+}
+

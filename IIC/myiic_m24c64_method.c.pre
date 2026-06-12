@@ -1,0 +1,218 @@
+/**
+  ******************************************************************************
+  * @file    dev_m24c64_iic.c
+  * @author  zsq
+  * @version V1.1.0
+  * @date    14-04-2014
+  * @brief   配置内部IIC芯片对应M24C64存储
+  *          M24C64对应存储大小是 64Kbit=8K=8191 byte
+ @verbatim
+  ******************************************************************************
+  */
+  
+#include "myiic_m24c64_method.h"
+
+
+ 
+
+#define EE_TYPE     AT24C64     // M24C64-最大存储 8192个字节
+
+
+/********************局部使用函数*******************/
+/**
+  * @brief  在M24C64存储芯片，指定地址读出一个数据	
+  * @param  ReadAddr:开始读数的地址  
+  *                      
+  *                     
+  * @param
+  * @retval 读到的数据
+  */
+static u8 prv_M24C64ReadOneByte(u16 ReadAddr)
+{				  
+	u8 temp=0;		  	    																 
+    Bsp_My_IIC_Start();  
+	if(EE_TYPE>AT24C16)
+	{
+		Bsp_My_IIC_Send_Byte(0XA0);	        //发送写命令
+		Bsp_My_IIC_Wait_Ack();
+		Bsp_My_IIC_Send_Byte(ReadAddr>>8);  //发送高地址	    
+	}else Bsp_My_IIC_Send_Byte(0XA0+((ReadAddr/256)<<1));   //发送器件地址0XA0,写数据 	   
+	Bsp_My_IIC_Wait_Ack(); 
+    Bsp_My_IIC_Send_Byte(ReadAddr);         //发送低地址
+	Bsp_My_IIC_Wait_Ack();	    
+	Bsp_My_IIC_Start();  	 	   
+	Bsp_My_IIC_Send_Byte(0XA1);             //进入接收模式			   
+	Bsp_My_IIC_Wait_Ack();	 
+    temp=Bsp_My_IIC_Read_Byte(0);		   
+    Bsp_My_IIC_Stop();                      //产生一个停止条件	    
+	return temp;
+}
+
+/**
+  * @brief  在M24C64指定地址写入一个数据
+  * @param  WriteAddr  :写入数据的目的地址 
+  *         DataToWrite:要写入的数据            
+  *                     
+  * @param
+  * @retval None
+  */
+static void prv_M24C64WriteOneByte(u16 WriteAddr,u8 DataToWrite)
+{				   	  	    																 
+    Bsp_My_IIC_Start();  
+/*	if(EE_TYPE>AT24C16)
+	{
+		Bsp_My_IIC_Send_Byte(0XA0);	                        //发送写命令
+		Bsp_My_IIC_Wait_Ack();
+		Bsp_My_IIC_Send_Byte(WriteAddr>>8);                 //发送高地址	  
+	}else 
+    {
+        Bsp_My_IIC_Send_Byte(0XA0+((WriteAddr/256)<<1));   //发送器件地址0XA0,写数据 	 
+    }*/
+    Bsp_My_IIC_Send_Byte(0XA0);	                        // 发送写命令
+    Bsp_My_IIC_Wait_Ack();
+    Bsp_My_IIC_Send_Byte(WriteAddr>>8);                 // 发送高地址	
+	Bsp_My_IIC_Wait_Ack();	   
+    Bsp_My_IIC_Send_Byte(WriteAddr);                    // 发送低地址
+	Bsp_My_IIC_Wait_Ack(); 	 										  		   
+	Bsp_My_IIC_Send_Byte(DataToWrite);                  // 发送字节							   
+	Bsp_My_IIC_Wait_Ack();  
+    
+    Bsp_My_IIC_Stop();                                  // 产生一个停止条件 
+    
+	delay_ms(5);	                                    // 延时5ms
+}
+
+/**
+  * @brief  在M24C64里面的指定地址开始写入长度为Len的数据
+            该函数用于写出16bit或者32bit的数据.
+  * @param  WriteAddr  :开始写入的地址       
+  *         DataToWrite:数据数组首地址
+  *         Len        :要写入数据的长度2,4
+  * @param
+  * @retval 数据
+  */
+/*u32 prv_M24C64WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len)
+{  	
+	u8 t=0;
+	for(t=0;t<Len;t++)
+	{
+		prv_M24C64WriteOneByte(WriteAddr+t,(DataToWrite>>(8*t))&0xff); 	 				   
+	}											    
+}*/
+/**
+  * @brief  在M24C64里面的指定地址开始读出长度为Len的数据
+            该函数用于读出16bit或者32bit的数据.
+  * @param  ReadAddr   :开始读出的地址       
+  *         Len        :要读出数据的长度2,4           
+  * @param
+  * @retval 数据
+  */
+u32 prv_M24C64ReadLenByte(u16 ReadAddr,u8 Len)
+{  	
+	u8 t=0;
+	u32 temp=0;
+	for(t=0;t<Len;t++)
+	{
+		temp<<=8;
+		temp+=prv_M24C64ReadOneByte(ReadAddr+Len-t-1); 	 				   
+	}
+	return temp;												    
+}
+
+
+
+
+
+/*******************************公共对应提供的接口函数****************************/
+
+/*
+  * @brief  检查flash存储芯片是否正常
+            这里用了24XX的最后一个地址(255)来存储标志字.
+            如果用其他24C系列,这个地址要修改
+  * @param      
+  *               
+  * @param
+  * @retval 返回1:检测失败
+            返回0:检测成功
+  *
+u8 device_m24C64_check(void)
+{
+	u8 temp;
+	temp=prv_M24C64ReadOneByte(0x00);            //避免每次开机都写数据		   
+	if(temp==0X55)  return 0;		   
+	else                                         //排除第一次初始化的情况
+	{
+		prv_M24C64WriteOneByte(0x00,0X55);
+	    temp=prv_M24C64ReadOneByte(0x00);	  
+		if(temp==0X55)  return 0;
+	}
+	return 1;											  
+}*/
+
+
+
+/**
+  * @brief  在AT24CXX里面的指定地址开始读出指定个数的数据
+  * @param  ReadAddr :开始读出的地址 对24c02为0~255
+            pBuffer  :数据数组首地址
+            NumToRead:要读出数据的个数   
+  *               
+  * @param
+  * @retval  None
+  */
+void device_m24C64_read(u16 ReadAddr,u8 *pBuffer,u16 NumToRead)
+{
+    //u16 index_i=0;
+    
+    /*Bsp_My_IIC_Start();  
+
+    Bsp_My_IIC_Send_Byte(0XA0);	            //发送写命令
+    Bsp_My_IIC_Wait_Ack();
+    Bsp_My_IIC_Send_Byte(ReadAddr>>8);      //发送高地址	    
+
+	Bsp_My_IIC_Wait_Ack(); 
+    Bsp_My_IIC_Send_Byte(ReadAddr);         //发送低地址
+	Bsp_My_IIC_Wait_Ack();	
+    
+	Bsp_My_IIC_Start();  	 	   
+	Bsp_My_IIC_Send_Byte(0XA1);             //进入接收模式			   
+	Bsp_My_IIC_Wait_Ack();	 
+    for(index_i =0; index_i<NumToRead;index_i++)
+    {
+        pBuffer[index_i]=Bsp_My_IIC_Read_Byte(1); 
+    }     
+    
+    Bsp_My_IIC_Stop();                      //产生一个停止条件	  
+    */
+    
+    while(NumToRead)
+    {
+        *pBuffer++ =prv_M24C64ReadOneByte(ReadAddr++); // 指定地址读参数
+        NumToRead--;
+    }
+
+}  
+
+
+/**
+  * @brief  在指定地址开始写入指定个数的数据
+  * @param  
+            NumToWrite:要写入数据的个数  
+  *         WriteAddr :开始写入的地址 对24c02为0~255
+  *         pBuffer   :数据数组首地址
+  *         NumToWrite:要写入数据的个数              
+  * @param
+  * @retval  None
+  */
+void device_m24C64_write(u16 WriteAddr,u8 *pBuffer,u16 NumToWrite)
+{
+    while(NumToWrite--)
+    {
+        prv_M24C64WriteOneByte(WriteAddr,*pBuffer); // 指定地址，写数据
+		WriteAddr++;
+		pBuffer++;
+    } 
+}
+
+
+
