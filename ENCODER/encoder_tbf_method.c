@@ -6,6 +6,8 @@
 #include "myiic_upper.h"
 #include "motor_upper.h"
 
+#define ENCODER_OFFSET_READ_DELAY_CNT 15    // 20ms*15=300ms，等电源和24C64先站稳再读零位
+
 /***************************************************************************************
 *函    数: void Encoder_tbf_SendAPI(void)
 *功    能:
@@ -21,10 +23,17 @@ void Encoder_tbf_SendAPI(void)
     u8 buf_temp[8] = {0};
     u32 offset_temp[2] = {0};
     static u8 start_bit = 0;
+    static u8 offset_read_delay_cnt =0;
 
     //零位读取
     if(start_bit == 0)//只执行一次
     {
+        if(offset_read_delay_cnt < ENCODER_OFFSET_READ_DELAY_CNT)
+        {
+            offset_read_delay_cnt++;
+            return;
+        }
+
         start_bit = 1;
 
         myiic_read_24c64_api(0, 8, buf_temp);

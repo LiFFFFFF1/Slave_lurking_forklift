@@ -3,7 +3,7 @@
 ..\obj\bsp_loading_dependency.o: ..\SYSTEM\sys\sys.h
 ..\obj\bsp_loading_dependency.o: ..\USER\stm32f10x.h
 ..\obj\bsp_loading_dependency.o: ..\CORE\core_cm3.h
-..\obj\bsp_loading_dependency.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\bsp_loading_dependency.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\bsp_loading_dependency.o: ..\USER\system_stm32f10x.h
 ..\obj\bsp_loading_dependency.o: ..\USER\stm32f10x_conf.h
 ..\obj\bsp_loading_dependency.o: ..\STM32F10x_FWLib\inc\stm32f10x_adc.h
@@ -30,13 +30,13 @@
 ..\obj\bsp_loading_dependency.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
 ..\obj\bsp_loading_dependency.o: ..\STM32F10x_FWLib\inc\stm32f10x_wwdg.h
 ..\obj\bsp_loading_dependency.o: ..\STM32F10x_FWLib\inc\misc.h
-..\obj\bsp_loading_dependency.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdio.h
-..\obj\bsp_loading_dependency.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\string.h
-..\obj\bsp_loading_dependency.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdbool.h
-..\obj\bsp_loading_dependency.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\obj\bsp_loading_dependency.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\bsp_loading_dependency.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\string.h
+..\obj\bsp_loading_dependency.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
+..\obj\bsp_loading_dependency.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\bsp_loading_dependency.o: ..\SYSTEM\FIFO\FIFO.h
 ..\obj\bsp_loading_dependency.o: ..\SYSTEM\sys\sys.h
-..\obj\bsp_loading_dependency.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdarg.h
+..\obj\bsp_loading_dependency.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdarg.h
 ..\obj\bsp_loading_dependency.o: ..\BSP\LOADING\bsp_loading_dependency.h
 ..\obj\bsp_loading_dependency.o: ..\SYSTEM\delay\delay.h
 ..\obj\bsp_loading_dependency.o: ..\BSP\CAN\bsp_can_dependency.h
@@ -46,7 +46,7 @@
 ..\obj\bsp_loading_dependency.o: ..\MAGNET\magnet_sensor_upper.h
 ..\obj\bsp_loading_dependency.o: ..\BSP\MODBUS\bsp_modbusrtu.h
 ..\obj\bsp_loading_dependency.o: ..\USER\public_def_type.h
-..\obj\bsp_loading_dependency.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\bsp_loading_dependency.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\math.h
 ..\obj\bsp_loading_dependency.o: ..\SYSTEM\IIC\myiic.h
 ..\obj\bsp_loading_dependency.o: ..\PLC\plc_hub_upper.h
 ..\obj\bsp_loading_dependency.o: ..\RFID\rfid_upper.h

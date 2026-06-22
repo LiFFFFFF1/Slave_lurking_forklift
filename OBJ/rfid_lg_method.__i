@@ -1,0 +1,6 @@
+--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O2 --apcs=interwork --split_sections -I ..\USER -I ..\CORE -I ..\STM32F10x_FWLib\inc -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\FIFO -I ..\BSP\MODBUS -I ..\BSP\UART -I ..\BSP\CAN -I ..\BSP\IO -I ..\BSP\LOADING -I ..\BSP\TIME -I ..\MAGNET -I ..\PLC -I ..\RFID -I ..\MOTOR -I ..\Music -I ..\ANTICO -I ..\SYSTEM\IWDG -I ..\IIC -I ..\SYSTEM\IIC -I ..\ENCODER
+-I.\RTE\_MCU_SlaveProject
+-ID:\Keil-MDK\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include
+-ID:\Keil-MDK\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include
+-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER
+-o ..\obj\rfid_lg_method.o --omf_browse ..\obj\rfid_lg_method.crf --depend ..\obj\rfid_lg_method.d "..\RFID\rfid_lg_method.c"

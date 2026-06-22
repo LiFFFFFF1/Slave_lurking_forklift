@@ -5,7 +5,6 @@
 #define NEW_UP_FRAME_LENGTH   20  // 上传帧长度
 #define NEW_DOWN_FRAME_LENGTH 13  // 下发帧长度
 
-
 #define IAP_FRAME_LENGTH 14  // 进入串口IAP更新下发帧长度
 uint32_t iap_boot_flag __attribute__((at(APP_BOOT_COMM_VAR_ADDR)));
 

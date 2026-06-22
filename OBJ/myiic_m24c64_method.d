@@ -2,12 +2,12 @@
 ..\obj\myiic_m24c64_method.o: ..\IIC\myiic_m24c64_method.h
 ..\obj\myiic_m24c64_method.o: ..\IIC\myiic_private_datatype.h
 ..\obj\myiic_m24c64_method.o: ..\USER\public_def_type.h
-..\obj\myiic_m24c64_method.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdint.h
-..\obj\myiic_m24c64_method.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\string.h
-..\obj\myiic_m24c64_method.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdbool.h
-..\obj\myiic_m24c64_method.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\myiic_m24c64_method.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdio.h
-..\obj\myiic_m24c64_method.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdarg.h
+..\obj\myiic_m24c64_method.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\myiic_m24c64_method.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\string.h
+..\obj\myiic_m24c64_method.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
+..\obj\myiic_m24c64_method.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\math.h
+..\obj\myiic_m24c64_method.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\myiic_m24c64_method.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdarg.h
 ..\obj\myiic_m24c64_method.o: ..\SYSTEM\sys\sys.h
 ..\obj\myiic_m24c64_method.o: ..\USER\stm32f10x.h
 ..\obj\myiic_m24c64_method.o: ..\CORE\core_cm3.h
@@ -37,7 +37,7 @@
 ..\obj\myiic_m24c64_method.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
 ..\obj\myiic_m24c64_method.o: ..\STM32F10x_FWLib\inc\stm32f10x_wwdg.h
 ..\obj\myiic_m24c64_method.o: ..\STM32F10x_FWLib\inc\misc.h
-..\obj\myiic_m24c64_method.o: D:\Keil_MDK\Keil_V5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\obj\myiic_m24c64_method.o: D:\Keil-MDK\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\myiic_m24c64_method.o: ..\SYSTEM\FIFO\FIFO.h
 ..\obj\myiic_m24c64_method.o: ..\SYSTEM\sys\sys.h
 ..\obj\myiic_m24c64_method.o: ..\BSP\LOADING\bsp_loading_dependency.h

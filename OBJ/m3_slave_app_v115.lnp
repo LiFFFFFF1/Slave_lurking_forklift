@@ -51,7 +51,7 @@
 "..\obj\encoder_upper.o"
 "..\obj\encoder_tbf_method.o"
 "..\obj\encoder_tf_method.o"
---library_type=microlib --strict --scatter "..\OBJ\m3_slave_app_v108_.sct"
+--library_type=microlib --strict --scatter "..\OBJ\m3_slave_app_v115.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
---list ".\Listings\m3_slave_app_v108_.map" -o ..\OBJ\m3_slave_app_v108_.axf
+--list ".\Listings\m3_slave_app_v115.map" -o ..\OBJ\m3_slave_app_v115.axf
