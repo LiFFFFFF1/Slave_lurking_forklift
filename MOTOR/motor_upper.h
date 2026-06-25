@@ -15,113 +15,113 @@
 #define MOTOR_DEV_EXT  extern 
 #endif
 
-#define    LIFT_CANID_1    1//ä¸¾å‡1  can_id
-#define    LIFT_CANID_2    2//ä¸¾å‡2  can_id
+#define    LIFT_CANID_1    1//¾ÙÉı1  can_id
+#define    LIFT_CANID_2    2//¾ÙÉı2  can_id
 
-#define    FORK_CANID    1//å‰é½¿èµ·å§‹ can_id
+#define    FORK_CANID    1//²æ³İÆğÊ¼ can_id
 
 
-#define    INPUT_UP_TIMESET    25//ä¸Šå‡è¾“å…¥æ¶ˆæŠ–æ—¶é—´*20ms
-#define    INPUT_DOWN_TIMESET    10//ä¸‹é™è¾“å…¥æ¶ˆæŠ–æ—¶é—´*20ms
+#define    INPUT_UP_TIMESET    25//ÉÏÉıÊäÈëÏû¶¶Ê±¼ä*20ms
+#define    INPUT_DOWN_TIMESET    10//ÏÂ½µÊäÈëÏû¶¶Ê±¼ä*20ms
 
-//ä¸¾å‡å‡é™è¶…æ—¶æ—¶é—´*20ms
+//¾ÙÉıÉı½µ³¬Ê±Ê±¼ä*20ms
 #define    LIFT_RUN_OVERTIME    1500
 
-//ä¸¾å‡åˆ°ä½é»˜è®¤é«˜åº¦mm
+//¾ÙÉıµ½Î»Ä¬ÈÏ¸ß¶Èmm
 #define    DEFAULT_LIFT_HIGH_DATA    300
 
-//ä¸¾å‡é»˜è®¤é€Ÿåº¦*0.1rpm
+//¾ÙÉıÄ¬ÈÏËÙ¶È*0.1rpm
 #define    DEFAULT_LIFT_SPEED    5000
 
-//ä¸¾å‡ç”µæœºæ–¹å‘
+//¾ÙÉıµç»ú·½Ïò
 #define    LIFT_DIRET	-1
 
 
 typedef enum
 {
-    EM_UNIT_ACT_ID_ALL     = 0,                   // æ‰€æœ‰åŒæ­¥
-    EM_UNIT_ACT_ID_LEFT    = 1,                   // æŒ‡å®šid1
-    EM_UNIT_ACT_ID_RIGHT   = 2,                   // æŒ‡å®šid2
+    EM_UNIT_ACT_ID_ALL     = 0,                   // ËùÓĞÍ¬²½
+    EM_UNIT_ACT_ID_LEFT    = 1,                   // Ö¸¶¨id1
+    EM_UNIT_ACT_ID_RIGHT   = 2,                   // Ö¸¶¨id2
 
-} EM_UNIT_ACT_ID;                                 // ä¸Šè£…æ‰§è¡ŒID
+} EM_UNIT_ACT_ID;                                 // ÉÏ×°Ö´ĞĞID
 
 
 typedef __packed struct
 {
-    USART_TypeDef* commun_port;                   // è®¾ç½®é€šä¿¡ç«¯å£å·,ä¸²å£ç«¯å£
-    u8 can_com_type;                              // 1-CAN, 2-comæ¨¡å¼
+    USART_TypeDef* commun_port;                   // ÉèÖÃÍ¨ĞÅ¶Ë¿ÚºÅ,´®¿Ú¶Ë¿Ú
+    u8 can_com_type;                              // 1-CAN, 2-comÄ£Ê½
     u8 device_type;                               //
-    u8 device_adr;                                // è®¾å¤‡åœ°å€
-    u8 commun_ask_mode;                           // é€šä¿¡åº”ç­”æ¨¡å¼
+    u8 device_adr;                                // Éè±¸µØÖ·
+    u8 commun_ask_mode;                           // Í¨ĞÅÓ¦´ğÄ£Ê½
 
-    u32 baud_rate;                                // æ³¢ç‰¹ç‡
-    u16 wordlength;                               // æ•°æ®å®½åº¦
+    u32 baud_rate;                                // ²¨ÌØÂÊ
+    u16 wordlength;                               // Êı¾İ¿í¶È
     u16 parity;
 
     //u8 input_timer[4];
-    u16 comm_timer[2];                            // é€šä¿¡è®¡æ—¶
-    u16 run_timer;						//ç”µæœºå¯åŠ¨è®¡æ—¶
-    u16 speed_timer;					//é€Ÿåº¦æ£€æµ‹è®¡æ—¶
-    u16 power_on_delay;					//ä¸Šç”µå»¶æ—¶è®¡æ—¶å™¨
+    u16 comm_timer[2];                            // Í¨ĞÅ¼ÆÊ±
+    u16 run_timer;						//µç»úÆô¶¯¼ÆÊ±
+    u16 speed_timer;					//ËÙ¶È¼ì²â¼ÆÊ±
+    u16 power_on_delay;					//ÉÏµçÑÓÊ±¼ÆÊ±Æ÷
         
-    u16 current_data[2];					//ç”µæµ
-    u16 err_data[2];						//æ•…éšœç 
-    s32 real_speed[2];					//å½“å‰é€Ÿåº¦
-    s32 set_speed_front;					//è®¾ç½®é€Ÿåº¦-å‰
-    s32 set_speed_back;					//è®¾ç½®é€Ÿåº¦-å
-    s16 high_real_data[2];				//å½“å‰ä¸¾å‡é«˜åº¦
+    u16 current_data[2];					//µçÁ÷
+    u16 err_data[2];						//¹ÊÕÏÂë
+    s32 real_speed[2];					//µ±Ç°ËÙ¶È
+    s32 set_speed_front;					//ÉèÖÃËÙ¶È-Ç°
+    s32 set_speed_back;					//ÉèÖÃËÙ¶È-ºó
+    s16 high_real_data[2];				//µ±Ç°¾ÙÉı¸ß¶È
 
-    u8 all_lift_state;						//ä¸¾å‡æ€»çŠ¶æ€
-    u8 lift_state;						//å‰åä¸¾å‡çŠ¶æ€
-    u8 lift_action_set;					//ä¸¾å‡åŠ¨ä½œè®¾ç½®
+    u8 all_lift_state;						//¾ÙÉı×Ü×´Ì¬
+    u8 lift_state;						//Ç°ºó¾ÙÉı×´Ì¬
+    u8 lift_action_set;					//¾ÙÉı¶¯×÷ÉèÖÃ
         
-    s16 lift_offset[2];				    //ä¸¾å‡é›¶ä½åç§»å€¼
-    s16 lift_target_highdata[2];		//ä¸¾å‡ç›®æ ‡é«˜åº¦
+    s16 lift_offset[2];				    //¾ÙÉıÁãÎ»Æ«ÒÆÖµ
+    s16 lift_target_highdata[2];		//¾ÙÉıÄ¿±ê¸ß¶È
 
-    float highdata_ratio;			    //ä¸¾å‡é«˜åº¦ç³»æ•°ï¼Œç”µæœºè½¬1åœˆå¯¹åº”é«˜åº¦å€¼
+    float highdata_ratio;			    //¾ÙÉı¸ß¶ÈÏµÊı£¬µç»ú×ª1È¦¶ÔÓ¦¸ß¶ÈÖµ
 
-    u8 lift_en;							//ä¸¾å‡ä½¿èƒ½
+    u8 lift_en;							//¾ÙÉıÊ¹ÄÜ
 
-    u8 can_state;						//CANè®¾å¤‡ç½‘ç»œçŠ¶æ€ï¼Œæ‰çº¿1
+    u8 can_state;						//CANÉè±¸ÍøÂç×´Ì¬£¬µôÏß1
 
-    u8 act_syn;							//ä¸¾å‡åŒæ­¥=0,   å¼‚æ­¥=1
+    u8 act_syn;							//¾ÙÉıÍ¬²½=0,   Òì²½=1
 
-    u8 unit_type;				// ä¸Šè£…åŠ¨ä½œç±»å‹
-    u8 unit_act_id;			    // ä¸Šè£…æ‰§è¡Œid
-    u8 unit_ctrl_mode;			// ä¸Šè£…æ§åˆ¶æ¨¡å¼
-    s16 unit_ctrl_data;			// ä¸Šè£…æ§åˆ¶å‚æ•°
+    u8 unit_type;				// ÉÏ×°¶¯×÷ÀàĞÍ
+    u8 unit_act_id;			    // ÉÏ×°Ö´ĞĞid
+    u8 unit_ctrl_mode;			// ÉÏ×°¿ØÖÆÄ£Ê½
+    s16 unit_ctrl_data;			// ÉÏ×°¿ØÖÆ²ÎÊı
 
-    u8 unit_act_state;			// ä¸Šè£…æ‰§è¡Œåé¦ˆçŠ¶æ€
-    s16 unit_act_data[2];	    // ä¸Šè£…æ‰§è¡Œåé¦ˆæ•°æ®
-    u16 unit_err_code[2];		// ä¸Šè£…æ•…éšœä»£ç 
+    u8 unit_act_state;			// ÉÏ×°Ö´ĞĞ·´À¡×´Ì¬
+    s16 unit_act_data[2];	    // ÉÏ×°Ö´ĞĞ·´À¡Êı¾İ
+    u16 unit_err_code[2];		// ÉÏ×°¹ÊÕÏ´úÂë
     
     u8 can_run_step;
     u16 can_send_cnt;
     u8 heart_node_cnt;
     
-    s32 fork_dst_spd[2];        // ç›®æ ‡é€Ÿåº¦
+    s32 fork_dst_spd[2];        // Ä¿±êËÙ¶È
     u16 fork_can_time[2];
     u16 fork_word_status[2];
-    s16 fork_real_speed[2];     // å½“å‰å‰é½¿ç”µæœºè½¬é€Ÿï¼Œå•ä½ rpm
+    s16 fork_real_speed[2];     // µ±Ç°²æ³İµç»ú×ªËÙ£¬µ¥Î» rpm
     u8  fork_location_cnt;
 
-    float fork_motor_max_rpm;       // å‰é½¿è¡Œèµ°ç”µæœºæœ€é«˜è½¬é€Ÿï¼Œå•ä½ rpm
-    float fork_gear_ratio;          // å‰é½¿è¡Œèµ°å‡é€Ÿæ¯”
-    float fork_wheel_diameter_mm;   // å‰é½¿è¡Œèµ°è½®ç›´å¾„ï¼Œå•ä½ mm
-    float fork_drv_pulse_per_rev;   // é©±åŠ¨å™¨é€Ÿåº¦å•ä½å¯¹åº”çš„æ¯è½¬è®¡æ•°
-    float fork_max_speed_mm_s;      // å‰é½¿æœ€å¤§çº¿é€Ÿåº¦ï¼Œå•ä½ mm/s
+    float fork_motor_max_rpm;       // ²æ³İĞĞ×ßµç»ú×î¸ß×ªËÙ£¬µ¥Î» rpm
+    float fork_gear_ratio;          // ²æ³İĞĞ×ß¼õËÙ±È
+    float fork_wheel_diameter_mm;   // ²æ³İĞĞ×ßÂÖÖ±¾¶£¬µ¥Î» mm
+    float fork_drv_pulse_per_rev;   // Çı¶¯Æ÷ËÙ¶Èµ¥Î»¶ÔÓ¦µÄÃ¿×ª¼ÆÊı
+    float fork_max_speed_mm_s;      // ²æ³İ×î´óÏßËÙ¶È£¬µ¥Î» mm/s
 	
 } MOTOR_DEV_STRU;
 
 MOTOR_DEV_EXT MOTOR_DEV_STRU Motor_Lift_Stru;
 
-/* å¯¹å¤–æ¥å£-å‘é€å¤„ç†ä»»åŠ¡ */
+/* ¶ÔÍâ½Ó¿Ú-·¢ËÍ´¦ÀíÈÎÎñ */
 extern void Motor_UpperTX_Task(void);
 
-/* å¯¹å¤–æ¥å£-æ¥æ”¶å¤„ç†ä»»åŠ¡ */
+/* ¶ÔÍâ½Ó¿Ú-½ÓÊÕ´¦ÀíÈÎÎñ */
 extern void Motor_UpperRX_Task(void);
 
-/* CANä¸­æ–­æ¥æ”¶å¤„ç† */
+/* CANÖĞ¶Ï½ÓÊÕ´¦Àí */
 extern void Motor_UpperRX_CAN_Handler_Task(CanRxMsg* RxMessage);
 
 #endif

@@ -1,13 +1,13 @@
 #ifndef _OBS_SICK_METHOD_H
 #define _OBS_SICK_METHOD_H
 
-// 浣跨敤鍒扮殑搴曞眰鍩虹鏂囦欢
+// 使用到的底层基础文件
 
 
-/* OBS-IO杈撳嚭浠诲姟*/
+/* OBS-IO输出任务*/
 extern void Obs_AreaSICK_IO_Send_Task(void);
 
-/* OBS-IO杈撳叆浠诲姟*/
+/* OBS-IO输入任务*/
 extern void Obs_AreaSICK_IO_RX_Task(void);
 
 #endif

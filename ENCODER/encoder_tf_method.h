@@ -6,10 +6,10 @@
 #include "bsp_usart_dependency.h"
 #include "bsp_modbusrtu.h"
 
-/* å‘é€å¤„ç†ä»»åŠ¡ */
+/* ·¢ËÍ´¦ÀíÈÎÎñ */
 extern void Encoder_tf_SendAPI(void);
 
-/* æ¥æ”¶å¤„ç†ä»»åŠ¡ */
+/* ½ÓÊÕ´¦ÀíÈÎÎñ */
 extern void Encoder_tf_CAN_Isr(CanRxMsg* RxMessage);
  
 

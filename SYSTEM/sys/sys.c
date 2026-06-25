@@ -1,41 +1,41 @@
 #include "sys.h"
 
 //////////////////////////////////////////////////////////////////
-//åŠ å…¥ä»¥ä¸‹ä»£ç ,æ”¯æŒprintfå‡½æ•°,è€Œä¸éœ€è¦é€‰æ‹©use MicroLIB	  
+//¼ÓÈëÒÔÏÂ´úÂë,Ö§³Öprintfº¯Êý,¶ø²»ÐèÒªÑ¡Ôñuse MicroLIB	  
 #if 1
 #pragma import(__use_no_semihosting)             
-//æ ‡å‡†åº“éœ€è¦çš„æ”¯æŒå‡½æ•°                 
+//±ê×¼¿âÐèÒªµÄÖ§³Öº¯Êý                 
 struct __FILE 
 { 
 	int handle; 
 }; 
 
 FILE __stdout;       
-//å®šä¹‰_sys_exit()ä»¥é¿å…ä½¿ç”¨åŠä¸»æœºæ¨¡å¼    
+//¶¨Òå_sys_exit()ÒÔ±ÜÃâÊ¹ÓÃ°ëÖ÷»úÄ£Ê½    
 int _sys_exit(int x) 
 { 
 	return x;
 } 
-//é‡å®šä¹‰fputcå‡½æ•° 
+//ÖØ¶¨Òåfputcº¯Êý 
 int fputc(int ch, FILE *f)
 {  
 #if PRINTF_CHANLE == 1	    
-	while((USART1->SR&0X40)==0);//å¾ªçŽ¯å‘é€,ç›´åˆ°å‘é€å®Œæ¯•   
+	while((USART1->SR&0X40)==0);//Ñ­»··¢ËÍ,Ö±µ½·¢ËÍÍê±Ï   
     USART1->DR = (u8) ch;      
 	return ch;
 	
 #elif PRINTF_CHANLE == 2
-	while((USART2->SR&0X40)==0);//å¾ªçŽ¯å‘é€,ç›´åˆ°å‘é€å®Œæ¯•   
+	while((USART2->SR&0X40)==0);//Ñ­»··¢ËÍ,Ö±µ½·¢ËÍÍê±Ï   
     USART2->DR = (u8) ch;      
 	return ch;
 	
 #elif PRINTF_CHANLE == 3
-	while((USART3->SR&0X40)==0);//å¾ªçŽ¯å‘é€,ç›´åˆ°å‘é€å®Œæ¯•   
+	while((USART3->SR&0X40)==0);//Ñ­»··¢ËÍ,Ö±µ½·¢ËÍÍê±Ï   
     USART3->DR = (u8) ch;      
 	return ch;
 	
 #elif PRINTF_CHANLE == 4
-	while((UART4->SR&0X40)==0);//å¾ªçŽ¯å‘é€,ç›´åˆ°å‘é€å®Œæ¯•   
+	while((UART4->SR&0X40)==0);//Ñ­»··¢ËÍ,Ö±µ½·¢ËÍÍê±Ï   
     UART4->DR = (u8) ch;      
 	return ch;
 	
@@ -45,24 +45,24 @@ int fputc(int ch, FILE *f)
 #endif 
 
 
-//THUMBæŒ‡ä»¤ä¸æ”¯æŒæ±‡ç¼–å†…è”
-//é‡‡ç”¨å¦‚ä¸‹æ–¹æ³•å®žçŽ°æ‰§è¡Œæ±‡ç¼–æŒ‡ä»¤WFI  
+//THUMBÖ¸Áî²»Ö§³Ö»ã±àÄÚÁª
+//²ÉÓÃÈçÏÂ·½·¨ÊµÏÖÖ´ÐÐ»ã±àÖ¸ÁîWFI  
 void WFI_SET(void)
 {
 	__ASM volatile("wfi");		  
 }
-//å…³é—­æ‰€æœ‰ä¸­æ–­
+//¹Ø±ÕËùÓÐÖÐ¶Ï
 void INTX_DISABLE(void)
 {		  
 	__ASM volatile("cpsid i");
 }
-//å¼€å¯æ‰€æœ‰ä¸­æ–­
+//¿ªÆôËùÓÐÖÐ¶Ï
 void INTX_ENABLE(void)
 {
 	__ASM volatile("cpsie i");		  
 }
-//è®¾ç½®æ ˆé¡¶åœ°å€
-//addr:æ ˆé¡¶åœ°å€
+//ÉèÖÃÕ»¶¥µØÖ·
+//addr:Õ»¶¥µØÖ·
 __asm void MSR_MSP(u32 addr) 
 {
     MSR MSP, r0 			//set Main Stack value

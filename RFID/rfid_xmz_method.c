@@ -1,17 +1,17 @@
 #define RFID_XMZ_GLOBALS
 #include "rfid_xmz_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "rfid_upper.h"
 
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜æ•°æ®ä¸€å¸§
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å›ž å€¼: æ— 
+*º¯    Êý: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æÊý¾ÝÒ»Ö¡
+*²Î    Êý:
+*×÷    Õß:
+*ÐÞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎÞ
 ****************************************************************************************/
 static void RFID_XMZ_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -122,19 +122,19 @@ static void RFID_XMZ_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_232_RX_Complete_Handler(void)
-*åŠŸ    èƒ½: æŽ¥æ”¶å¤„ç†
-*å‚    æ•°:   
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å›ž å€¼: æ— 
+*º¯    Êý: void RFID_232_RX_Complete_Handler(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êý:   
+*×÷    Õß: 
+*ÐÞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎÞ
 ****************************************************************************************/
 void RFID_XMZ_232_RX_Complete_Handler(void)
 {
     USART_STRU *Serial;
     QUEUE *QUEUE_com;
     
-    /* éžCOMæ¨¡å¼ä¸‹ */
+    /* ·ÇCOMÄ£Ê½ÏÂ */
     if(RFID_Upper_Mesg_Stru.can_com_type != EM_SET_PORT_COM )
     {
         return;
@@ -170,15 +170,15 @@ void RFID_XMZ_232_RX_Complete_Handler(void)
         return;
     }
 
-    RFID_XMZ_ReadbufData(Serial, QUEUE_com);                   // èŽ·å–å¯¹åº”ä¸²å£å¯¹æŽ¥æ•°æ®
+    RFID_XMZ_ReadbufData(Serial, QUEUE_com);                   // »ñÈ¡¶ÔÓ¦´®¿Ú¶Ô½ÓÊý¾Ý
 
     if(Serial->recv_complete_bit & 0x8000)
     {         
-        // æ ¡éªŒ é€šè¿‡
+        // Ð£Ñé Í¨¹ý
         if(Serial->recv_pbuffer[RFID_XMZ_REC_LEN-1] == 0x0A
             &&Serial->recv_pbuffer[RFID_XMZ_REC_LEN-2] == 0x0D)
         {
-            //RFIDç¼–å·
+            //RFID±àºÅ
             RFID_Upper_Mesg_Stru.read_number   = (Serial->recv_pbuffer[0]-0x30)*1000;   
             RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[1]-0x30)*100;   
             RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[2]-0x30)*10;   

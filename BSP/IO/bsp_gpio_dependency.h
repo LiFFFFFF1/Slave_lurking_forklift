@@ -4,7 +4,7 @@
 #include "sys.h"
 
 
-/* åˆå§‹åŒ–ç«¯å£IO */
+/* ³õÊ¼»¯¶Ë¿ÚIO */
 extern void Bsp_GPIO_Pin_Init(void);
 
 extern void Bsp_Read_AlarmIO(void);

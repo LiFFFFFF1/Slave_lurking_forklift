@@ -1,16 +1,16 @@
 #define RFID_CK_GLOBALS
 #include "rfid_ck_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "rfid_upper.h"
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜æ•°æ®ä¸€å¸§
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æÊı¾İÒ»Ö¡
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 static void RFID_CK_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -91,12 +91,12 @@ static void RFID_CK_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_232_RX_Complete_Handler(void)
-*åŠŸ    èƒ½: æ¥æ”¶å¤„ç†
-*å‚    æ•°:   
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void RFID_232_RX_Complete_Handler(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êı:   
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void RFID_CK_232_RX_Complete_Handler(u8 port_com)
 {
@@ -131,31 +131,31 @@ void RFID_CK_232_RX_Complete_Handler(u8 port_com)
             break;
     }
 
-    RFID_CK_ReadbufData(Serial, QUEUE_com);                   // è·å–å¯¹åº”ä¸²å£å¯¹æ¥æ•°æ®
+    RFID_CK_ReadbufData(Serial, QUEUE_com);                   // »ñÈ¡¶ÔÓ¦´®¿Ú¶Ô½ÓÊı¾İ
 
     if(Serial->recv_complete_bit & 0x8000)
     { 
-        /* XORæ ¡éªŒåˆ¤æ–­ */
+        /* XORĞ£ÑéÅĞ¶Ï */
         xor_val = Bsp_XorCheck(&Serial->recv_pbuffer[1], RFID_CK_REC_LEN-4);
         xor_ascll_H = Bsp_HexToASCII(xor_val>>4);
         xor_ascll_L = Bsp_HexToASCII(xor_val&0x0f);
         
-        // æ ¡éªŒ é€šè¿‡
+        // Ğ£Ñé Í¨¹ı
         if(Serial->recv_pbuffer[RFID_CK_REC_LEN-1] == '#'&&
             xor_ascll_L==Serial->recv_pbuffer[RFID_CK_REC_LEN-2] &&     
                 xor_ascll_H==Serial->recv_pbuffer[RFID_CK_REC_LEN-3])
         {
-            //RFIDç¼–å·
+            //RFID±àºÅ
             RFID_Upper_Mesg_Stru.read_number   = (Serial->recv_pbuffer[13]-0x30)*1000;   
             RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[14]-0x30)*100;   
             RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[15]-0x30)*10;   
             RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[16]-0x30)*1;  
 
-            //ä¸Šä¼ 
+            //ÉÏ´«
             if(RFID_Upper_Mesg_Stru.read_number)
             PLC_TO_HUB_Mesg_Stru.upload_rfid_site = RFID_Upper_Mesg_Stru.read_number;
             
-            PLC_TO_HUB_Mesg_Stru.upload_run_mileage = 0;  //é‡Œç¨‹æ¸…é›¶           
+            PLC_TO_HUB_Mesg_Stru.upload_run_mileage = 0;  //Àï³ÌÇåÁã           
         }
         
         Serial->recv_complete_bit =0;
@@ -164,17 +164,17 @@ void RFID_CK_232_RX_Complete_Handler(u8 port_com)
     
 }
 
-void RFID_CK_232_Write_Send(void)//å†™å¡æ—¶å‘é€æ•°æ®
+void RFID_CK_232_Write_Send(void)//Ğ´¿¨Ê±·¢ËÍÊı¾İ
 {
     
     
     RFID_Upper_Mesg_Stru.commun_timer =0;
-    RFID_Upper_Mesg_Stru.offline_state = 0;               // åœ¨çº¿
+    RFID_Upper_Mesg_Stru.offline_state = 0;               // ÔÚÏß
 
-    //å†™å¡
+    //Ğ´¿¨
     if(RFID_Upper_Mesg_Stru.rfid_mode == RFID_WRITE_ONLY_MODE)
     {
-        RFID_Upper_Mesg_Stru.write_number = 0;            // æ¸…é›¶
+        RFID_Upper_Mesg_Stru.write_number = 0;            // ÇåÁã
         RFID_Upper_Mesg_Stru.rfid_mode = RFID_READ_ONLY_MODE;
 
     }

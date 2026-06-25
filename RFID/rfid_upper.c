@@ -1,7 +1,7 @@
 #define RFID_UPPER_GLOBALS
 #include "rfid_upper.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_method.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_method.h
 #include "rfid_xs_method.h"
 #include "rfid_ck_method.h"
 #include "rfid_bjf_method.h"
@@ -9,13 +9,13 @@
 #include "rfid_lg_method.h"
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_UpperTX_Mesg_Task(void)
-*åŠŸ    èƒ½: 
-*å‚    æ•°:       
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void RFID_UpperTX_Mesg_Task(void)
+*¹¦    ÄÜ: 
+*²Î    Êı:       
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º
 *    
 *  
 ****************************************************************************************/
@@ -24,7 +24,7 @@ void RFID_UpperTX_Mesg_Task(void)
     switch(RFID_Upper_Mesg_Stru.rfid_type)
     {
         /*case RFID_XS:
-            RFID_XS_485_Write_Send();//  å†™å…¥åœ°æ ‡
+            RFID_XS_485_Write_Send();//  Ğ´ÈëµØ±ê
             break;
             
         case RFID_BJF:
@@ -43,10 +43,10 @@ void RFID_UpperTX_Mesg_Task(void)
 //            break; 
 
         case EM_DEVICE_DEV_RFID_CK:
-            RFID_LG_485_Write_Send();//  å†™å…¥åœ°æ ‡
+            RFID_LG_485_Write_Send();//  Ğ´ÈëµØ±ê
             break;
         case EM_DEVICE_DEV_RFID_LG:
-            RFID_LG_485_Write_Send();//  å†™å…¥åœ°æ ‡
+            RFID_LG_485_Write_Send();//  Ğ´ÈëµØ±ê
             break;
 
        default:
@@ -57,13 +57,13 @@ void RFID_UpperTX_Mesg_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_UpperRX_Task(void)
-*åŠŸ    èƒ½: æ¥æ”¶å¤„ç†
-*å‚    æ•°:       
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void RFID_UpperRX_Task(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êı:       
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º
 *    
 *  
 ****************************************************************************************/
@@ -73,7 +73,7 @@ void RFID_UpperRX_Task(void)
     {
 
         case EM_DEVICE_DEV_RFID_LG:
-            RFID_LG_485_RX_Complete_Handler(1);//è¯»å–åœ°æ ‡ 485-3
+            RFID_LG_485_RX_Complete_Handler(1);//¶ÁÈ¡µØ±ê 485-3
             break;
 
         case EM_DEVICE_DEV_RFID_CK:

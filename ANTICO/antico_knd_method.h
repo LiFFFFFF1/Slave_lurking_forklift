@@ -2,16 +2,16 @@
 #define _ANTICO_ZS_METHOD_H
 
 
-// ä½¿ç”¨åˆ°çš„åº•å±‚åŸºç¡€æ–‡ä»¶
+// Ê¹ÓÃµ½µÄµ×²ã»ù´¡ÎÄ¼ş
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"
 #include "bsp_modbusrtu.h"
 #include "plc_hub_custom_method.h"
 
-/* å‘é€æŸ¥è¯¢ä»»åŠ¡*/
+/* ·¢ËÍ²éÑ¯ÈÎÎñ*/
 extern void ANTICO_KND_Send_Task(void); 
 
-/* æ¥æ”¶å¤„ç†ä»»åŠ¡*/
+/* ½ÓÊÕ´¦ÀíÈÎÎñ*/
 extern void ANTICO_KND_RX_Task(void);
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef _RFID_UPPER_H
 #define _RFID_UPPER_H
 
-// ä½¿ç”¨åˆ°çš„åº•å±‚åŸºç¡€æ–‡ä»¶
+// Ê¹ÓÃµ½µÄµ×²ã»ù´¡ÎÄ¼ş
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"
 #include "bsp_modbusrtu.h"
@@ -28,26 +28,26 @@ typedef enum
 
 typedef __packed struct
 {
-    USART_TypeDef* commun_port;                             // è®¾ç½®é€šä¿¡ç«¯å£å·,ä¸²å£ç«¯å£
+    USART_TypeDef* commun_port;                             // ÉèÖÃÍ¨ĞÅ¶Ë¿ÚºÅ,´®¿Ú¶Ë¿Ú
     
-    u8 id_number;                                           // è®¾å¤‡idä¸ªæ•°
-    u32 baud_rate;                                          // æ³¢ç‰¹ç‡
-    u16 wordlength;                                         // æ•°æ®å®½åº¦
-    u16 parity;                                             // æ ¡éªŒ
+    u8 id_number;                                           // Éè±¸id¸öÊı
+    u32 baud_rate;                                          // ²¨ÌØÂÊ
+    u16 wordlength;                                         // Êı¾İ¿í¶È
+    u16 parity;                                             // Ğ£Ñé
 
-    u8 rfid_type;                                 			// RFIDç±»å‹
-    u8 rfid_mode;                                      		// è¯»/å†™æ¨¡å¼
-    u8 can_com_type;                                        // æ¨¡å¼
-    u8 commun_ask_mode;                                     // é€šä¿¡åº”ç­”æ¨¡å¼ï¼Œ1-ä¸»åŠ¨ä¸Šä¼ ï¼Œ2-é—®ç­”æ¨¡å¼
+    u8 rfid_type;                                 			// RFIDÀàĞÍ
+    u8 rfid_mode;                                      		// ¶Á/Ğ´Ä£Ê½
+    u8 can_com_type;                                        // Ä£Ê½
+    u8 commun_ask_mode;                                     // Í¨ĞÅÓ¦´ğÄ£Ê½£¬1-Ö÷¶¯ÉÏ´«£¬2-ÎÊ´ğÄ£Ê½
 
-    u8 init_state;                                          // åˆå§‹åŒ–æ ‡å¿—
-    u8 offline_state;                        				// ç¦»çº¿çŠ¶æ€
-    u16 commun_timer;                   					// é€šä¿¡è®¡æ—¶
+    u8 init_state;                                          // ³õÊ¼»¯±êÖ¾
+    u8 offline_state;                        				// ÀëÏß×´Ì¬
+    u16 commun_timer;                   					// Í¨ĞÅ¼ÆÊ±
 
-    u16 read_number;                                     	// è¯»å–çš„RFIDç¼–å·
-    u16 write_number;                                    	// å†™å…¥çš„RFIDç¼–å·
+    u16 read_number;                                     	// ¶ÁÈ¡µÄRFID±àºÅ
+    u16 write_number;                                    	// Ğ´ÈëµÄRFID±àºÅ
 
-    u16 id_number_history[10];                              // è¯»å–çš„RFIDç¼–å·å†å²è®°å½•  
+    u16 id_number_history[10];                              // ¶ÁÈ¡µÄRFID±àºÅÀúÊ·¼ÇÂ¼  
 
 } SENSOR_RFID_STRU;
 

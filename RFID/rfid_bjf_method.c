@@ -2,19 +2,19 @@
 #include "rfid_bjf_method.h"
 #include "delay.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "rfid_upper.h"
 
-// ç§æœ‰å®šä¹‰
-//static u8 ChangeMode_Bit;//è¯»å†™å¡æ¨¡å¼è½¬æ¢æ ‡å¿—ä½
+// Ë½ÓÐ¶¨Òå
+//static u8 ChangeMode_Bit;//¶ÁÐ´¿¨Ä£Ê½×ª»»±êÖ¾Î»
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜æ•°æ®ä¸€å¸§
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å›ž å€¼: æ— 
+*º¯    Êý: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æÊý¾ÝÒ»Ö¡
+*²Î    Êý:
+*×÷    Õß:
+*ÐÞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎÞ
 ****************************************************************************************/
 static void RFID_BJF_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -32,14 +32,14 @@ static void RFID_BJF_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 
                 if(Serial->step==0)//
                 {
-                    if(dat == 0x30)//è¯»å¡è¿”å›žæ•°æ®
+                    if(dat == 0x30)//¶Á¿¨·µ»ØÊý¾Ý
                     {
                         Serial->step = 1;
                         Serial->recv_pbuffer[0] = dat;
                         Serial->count = 1;
                     }
 
-                    else if(dat == 0x35)//å¦å¤–ä¸€å¸§è¿”å›žæ•°æ®
+                    else if(dat == 0x35)//ÁíÍâÒ»Ö¡·µ»ØÊý¾Ý
                     {
                         Serial->step = 11;
                         Serial->recv_pbuffer[0] = dat;
@@ -140,7 +140,7 @@ static void RFID_BJF_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 
                 ////////////////////////////////////
 
-                else if(Serial->step== 11)//å¦å¤–ä¸€å¸§è¿”å›žæ•°æ®
+                else if(Serial->step== 11)//ÁíÍâÒ»Ö¡·µ»ØÊý¾Ý
                 {
                     if(dat == 0x23)
                     {
@@ -198,12 +198,12 @@ static void RFID_BJF_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_485_RX_Complete_Handler(void)
-*åŠŸ    èƒ½: æŽ¥æ”¶å¤„ç†
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å›ž å€¼: æ— 
+*º¯    Êý: void RFID_485_RX_Complete_Handler(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êý:
+*×÷    Õß:
+*ÐÞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎÞ
 ****************************************************************************************/
 void RFID_BJF_485_RX_Complete_Handler(void)
 {
@@ -211,7 +211,7 @@ void RFID_BJF_485_RX_Complete_Handler(void)
     USART_STRU *Serial;
     QUEUE *QUEUE_com;
 
-    /* éžCOMæ¨¡å¼ä¸‹ */
+    /* ·ÇCOMÄ£Ê½ÏÂ */
     if(RFID_Upper_Mesg_Stru.can_com_type != EM_SET_PORT_COM)
     {
         return;
@@ -247,17 +247,17 @@ void RFID_BJF_485_RX_Complete_Handler(void)
         return;
     }
 
-    RFID_BJF_ReadbufData(Serial,QUEUE_com);                   // èŽ·å–å¯¹åº”ä¸²å£å¯¹æŽ¥æ•°æ®
+    RFID_BJF_ReadbufData(Serial,QUEUE_com);                   // »ñÈ¡¶ÔÓ¦´®¿Ú¶Ô½ÓÊý¾Ý
 
     if(Serial->recv_complete_bit & 0x8000)
     {
-        if(RFID_Upper_Mesg_Stru.init_state == 0x0a)//åˆå§‹åŒ–å®ŒæˆåŽ
+        if(RFID_Upper_Mesg_Stru.init_state == 0x0a)//³õÊ¼»¯Íê³Éºó
         {
-            if(RFID_Upper_Mesg_Stru.rfid_mode == RFID_READ_ONLY_MODE)//è¯»å¡æ—¶è¿”å›žæ•°æ®
+            if(RFID_Upper_Mesg_Stru.rfid_mode == RFID_READ_ONLY_MODE)//¶Á¿¨Ê±·µ»ØÊý¾Ý
             {
                 if(Serial->recv_pbuffer[0] == 0x30&&Serial->recv_pbuffer[5] == 0x23&&Serial->recv_pbuffer[6] == 0x0d)
                 {
-                    //RFIDç¼–å·
+                    //RFID±àºÅ
                     RFID_Upper_Mesg_Stru.read_number   = (Serial->recv_pbuffer[1]-0x30)*1000;
                     RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[2]-0x30)*100;
                     RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[3]-0x30)*10;
@@ -267,20 +267,20 @@ void RFID_BJF_485_RX_Complete_Handler(void)
             }
         }
 
-        //åˆå§‹åŒ–æˆåŠŸæ”¶åˆ°æ•°æ®
+        //³õÊ¼»¯³É¹¦ÊÕµ½Êý¾Ý
         if(RFID_Upper_Mesg_Stru.init_state == 2 || RFID_Upper_Mesg_Stru.init_state == 4)
         {
-            //åˆå§‹åŒ–æ—¶æ— å¡ï¼Œè¿”å›ž0x35 0x23 0x0D
+            //³õÊ¼»¯Ê±ÎÞ¿¨£¬·µ»Ø0x35 0x23 0x0D
             if(Serial->recv_pbuffer[0] == 0x35 && Serial->recv_pbuffer[1] == 0x23 && Serial->recv_pbuffer[2] == 0x0D)
             {
-                RFID_Upper_Mesg_Stru.init_state = 0x0a; //åˆå§‹åŒ–å®Œæˆæ ‡å¿—
+                RFID_Upper_Mesg_Stru.init_state = 0x0a; //³õÊ¼»¯Íê³É±êÖ¾
             }
             
-            //åˆå§‹åŒ–æ—¶æœ‰å¡ï¼Œè¿”å›žå®žé™…å¡å·
+            //³õÊ¼»¯Ê±ÓÐ¿¨£¬·µ»ØÊµ¼Ê¿¨ºÅ
             else if(Serial->recv_pbuffer[0] == 0x30 && Serial->recv_pbuffer[5] == 0x23 && Serial->recv_pbuffer[6] == 0x0d)
             {
-                RFID_Upper_Mesg_Stru.init_state = 0x0a; //åˆå§‹åŒ–å®Œæˆæ ‡å¿—
-                //RFIDç¼–å·
+                RFID_Upper_Mesg_Stru.init_state = 0x0a; //³õÊ¼»¯Íê³É±êÖ¾
+                //RFID±àºÅ
                 RFID_Upper_Mesg_Stru.read_number   = (Serial->recv_pbuffer[1] - 0x30) * 1000;
                 RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[2] - 0x30) * 100;
                 RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[3] - 0x30) * 10;
@@ -295,12 +295,12 @@ void RFID_BJF_485_RX_Complete_Handler(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_BJF_485_Send(void)
-*åŠŸ    èƒ½: åˆå§‹åŒ–åŠå†™å¡æ—¶å‘é€æ•°æ®
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å›ž å€¼: æ— 
+*º¯    Êý: void RFID_BJF_485_Send(void)
+*¹¦    ÄÜ: ³õÊ¼»¯¼°Ð´¿¨Ê±·¢ËÍÊý¾Ý
+*²Î    Êý:
+*×÷    Õß:
+*ÐÞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎÞ
 ****************************************************************************************/
 void RFID_BJF_485_Write_Send(void)
 {
@@ -311,7 +311,7 @@ void RFID_BJF_485_Write_Send(void)
 
     if(RFID_Upper_Mesg_Stru.rfid_mode == RFID_WRITE_ONLY_MODE)
     {
-        if(RFID_Upper_Mesg_Stru.write_number > 0 && RFID_Upper_Mesg_Stru.write_number < 9999)//å†™å…¥åœ°æ ‡å€¼
+        if(RFID_Upper_Mesg_Stru.write_number > 0 && RFID_Upper_Mesg_Stru.write_number < 9999)//Ð´ÈëµØ±êÖµ
         {
             BJF_Write_SendBuf[0] = 0x45;
             BJF_Write_SendBuf[1] = 0x57;
@@ -321,32 +321,32 @@ void RFID_BJF_485_Write_Send(void)
             BJF_Write_SendBuf[5] = 0x30;
             BJF_Write_SendBuf[6] = 0x30;
             BJF_Write_SendBuf[7] = 0x31;
-            BJF_Write_SendBuf[8] = 0x30+(RFID_Upper_Mesg_Stru.write_number / 1000);//ç¼–å·:åƒä½
-            BJF_Write_SendBuf[9] = 0x30+((RFID_Upper_Mesg_Stru.write_number % 1000) / 100);//ç¼–å·:ç™¾ä½
-            BJF_Write_SendBuf[10] =0x30+((RFID_Upper_Mesg_Stru.write_number % 1000) % 100 / 10);//ç¼–å·:åä½
-            BJF_Write_SendBuf[11] =0x30+((RFID_Upper_Mesg_Stru.write_number % 1000) % 100 % 10);//ç¼–å·:ä¸ªä½
+            BJF_Write_SendBuf[8] = 0x30+(RFID_Upper_Mesg_Stru.write_number / 1000);//±àºÅ:Ç§Î»
+            BJF_Write_SendBuf[9] = 0x30+((RFID_Upper_Mesg_Stru.write_number % 1000) / 100);//±àºÅ:°ÙÎ»
+            BJF_Write_SendBuf[10] =0x30+((RFID_Upper_Mesg_Stru.write_number % 1000) % 100 / 10);//±àºÅ:Ê®Î»
+            BJF_Write_SendBuf[11] =0x30+((RFID_Upper_Mesg_Stru.write_number % 1000) % 100 % 10);//±àºÅ:¸öÎ»
             BJF_Write_SendBuf[12] = 0x23;
             BJF_Write_SendBuf[13] = 0x0d;
 
-            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_Write_SendBuf[0], 14);//å‘é€æ•°æ®
+            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_Write_SendBuf[0], 14);//·¢ËÍÊý¾Ý
             
 
             RFID_Upper_Mesg_Stru.rfid_mode = RFID_READ_ONLY_MODE;
 
-            RFID_Upper_Mesg_Stru.write_number = 0;//æ¸…é›¶
-            RFID_Upper_Mesg_Stru.init_state = 0;//é‡æ–°åˆå§‹åŒ–
+            RFID_Upper_Mesg_Stru.write_number = 0;//ÇåÁã
+            RFID_Upper_Mesg_Stru.init_state = 0;//ÖØÐÂ³õÊ¼»¯
 
         }
 
     }
 
-    //åˆå§‹åŒ–æ—¶æˆ–å†™å¡åŽè½¬åŒ–æˆè¯»å¡æ¨¡å¼
+    //³õÊ¼»¯Ê±»òÐ´¿¨ºó×ª»¯³É¶Á¿¨Ä£Ê½
     if(RFID_Upper_Mesg_Stru.init_state == 0)
     {
         if(++timer > 10)//*50ms
         {
             timer = 0;
-            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_SaveCMD_SendBuf[0], 5);//å‘é€æ•°æ®
+            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_SaveCMD_SendBuf[0], 5);//·¢ËÍÊý¾Ý
            
             RFID_Upper_Mesg_Stru.init_state = 1;
         }
@@ -356,7 +356,7 @@ void RFID_BJF_485_Write_Send(void)
         if(++timer > 10)
         {
             timer = 0;
-            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_Readmode_SendBuf[0], 10);//å‘é€æ•°æ®
+            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_Readmode_SendBuf[0], 10);//·¢ËÍÊý¾Ý
             
             RFID_Upper_Mesg_Stru.init_state = 2;
         }
@@ -366,7 +366,7 @@ void RFID_BJF_485_Write_Send(void)
         if(++timer > 10)
         {
             timer = 0;
-            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_SaveCMD_SendBuf[0], 5);//å‘é€æ•°æ®
+            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_SaveCMD_SendBuf[0], 5);//·¢ËÍÊý¾Ý
            
             RFID_Upper_Mesg_Stru.init_state = 3;
         }
@@ -376,17 +376,17 @@ void RFID_BJF_485_Write_Send(void)
         if(++timer > 10)
         {
             timer = 0;
-            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_Readmode_SendBuf[0], 10);//å‘é€æ•°æ®
+            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &BJF_Readmode_SendBuf[0], 10);//·¢ËÍÊý¾Ý
          
             RFID_Upper_Mesg_Stru.init_state = 4;
         }
     }
-    else if(RFID_Upper_Mesg_Stru.init_state == 4)//è¶…æ—¶
+    else if(RFID_Upper_Mesg_Stru.init_state == 4)//³¬Ê±
     {
         if(++timer > 50)//*50ms
         {
             timer = 0;
-            RFID_Upper_Mesg_Stru.init_state = 0xff;//è¶…æ—¶æ ‡å¿—
+            RFID_Upper_Mesg_Stru.init_state = 0xff;//³¬Ê±±êÖ¾
         }
     }
 

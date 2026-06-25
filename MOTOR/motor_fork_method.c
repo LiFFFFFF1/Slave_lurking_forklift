@@ -1,6 +1,6 @@
 #include "motor_fork_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å—å¤´æ–‡ä»¶
+// °üº¬Ê¹ÓÃÄ£¿éÍ·ÎÄ¼ş
 #include "motor_upper.h"
 #include "plc_hub_upper.h"
 #include "encoder_upper.h"
@@ -13,42 +13,42 @@
 #define FORK_DEFAULT_DRV_PPR      10000.0f
 #define FORK_MASTER_HEART_ID      0x3F
 #define FORK_MASTER_HEART_PERIOD  10      // 10ms task * 10 = 100ms
-#define FORK_START_NODE_PERIOD    10      // ä¸Šç”µåæ¯100mså¯åŠ¨ä¸€æ¬¡NMTå¹¿æ’­å¸§
+#define FORK_START_NODE_PERIOD    10      // ÉÏµçºóÃ¿100msÆô¶¯Ò»´ÎNMT¹ã²¥Ö¡
 
-#define FORK_SYNC_SPD_PER_MM      1500
-#define FORK_SYNC_SPD_MAX         16666
+#define FORK_SYNC_SPD_PER_MM      1666
+#define FORK_SYNC_SPD_MAX         50000
 #define FORK_SYNC_DEAD_DIFF_MM     1
 #define FORK_SYNC_STOP_DIFF_MM     20
-#define FORK_POS_DEAD_MM           1      // ç²¾å®šä½æ­»åŒºï¼Œ<=1mmç»™0é€Ÿå¹¶ç­‰å¾…ç¨³å®š
-#define FORK_HAND_SPD_MAX_RPM     1000    // æ‰‹åŠ¨é€Ÿåº¦æ¨¡å¼é™å¹…
-#define FORK_AUTO_SPD_MAX_RPM     1500    // ä½ç½®æ¨¡å¼å®‰å…¨æœ€é«˜é€Ÿåº¦
-#define FORK_AUTO_SHORT_TRAVEL_MM 200     // åˆå§‹è¡Œç¨‹å°äºè¯¥å€¼æ—¶ï¼Œé™åˆ¶è‡ªåŠ¨æœ€é«˜é€Ÿåº¦
+#define FORK_POS_DEAD_MM           1      // ¾«¶¨Î»ËÀÇø£¬<=1mm¸ø0ËÙ²¢µÈ´ıÎÈ¶¨
+#define FORK_HAND_SPD_MAX_RPM     1000    // ÊÖ¶¯ËÙ¶ÈÄ£Ê½ÏŞ·ù
+#define FORK_AUTO_SPD_MAX_RPM     1500    // Î»ÖÃÄ£Ê½°²È«×î¸ßËÙ¶È
+#define FORK_AUTO_SHORT_TRAVEL_MM 200     // ³õÊ¼ĞĞ³ÌĞ¡ÓÚ¸ÃÖµÊ±£¬ÏŞÖÆ×Ô¶¯×î¸ßËÙ¶È
 #define FORK_AUTO_SHORT_MAX_RPM   1000
-#define FORK_AUTO_DECEL_RANGE_MM  100     // ä½ç½®æ¨¡å¼æå‰100mmå¼€å§‹å‡é€Ÿ
-#define FORK_AUTO_MID_DECEL_MM    30      // 30mmå¤„é™åˆ°ä¸­æ®µé€Ÿåº¦
-#define FORK_AUTO_FINE_RANGE_MM   5       // æœ€å5mmä½é€Ÿè´´è¿‘
+#define FORK_AUTO_DECEL_RANGE_MM  100     // Î»ÖÃÄ£Ê½ÌáÇ°100mm¿ªÊ¼¼õËÙ
+#define FORK_AUTO_MID_DECEL_MM    30      // 30mm´¦½µµ½ÖĞ¶ÎËÙ¶È
+#define FORK_AUTO_FINE_RANGE_MM   5       // ×îºó5mmµÍËÙÌù½ü
 #define FORK_AUTO_MID_RPM         300
 #define FORK_AUTO_FINE_RPM        100
-#define FORK_SPD_RAMP_TIME_MS     500     // æ‰‹åŠ¨/è‡ªåŠ¨å…±ç”¨çˆ¬å¡æ—¶é—´
+#define FORK_SPD_RAMP_TIME_MS     500     // ÊÖ¶¯/×Ô¶¯¹²ÓÃÅÀÆÂÊ±¼ä
 #define FORK_TASK_PERIOD_MS       10
-#define FORK_POS_STABLE_CNT       50      // 10ms*50=0.5sï¼Œç¨³å®šååé¦ˆåˆ°ä½
+#define FORK_POS_STABLE_CNT       50      // 10ms*50=0.5s£¬ÎÈ¶¨ºó·´À¡µ½Î»
 #define FORK_POWER_ON_DELAY_MAX    1500
 #define FORK_SOFT_POS_MIN_MM       0
 #define FORK_SOFT_POS_MAX_MM       1350
 #define FORK_SOFT_SLOW_RANGE_MM    30
 #define FORK_SOFT_SLOW_RPM         50
 #define FORK_OP_STATUS_MASK       0x006F
-#define FORK_OP_STATUS_VALUE      0x0027  // CiA402 Operation Enabledï¼›0x1637æŒ‰è¯¥æ©ç åˆ¤æ–­ä¸ºä½¿èƒ½
-#define FORK_OP_DISABLE_CONFIRM_CNT 10    // 10ms*10=100msï¼Œé˜²æ­¢çŠ¶æ€å­—ç¬æ—¶æŠ–åŠ¨è¯¯è§¦å‘
+#define FORK_OP_STATUS_VALUE      0x0027  // CiA402 Operation Enabled£»0x1637°´¸ÃÑÚÂëÅĞ¶ÏÎªÊ¹ÄÜ
+#define FORK_OP_DISABLE_CONFIRM_CNT 10    // 10ms*10=100ms£¬·ÀÖ¹×´Ì¬×ÖË²Ê±¶¶¶¯Îó´¥·¢
 
-static u16 fork_power_on_delay =0;  // å‰è‡‚ç‹¬ç«‹ä¸Šç”µå»¶æ—¶ï¼Œé¿å…å’Œä¸¾å‡å…±ç”¨è®¡æ•°
-static u8 fork_power_on_delay_done =0;  // åªå…è®¸ä¸Šç”µè‡ªæ£€ç­‰å¾…æ‰§è¡Œä¸€æ¬¡
+static u16 fork_power_on_delay =0;  // ²æ±Û¶ÀÁ¢ÉÏµçÑÓÊ±£¬±ÜÃâºÍ¾ÙÉı¹²ÓÃ¼ÆÊı
+static u8 fork_power_on_delay_done =0;  // Ö»ÔÊĞíÉÏµç×Ô¼ìµÈ´ıÖ´ĞĞÒ»´Î
 static u8 fork_op_disable_cnt =0;
  
 /*
 
-é…ç½® TPDO1    60410010+603F0010+606C0020
-é…ç½® RPDO1    60600008+60400010+60FF0020
+ÅäÖÃ TPDO1    60410010+603F0010+606C0020
+ÅäÖÃ RPDO1    60600008+60400010+60FF0020
 */
 /*******************************************************************************
   * @brief   _fork_err_check(void)
@@ -105,7 +105,7 @@ static void _fork_err_check(void)
         {
             Motor_Lift_Stru.can_run_step =0;   
             fork_power_on_delay =FORK_POWER_ON_DELAY_MAX;
-            fork_power_on_delay_done =1;        // å¤ä½åä¸å†é‡æ–°ç­‰å¾…5s
+            fork_power_on_delay_done =1;        // ¸´Î»ºó²»ÔÙÖØĞÂµÈ´ı5s
             Motor_Lift_Stru.heart_node_cnt =0;
         }
         else
@@ -130,7 +130,7 @@ static void _fork_err_check(void)
   *
   * @retval  none
   *
-  * @note    é€Ÿåº¦é™å¹…
+  * @note    ËÙ¶ÈÏŞ·ù
   *****************************************************************************/
 static s32 fork_limit_s32(s32 val,s32 min_val,s32 max_val)
 {
@@ -339,7 +339,7 @@ static void fork_apply_target_limit_speed(s32 target_pos,s32 move_dir,s32 fork_d
   *
   * @retval  none
   *
-  * @note    å‰è‡‚åŒæ­¥è¡¥å¿ï¼Œæ‰‹åŠ¨/è‡ªåŠ¨æ¨¡å¼å…±ç”¨
+  * @note    ²æ±ÛÍ¬²½²¹³¥£¬ÊÖ¶¯/×Ô¶¯Ä£Ê½¹²ÓÃ
   *****************************************************************************/
 static void fork_sync_speed(s32 base_spd,s32 fork_dst_speed[2])
 {
@@ -373,7 +373,7 @@ static void fork_sync_speed(s32 base_spd,s32 fork_dst_speed[2])
 
     if(base_spd >0)
     {
-        if(fork_diff >0)    // å·¦è‡‚æ¯”å³è‡‚ä¼¸å‡ºå¤š
+        if(fork_diff >0)    // ×ó±Û±ÈÓÒ±ÛÉì³ö¶à
         {
             if(abs_fork_diff >=FORK_SYNC_STOP_DIFF_MM)
             {
@@ -386,7 +386,7 @@ static void fork_sync_speed(s32 base_spd,s32 fork_dst_speed[2])
                 fork_dst_speed[1] =base_spd+sync_spd;
             }
         }
-        else                // å³è‡‚æ¯”å·¦è‡‚ä¼¸å‡ºå¤š
+        else                // ÓÒ±Û±È×ó±ÛÉì³ö¶à
         {
             if(abs_fork_diff >=FORK_SYNC_STOP_DIFF_MM)
             {
@@ -406,7 +406,7 @@ static void fork_sync_speed(s32 base_spd,s32 fork_dst_speed[2])
     }
     else
     {
-        if(fork_diff >0)    // å·¦è‡‚æ¯”å³è‡‚ä¼¸å‡ºå¤š
+        if(fork_diff >0)    // ×ó±Û±ÈÓÒ±ÛÉì³ö¶à
         {
             if(abs_fork_diff >=FORK_SYNC_STOP_DIFF_MM)
             {
@@ -423,7 +423,7 @@ static void fork_sync_speed(s32 base_spd,s32 fork_dst_speed[2])
                 }
             }
         }
-        else                // å³è‡‚æ¯”å·¦è‡‚ä¼¸å‡ºå¤š
+        else                // ÓÒ±Û±È×ó±ÛÉì³ö¶à
         {
             if(abs_fork_diff >=FORK_SYNC_STOP_DIFF_MM)
             {
@@ -447,46 +447,49 @@ static void fork_apply_soft_limit_speed(s32 fork_dst_speed[2])
     s32 slow_drv_speed =fork_motor_rpm_to_drv_s32(FORK_SOFT_SLOW_RPM);
     s32 left_pos =Encoder_Mesg_Stru.real_data[0];
     s32 right_pos =Encoder_Mesg_Stru.real_data[1];
-    s32 move_dir =0;
 
-    if(fork_dst_speed[0] >0 || fork_dst_speed[1] >0)
+    if(fork_dst_speed[0] >0)
     {
-        move_dir =1;
-    }
-    else if(fork_dst_speed[0] <0 || fork_dst_speed[1] <0)
-    {
-        move_dir =-1;
-    }
-
-    if(move_dir >0)
-    {
-        if(left_pos >=FORK_SOFT_POS_MAX_MM || right_pos >=FORK_SOFT_POS_MAX_MM)
+        if(left_pos >=FORK_SOFT_POS_MAX_MM)
         {
             fork_dst_speed[0] =0;
-            fork_dst_speed[1] =0;
-            return;
         }
-
-        if(left_pos >=(FORK_SOFT_POS_MAX_MM -FORK_SOFT_SLOW_RANGE_MM) ||
-           right_pos >=(FORK_SOFT_POS_MAX_MM -FORK_SOFT_SLOW_RANGE_MM))
+        else if(left_pos >=(FORK_SOFT_POS_MAX_MM -FORK_SOFT_SLOW_RANGE_MM))
         {
             fork_dst_speed[0] =fork_limit_s32(fork_dst_speed[0],0,slow_drv_speed);
+        }
+    }
+    else if(fork_dst_speed[0] <0)
+    {
+        if(left_pos <=FORK_SOFT_POS_MIN_MM)
+        {
+            fork_dst_speed[0] =0;
+        }
+        else if(left_pos <=(FORK_SOFT_POS_MIN_MM +FORK_SOFT_SLOW_RANGE_MM))
+        {
+            fork_dst_speed[0] =fork_limit_s32(fork_dst_speed[0],-slow_drv_speed,0);
+        }
+    }
+
+    if(fork_dst_speed[1] >0)
+    {
+        if(right_pos >=FORK_SOFT_POS_MAX_MM)
+        {
+            fork_dst_speed[1] =0;
+        }
+        else if(right_pos >=(FORK_SOFT_POS_MAX_MM -FORK_SOFT_SLOW_RANGE_MM))
+        {
             fork_dst_speed[1] =fork_limit_s32(fork_dst_speed[1],0,slow_drv_speed);
         }
     }
-    else if(move_dir <0)
+    else if(fork_dst_speed[1] <0)
     {
-        if(left_pos <=FORK_SOFT_POS_MIN_MM || right_pos <=FORK_SOFT_POS_MIN_MM)
+        if(right_pos <=FORK_SOFT_POS_MIN_MM)
         {
-            fork_dst_speed[0] =0;
             fork_dst_speed[1] =0;
-            return;
         }
-
-        if(left_pos <=(FORK_SOFT_POS_MIN_MM +FORK_SOFT_SLOW_RANGE_MM) ||
-           right_pos <=(FORK_SOFT_POS_MIN_MM +FORK_SOFT_SLOW_RANGE_MM))
+        else if(right_pos <=(FORK_SOFT_POS_MIN_MM +FORK_SOFT_SLOW_RANGE_MM))
         {
-            fork_dst_speed[0] =fork_limit_s32(fork_dst_speed[0],-slow_drv_speed,0);
             fork_dst_speed[1] =fork_limit_s32(fork_dst_speed[1],-slow_drv_speed,0);
         }
     }
@@ -505,17 +508,17 @@ static void _fork_canopen_senddata(u8 id, u8 mode, u16 ctl_word, s32 send_val)
 {
     u8 can_buf[8]= {0};
 
-    can_buf[0] = mode;           // æ¨¡å¼ï¼š3-PVé€Ÿåº¦ï¼Œ1-PPä½ç½®
+    can_buf[0] = mode;           // Ä£Ê½£º3-PVËÙ¶È£¬1-PPÎ»ÖÃ
 
     can_buf[1] = ctl_word;       //
-    can_buf[2] = ctl_word>>8;    // æ§åˆ¶å­—
+    can_buf[2] = ctl_word>>8;    // ¿ØÖÆ×Ö
 
-    can_buf[3] = send_val;           // speed_vx>0å‰è¿›ï¼Œspeed_vx<0åé€€
-    can_buf[4] = send_val>>8;        // è®¾ç½®è½¬é€Ÿ/ä½ç½®å€¼
+    can_buf[3] = send_val;           // speed_vx>0Ç°½ø£¬speed_vx<0ºóÍË
+    can_buf[4] = send_val>>8;        // ÉèÖÃ×ªËÙ/Î»ÖÃÖµ
     can_buf[5] = send_val>>16;
     can_buf[6] = send_val>>24;
 
-    CAN1_Send_One_Frame_Data(0x200+id, can_buf, 7);    // é©±åŠ¨å™¨é‡‡ç”¨ä½å­—èŠ‚åœ¨å‰
+    CAN1_Send_One_Frame_Data(0x200+id, can_buf, 7);    // Çı¶¯Æ÷²ÉÓÃµÍ×Ö½ÚÔÚÇ°
 
 }
 
@@ -544,9 +547,9 @@ static void _fork_action_task(void)
     s32 fork_sync_dst_speed[2]={0};
     u8 fork_pos_main_idx=0;
     
-    if((PLC_TO_HUB_Mesg_Stru.inputL_state&0x03) !=0x03 ||                       // å·¦å³æ’è‡‚è§¦è¾¹ï¼Œå¸¸é—­
-       (ANTICO_Mesg_Stru.err_state | Encoder_Mesg_Stru.err_state) ||            // å¸¸è§„æ•…éšœ
-       Motor_Lift_Stru.unit_err_code[0] || Motor_Lift_Stru.unit_err_code[1]     // æ’è‡‚æ•…éšœ
+    if((PLC_TO_HUB_Mesg_Stru.inputL_state&0x03) !=0x03 ||                       // ×óÓÒ²å±Û´¥±ß£¬³£±Õ
+       (ANTICO_Mesg_Stru.err_state | Encoder_Mesg_Stru.err_state) ||            // ³£¹æ¹ÊÕÏ
+       Motor_Lift_Stru.unit_err_code[0] || Motor_Lift_Stru.unit_err_code[1]     // ²å±Û¹ÊÕÏ
       )
     {
         fork_base_spd =0;
@@ -554,15 +557,15 @@ static void _fork_action_task(void)
         fork_auto_move_dir =0;
         Motor_Lift_Stru.fork_dst_spd[0] =0;
         Motor_Lift_Stru.fork_dst_spd[1] =0;
-        Motor_Lift_Stru.unit_act_state =0;          // 0-æ— ä»»åŠ¡ï¼Œ1-æ‰§è¡Œä¸­ï¼Œ2-åˆ°ä½
+        Motor_Lift_Stru.unit_act_state =0;          // 0-ÎŞÈÎÎñ£¬1-Ö´ĞĞÖĞ£¬2-µ½Î»
         Motor_Lift_Stru.fork_location_cnt =0;
         return;
     }
 
-    // æ’è‡‚åŠ¨ä½œä¸åŒæ­¥æ§åˆ¶
+    // ²å±Û¶¯×÷ÓëÍ¬²½¿ØÖÆ
     if(Motor_Lift_Stru.unit_type==1 && Motor_Lift_Stru.unit_act_id==0) 
     {
-        if(Motor_Lift_Stru.unit_ctrl_mode==1)       // é€Ÿåº¦æ¨¡å¼
+        if(Motor_Lift_Stru.unit_ctrl_mode==1)       // ËÙ¶ÈÄ£Ê½
         {
             fork_auto_target_valid =0;
             s32_temp_val =fork_limit_s32(Motor_Lift_Stru.unit_ctrl_data,-FORK_HAND_SPD_MAX_RPM,FORK_HAND_SPD_MAX_RPM);
@@ -594,10 +597,10 @@ static void _fork_action_task(void)
             Motor_Lift_Stru.fork_dst_spd[0] =fork_sync_dst_speed[0];
             Motor_Lift_Stru.fork_dst_spd[1] =fork_sync_dst_speed[1];
             
-            Motor_Lift_Stru.unit_act_state =1;      // 1-æ‰§è¡Œä¸­ï¼Œ2-åˆ°ä½
+            Motor_Lift_Stru.unit_act_state =1;      // 1-Ö´ĞĞÖĞ£¬2-µ½Î»
             Motor_Lift_Stru.fork_location_cnt =0;
         }
-        else if(Motor_Lift_Stru.unit_ctrl_mode==2)  // ä½ç½®æ¨¡å¼
+        else if(Motor_Lift_Stru.unit_ctrl_mode==2)  // Î»ÖÃÄ£Ê½
         {
             s32 s32_fork_target_pos =fork_limit_s32((s32)Motor_Lift_Stru.unit_ctrl_data,
                                                     FORK_SOFT_POS_MIN_MM,
@@ -647,7 +650,7 @@ static void _fork_action_task(void)
                 fork_auto_target_valid =1;
             }
 
-            //--------------------åŸºç¡€é€Ÿåº¦--------------------------
+            //--------------------»ù´¡ËÙ¶È--------------------------
             fork_pos_remain[0] =fork_get_pos_remain_by_dir(s32_fork_target_pos,
                                                             Encoder_Mesg_Stru.real_data[0],
                                                             fork_auto_move_dir);
@@ -690,7 +693,7 @@ static void _fork_action_task(void)
             {
                 fork_base_spd =0;
             }
-            //--------------------åŸºç¡€é€Ÿåº¦ end----------------------
+            //--------------------»ù´¡ËÙ¶È end----------------------
 
             fork_sync_speed(fork_base_spd,fork_sync_dst_speed);
             fork_apply_target_limit_speed(s32_fork_target_pos,
@@ -709,11 +712,11 @@ static void _fork_action_task(void)
             if(Motor_Lift_Stru.fork_location_cnt < FORK_POS_STABLE_CNT)
             {
                 Motor_Lift_Stru.fork_location_cnt++;
-                Motor_Lift_Stru.unit_act_state =1;   // 1-æ‰§è¡Œä¸­ï¼Œ2-åˆ°ä½
+                Motor_Lift_Stru.unit_act_state =1;   // 1-Ö´ĞĞÖĞ£¬2-µ½Î»
             }
             else
             {
-                Motor_Lift_Stru.unit_act_state =2;   // 1-æ‰§è¡Œä¸­ï¼Œ2-åˆ°ä½
+                Motor_Lift_Stru.unit_act_state =2;   // 1-Ö´ĞĞÖĞ£¬2-µ½Î»
             }
             
         }
@@ -724,7 +727,7 @@ static void _fork_action_task(void)
             fork_auto_move_dir =0;
             Motor_Lift_Stru.fork_dst_spd[0] =0;
             Motor_Lift_Stru.fork_dst_spd[1] =0;
-            Motor_Lift_Stru.unit_act_state =0;          // 0-æ— ä»»åŠ¡ï¼Œ1-æ‰§è¡Œä¸­ï¼Œ2-åˆ°ä½
+            Motor_Lift_Stru.unit_act_state =0;          // 0-ÎŞÈÎÎñ£¬1-Ö´ĞĞÖĞ£¬2-µ½Î»
             Motor_Lift_Stru.fork_location_cnt =0;
         }
     }
@@ -745,7 +748,7 @@ static void _fork_action_task(void)
   *
   * @retval  none
   *
-  * @note å‰é½¿CANå‘é€æ•°æ®
+  * @note ²æ³İCAN·¢ËÍÊı¾İ
   *****************************************************************************/
 static void _fork_can_send_step(void)
 {
@@ -803,7 +806,7 @@ static void _fork_can_send_step(void)
                     Motor_Lift_Stru.fork_dst_spd[0] =0;
                     Motor_Lift_Stru.fork_dst_spd[1] =0;
                     Motor_Lift_Stru.can_send_cnt =0;
-                    Motor_Lift_Stru.can_run_step =1;   // PDOä»åœ¨çº¿ä½†æ‰ä½¿èƒ½æ—¶ï¼Œé‡æ–°ä¸‹å‘ä½¿èƒ½åºåˆ—
+                    Motor_Lift_Stru.can_run_step =1;   // PDOÈÔÔÚÏßµ«µôÊ¹ÄÜÊ±£¬ÖØĞÂÏÂ·¢Ê¹ÄÜĞòÁĞ
                     fork_op_disable_cnt =0;
                 }
                 else
@@ -818,7 +821,7 @@ static void _fork_can_send_step(void)
             _fork_canopen_senddata(2,0x03,0x0F,Motor_Lift_Stru.fork_dst_spd[1]);
             break;
             
-        case 20:        // å¤ä½èŠ‚ç‚¹
+        case 20:        // ¸´Î»½Úµã
             
             if(Motor_Lift_Stru.can_send_cnt<200)
             {
@@ -860,11 +863,11 @@ static void _fork_can_send_step(void)
   *****************************************************************************/
 void Fork_Task_Deal(void)
 {
-    // ä¸ŠæŠ¥ç»™ä¸»ç«™çš„åé¦ˆå‚æ•°ä½¿ç”¨å·¦å³å‰å½“å‰ä½ç½®ï¼Œå•ä½æŒ‰å½“å‰æ§åˆ¶é€»è¾‘ä¿æŒä¸º mmã€‚
+    // ÉÏ±¨¸øÖ÷Õ¾µÄ·´À¡²ÎÊıÊ¹ÓÃ×óÓÒ²æµ±Ç°Î»ÖÃ£¬µ¥Î»°´µ±Ç°¿ØÖÆÂß¼­±£³ÖÎª mm¡£
     Motor_Lift_Stru.unit_act_data[0] = (s16)Encoder_Mesg_Stru.real_data[0];
     Motor_Lift_Stru.unit_act_data[1] = (s16)Encoder_Mesg_Stru.real_data[1];
 
-    // ä»…ä¸Šç”µåç­‰å¾…ä¸€æ¬¡é©±åŠ¨å™¨è‡ªæ£€ï¼Œåç»­æ€¥åœ/å¤ä½/CANé‡å¯ä¸å†è¿›å…¥5sç­‰å¾…ã€‚
+    // ½öÉÏµçºóµÈ´ıÒ»´ÎÇı¶¯Æ÷×Ô¼ì£¬ºóĞø¼±Í£/¸´Î»/CANÖØÆô²»ÔÙ½øÈë5sµÈ´ı¡£
     if(fork_power_on_delay_done ==0)
     {
         if(fork_power_on_delay < FORK_POWER_ON_DELAY_MAX)    // 1500 * 10ms = 15s 
@@ -878,9 +881,9 @@ void Fork_Task_Deal(void)
         fork_power_on_delay_done =1;
     }
 
-    _fork_err_check();      // å¼‚å¸¸æ£€æµ‹
-    _fork_action_task();    // æ’è‡‚åŠ¨ä½œæ‰§è¡Œä»»åŠ¡
-    _fork_can_send_step();  // CANå‘é€æ•°æ®
+    _fork_err_check();      // Òì³£¼ì²â
+    _fork_action_task();    // ²å±Û¶¯×÷Ö´ĞĞÈÎÎñ
+    _fork_can_send_step();  // CAN·¢ËÍÊı¾İ
 }
 
 
@@ -891,7 +894,7 @@ void Fork_Task_Deal(void)
   *
   * @retval  none
   *
-  * @note    çº¬åˆ›ä¼¸ç¼©é©±åŠ¨å™¨CANæ¥æ”¶å¤„ç†
+  * @note    Î³´´ÉìËõÇı¶¯Æ÷CAN½ÓÊÕ´¦Àí
   *****************************************************************************/
 void Motor_WC_CAN_RX_Handler(CanRxMsg* rxmessage)
 {
@@ -901,22 +904,22 @@ void Motor_WC_CAN_RX_Handler(CanRxMsg* rxmessage)
     
     switch(rxmessage->StdId)
     {
-        case 0x180+FORK_CANID:  // å‰é½¿1
-        case 0x180+FORK_CANID+1:// å‰é½¿2
+        case 0x180+FORK_CANID:  // ²æ³İ1
+        case 0x180+FORK_CANID+1:// ²æ³İ2
             code_id =rxmessage->StdId-(0x180+FORK_CANID);
         
-            Motor_Lift_Stru.fork_can_time[code_id] =0;  // é€šä¿¡è®¡æ•°
-            // çŠ¶æ€å­—-0x6041
+            Motor_Lift_Stru.fork_can_time[code_id] =0;  // Í¨ĞÅ¼ÆÊı
+            // ×´Ì¬×Ö-0x6041
             Motor_Lift_Stru.fork_word_status[code_id] =rxmessage->Data[0]+(u16)(rxmessage->Data[1]<<8);
             
             
-            // æ•…éšœç 
+            // ¹ÊÕÏÂë
             u16_temp_val = (u16)(rxmessage->Data[3]<<8)+rxmessage->Data[2];
             Motor_Lift_Stru.unit_err_code[code_id] =u16_temp_val;
-            // 606C-é€Ÿåº¦åé¦ˆï¼Œå•ä½ count/s
+            // 606C-ËÙ¶È·´À¡£¬µ¥Î» count/s
             s32_temp_val =(s32)(rxmessage->Data[7]<<24)+(s32)(rxmessage->Data[6]<<16)+ \
                           (s32)(rxmessage->Data[5]<<8)+rxmessage->Data[4];
-            Motor_Lift_Stru.fork_real_speed[code_id] =fork_drv_speed_to_motor_rpm_s16(s32_temp_val);    // å•ä½ rpm
+            Motor_Lift_Stru.fork_real_speed[code_id] =fork_drv_speed_to_motor_rpm_s16(s32_temp_val);    // µ¥Î» rpm
             break;
 
         default:

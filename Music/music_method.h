@@ -2,7 +2,7 @@
 #define _MUSIC_METHOD_H
 
 
-// 浣跨敤鍒扮殑搴曞眰鍩虹鏂囦欢
+// 使用到的底层基础文件
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"	
 #include "bsp_modbusrtu.h"

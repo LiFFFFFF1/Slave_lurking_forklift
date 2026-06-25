@@ -1,22 +1,22 @@
 #include "plc_hub_custom_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 
-#define NEW_UP_FRAME_LENGTH   20  // ä¸Šä¼ å¸§é•¿åº¦
-#define NEW_DOWN_FRAME_LENGTH 13  // ä¸‹å‘å¸§é•¿åº¦
+#define NEW_UP_FRAME_LENGTH   24  // ÉÏ´«Ö¡³¤¶È
+#define NEW_DOWN_FRAME_LENGTH 13  // ÏÂ·¢Ö¡³¤¶È
 
-#define IAP_FRAME_LENGTH 14  // è¿›å…¥ä¸²å£IAPæ›´æ–°ä¸‹å‘å¸§é•¿åº¦
+#define IAP_FRAME_LENGTH 14  // ½øÈë´®¿ÚIAP¸üĞÂÏÂ·¢Ö¡³¤¶È
 uint32_t iap_boot_flag __attribute__((at(APP_BOOT_COMM_VAR_ADDR)));
 
 
 /***************************************************************************************
-*å‡½    æ•°:  void PLC_ReadCustomData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½:  è¯»å–PLCä¸Šä¼ æ•°æ®ï¼Œä»é˜Ÿåˆ—æ•°æ®è‡ªåŠ¨åŒ¹é…åè®®
-*å‚    æ•°:  æ ¹æ®é…ç½®COMç«¯å£ï¼Œè‡ªåŠ¨åŒ¹é…å¯¹åº”é˜Ÿåˆ—
-*ä½œ    è€…:  shiquan.zhao
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šè‡ªå®šä¹‰åè®®æ¥æ”¶
+*º¯    Êı:  void PLC_ReadCustomData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ:  ¶ÁÈ¡PLCÉÏ´«Êı¾İ£¬´Ó¶ÓÁĞÊı¾İ×Ô¶¯Æ¥ÅäĞ­Òé
+*²Î    Êı:  ¸ù¾İÅäÖÃCOM¶Ë¿Ú£¬×Ô¶¯Æ¥Åä¶ÔÓ¦¶ÓÁĞ
+*×÷    Õß:  shiquan.zhao
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º×Ô¶¨ÒåĞ­Òé½ÓÊÕ
 ****************************************************************************************/
 static void PLC_Hub_CustomReadData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -34,13 +34,13 @@ static void PLC_Hub_CustomReadData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 
                 if(Serial->step == 0)
                 {
-                    if(dat == 0xEE)// èµ·å§‹ç 
+                    if(dat == 0xEE)// ÆğÊ¼Âë
                     {
                         Serial->step++;
                         Serial->recv_pbuffer[0] = dat;
                         Serial->count = 1;
                     }
-                    else if(dat == 0x48)//head-åˆ‡æ¢ä¸²å£IAPæ›´æ–°
+                    else if(dat == 0x48)//head-ÇĞ»»´®¿ÚIAP¸üĞÂ
                     {
                         Serial->step = 0x10;
                         Serial->recv_pbuffer[0] = dat;
@@ -50,7 +50,7 @@ static void PLC_Hub_CustomReadData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step == 1)
                 {
-                    if(dat == 0x51)// èµ·å§‹ç 
+                    if(dat == 0x51)// ÆğÊ¼Âë
                     {
                         Serial->step++;
                         Serial->recv_pbuffer[1] = dat;
@@ -64,11 +64,11 @@ static void PLC_Hub_CustomReadData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 else if(Serial->step == 2)
                 {
                     Serial->step++;
-                    Serial->recv_pbuffer[2] = dat;// è¯»å–é•¿åº¦å­—èŠ‚
+                    Serial->recv_pbuffer[2] = dat;// ¶ÁÈ¡³¤¶È×Ö½Ú
                     Serial->count=3;
                 }
                 
-                else if(Serial->step == 3)//ä¸»æœºæ•°æ®å¸§
+                else if(Serial->step == 3)//Ö÷»úÊı¾İÖ¡
                 {
                     Serial->recv_pbuffer[Serial->count++] = dat;
                     if(Serial->count >= Serial->recv_pbuffer[2])
@@ -82,10 +82,10 @@ static void PLC_Hub_CustomReadData(USART_STRU *Serial,QUEUE *QUEUE_com)
                     }
                 }
 
-		/////////////////åˆ‡æ¢ä¸²å£IAPæ›´æ–°æ•°æ®å¸§
+		/////////////////ÇĞ»»´®¿ÚIAP¸üĞÂÊı¾İÖ¡
 		else if(Serial->step == 0x10)
                 {
-                    if(dat == 0x05)//cmd-åˆ‡æ¢ä¸²å£IAPæ›´æ–°
+                    if(dat == 0x05)//cmd-ÇĞ»»´®¿ÚIAP¸üĞÂ
                     {
                         Serial->step++;
                         Serial->recv_pbuffer[1] = dat;
@@ -130,12 +130,12 @@ static void PLC_Hub_CustomReadData(USART_STRU *Serial,QUEUE *QUEUE_com)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void PLC_Hub_CustomRX_Task(void)
-*åŠŸ    èƒ½: æ ¹æ®ä»é˜Ÿåˆ—è·å–çš„æ•°æ®ï¼Œè¿›è¡Œæ•°æ®æ ¡éªŒ
-*å‚    æ•°: æ ¹æ®é…ç½®COMç«¯å£ï¼Œè‡ªåŠ¨åŒ¹é…å¯¹åº”é˜Ÿåˆ—
-*ä½œ    è€…:  shiquan.zhao
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void PLC_Hub_CustomRX_Task(void)
+*¹¦    ÄÜ: ¸ù¾İ´Ó¶ÓÁĞ»ñÈ¡µÄÊı¾İ£¬½øĞĞÊı¾İĞ£Ñé
+*²Î    Êı: ¸ù¾İÅäÖÃCOM¶Ë¿Ú£¬×Ô¶¯Æ¥Åä¶ÔÓ¦¶ÓÁĞ
+*×÷    Õß:  shiquan.zhao
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void PLC_Hub_CustomRX_Task(void)
 {
@@ -177,17 +177,17 @@ void PLC_Hub_CustomRX_Task(void)
         return;
     }
 
-    PLC_Hub_CustomReadData(Serial,QUEUE_com);                   // è‡ªå®šä¹‰è§£ç 
+    PLC_Hub_CustomReadData(Serial,QUEUE_com);                   // ×Ô¶¨Òå½âÂë
 
     if(Serial->recv_complete_bit & 0x8000)
     {
         get_all_len =Serial->recv_complete_bit&0x7FFF;
 
-        if(get_all_len == NEW_DOWN_FRAME_LENGTH)//ä¸»æœºæ•°æ®å¸§
+        if(get_all_len == NEW_DOWN_FRAME_LENGTH)//Ö÷»úÊı¾İÖ¡
         {
             xor_temp = Bsp_XorCheck(Serial->recv_pbuffer, NEW_DOWN_FRAME_LENGTH-1);
 
-            // ç»“æŸç 
+            // ½áÊøÂë
             if(Serial->recv_pbuffer[NEW_DOWN_FRAME_LENGTH-1] == xor_temp)
             {
                 Parse_NewProtocol_Down_Frame(Serial->recv_pbuffer);
@@ -197,9 +197,9 @@ void PLC_Hub_CustomRX_Task(void)
             }
         }
 
-        else if(get_all_len == IAP_FRAME_LENGTH)//åˆ‡æ¢ä¸²å£IAPæ›´æ–°æ•°æ®å¸§
+        else if(get_all_len == IAP_FRAME_LENGTH)//ÇĞ»»´®¿ÚIAP¸üĞÂÊı¾İÖ¡
         {
-            // è®¾ç½®èµ·å§‹åœ°å€ï¼Œå°ç«¯å­˜å‚¨ï¼Œä½ä½åœ¨å‰
+            // ÉèÖÃÆğÊ¼µØÖ·£¬Ğ¡¶Ë´æ´¢£¬µÍÎ»ÔÚÇ°
             flash_addr_index = (uint32_t)Serial->recv_pbuffer[5];
             flash_addr_index <<= 8;
             flash_addr_index += (uint32_t)Serial->recv_pbuffer[4];
@@ -208,23 +208,23 @@ void PLC_Hub_CustomRX_Task(void)
             flash_addr_index <<= 8;
             flash_addr_index += (uint32_t)Serial->recv_pbuffer[2];
 
-            //æ•°æ®åŒºé•¿åº¦
+            //Êı¾İÇø³¤¶È
             iap_recv_data_len = (u16)(Serial->recv_pbuffer[7]<<8)+Serial->recv_pbuffer[6];
 
-            // XORæ ¡éªŒåˆ¤æ–­ 
+            // XORĞ£ÑéÅĞ¶Ï 
             xor_temp = Bsp_XorCheck(Serial->recv_pbuffer,(get_all_len-1));
 
-            if(xor_temp == Serial->recv_pbuffer[get_all_len-1]//æ ¡éªŒ
+            if(xor_temp == Serial->recv_pbuffer[get_all_len-1]//Ğ£Ñé
                 &&Serial->recv_pbuffer[get_all_len-2] == 0x58//end
                 &&flash_addr_index == FLASH_APP1_START_ADDR//addr
-                &&get_all_len == 14//æœ‰æ•ˆé•¿åº¦
-                &&iap_recv_data_len == 4//æ•°æ®åŒºé•¿åº¦
-                &&Serial->recv_pbuffer[8] == 0x05// æ•°æ®åŒº
+                &&get_all_len == 14//ÓĞĞ§³¤¶È
+                &&iap_recv_data_len == 4//Êı¾İÇø³¤¶È
+                &&Serial->recv_pbuffer[8] == 0x05// Êı¾İÇø
                 &&Serial->recv_pbuffer[9] == 0x05
                 &&Serial->recv_pbuffer[10] == 0x05
                 &&Serial->recv_pbuffer[11] == 0x05)
             {
-		PLC_TO_HUB_Mesg_Stru.enter_iap_update_flag = 1;//åˆ‡æ¢ä¸²å£IAPæ›´æ–°æ ‡å¿—
+		PLC_TO_HUB_Mesg_Stru.enter_iap_update_flag = 1;//ÇĞ»»´®¿ÚIAP¸üĞÂ±êÖ¾
 	    }
 
         }
@@ -232,15 +232,15 @@ void PLC_Hub_CustomRX_Task(void)
         Serial->recv_complete_bit=0;
     }
 
-    //è¶…æ—¶è®¡æ—¶*1ms
+    //³¬Ê±¼ÆÊ±*1ms
     if(++PLC_TO_HUB_Mesg_Stru.recv_over_time > PLC_TO_HUB_Mesg_Stru.over_time_set)
     {
          PLC_TO_HUB_Mesg_Stru.recv_over_time = 0;
-         PLC_TO_HUB_Mesg_Stru.light_cmd = EM_LIGHT_INIT;//ç¯å…¨ç­
+         PLC_TO_HUB_Mesg_Stru.light_cmd = EM_LIGHT_INIT;//µÆÈ«Ãğ
     }
 
 
-    //æŠ¥è­¦å¤ä½
+    //±¨¾¯¸´Î»
     if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 0) == 1
         &&PLC_TO_HUB_Mesg_Stru.err_data > 0)    
     {
@@ -249,19 +249,19 @@ void PLC_Hub_CustomRX_Task(void)
     }
 
 
-#if IAP_1_W5500_2_Serial == 2//ä¸²å£æ›´æ–°
-    //è¿›å…¥ä¸²å£IAPæ›´æ–°
+#if IAP_1_W5500_2_Serial == 2//´®¿Ú¸üĞÂ
+    //½øÈë´®¿ÚIAP¸üĞÂ
     if(PLC_TO_HUB_Mesg_Stru.enter_iap_update_flag == 1)
     {
 	if(++PLC_TO_HUB_Mesg_Stru.enter_iap_update_dalay_timer > 500)//*1ms
         {
-            PLC_TO_HUB_Mesg_Stru.enter_iap_update_flag = 0;//æ¸…é™¤æ ‡å¿—
+            PLC_TO_HUB_Mesg_Stru.enter_iap_update_flag = 0;//Çå³ı±êÖ¾
             PLC_TO_HUB_Mesg_Stru.enter_iap_update_dalay_timer = 0;
 
-	    iap_boot_flag = APP_BOOTLOADER_REQ_FLAG;//æ›´æ–°æ ‡å¿—
+	    iap_boot_flag = APP_BOOTLOADER_REQ_FLAG;//¸üĞÂ±êÖ¾
 	    
-            __set_FAULTMASK(1);// å…³é—­æ‰€æœ‰ä¸­æ–­
-            NVIC_SystemReset();// å¤ä½
+            __set_FAULTMASK(1);// ¹Ø±ÕËùÓĞÖĞ¶Ï
+            NVIC_SystemReset();// ¸´Î»
         }
     }
 #endif
@@ -272,31 +272,31 @@ void PLC_Hub_CustomRX_Task(void)
 
 static void Parse_NewProtocol_Down_Frame(u8 *frame)
 {
-    // éªŒè¯å¸§é•¿åº¦ ,   å‘½ä»¤ç 
+    // ÑéÖ¤Ö¡³¤¶È ,   ÃüÁîÂë
     if(frame[2] != NEW_DOWN_FRAME_LENGTH || frame[3] != 0x01)
     {
         return;
     }
 
-    // è§£æç¯çŠ¶æ€
+    // ½âÎöµÆ×´Ì¬
     PLC_TO_HUB_Mesg_Stru.light_cmd = frame[4];
 
-    // è§£ææ§åˆ¶ä½
+    // ½âÎö¿ØÖÆÎ»
     PLC_TO_HUB_Mesg_Stru.ctrl_cmd = frame[5];
 
-    // è§£ææ’­æ”¾ID
+    // ½âÎö²¥·ÅID
     PLC_TO_HUB_Mesg_Stru.set_music_id = frame[6];
 
-    //ä¸Šè£…åŠ¨ä½œç±»å‹
+    //ÉÏ×°¶¯×÷ÀàĞÍ
     Motor_Lift_Stru.unit_type = frame[7];
     
-    //ä¸Šè£…æ‰§è¡Œid
+    //ÉÏ×°Ö´ĞĞid
     Motor_Lift_Stru.unit_act_id = frame[8];
 
-    //ä¸Šè£…æ§åˆ¶æ¨¡å¼
+    //ÉÏ×°¿ØÖÆÄ£Ê½
     Motor_Lift_Stru.unit_ctrl_mode = frame[9];
     
-    //ä¸Šè£…æ§åˆ¶å‚æ•°
+    //ÉÏ×°¿ØÖÆ²ÎÊı
     Motor_Lift_Stru.unit_ctrl_data = (s16)((frame[11] << 8) | frame[10]);
 
 
@@ -305,18 +305,17 @@ static void Parse_NewProtocol_Down_Frame(u8 *frame)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void PLC_Hub_CustomTX_Mesg_Ask(void)
-*åŠŸ    èƒ½: HUBå‘é€ç»™PLCçš„æ•°æ®å¤„ç†
-*å‚    æ•°:
-*ä½œ    è€…: shiquan.zhao
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼:    æ— 
-*å¤‡    æ³¨ï¼š åŒ¹é…æ—§åè®®
+*º¯    Êı: void PLC_Hub_CustomTX_Mesg_Ask(void)
+*¹¦    ÄÜ: HUB·¢ËÍ¸øPLCµÄÊı¾İ´¦Àí
+*²Î    Êı:
+*×÷    Õß: shiquan.zhao
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ:    ÎŞ
+*±¸    ×¢£º Æ¥Åä¾ÉĞ­Òé
 *
 ****************************************************************************************/
 void PLC_Hub_CustomTX_Mesg_Ask(void)
 {
-    static u8 send_step = 0;
     u8 upload_frame[NEW_UP_FRAME_LENGTH] = {0};
 
     if(PLC_TO_HUB_Mesg_Stru.commun_port == NULL)
@@ -324,42 +323,33 @@ void PLC_Hub_CustomTX_Mesg_Ask(void)
         return;
     }
 
-    upload_frame[0] = 0xEE;                                     // å¸§å¤´
+    upload_frame[0] = 0xEE;                                     // Ö¡Í·
     upload_frame[1] = 0x61;
-    upload_frame[2] = NEW_UP_FRAME_LENGTH;    // æ€»é•¿åº¦
-    upload_frame[3] = 0x01;                                     // å‘½ä»¤ç 
+    upload_frame[2] = NEW_UP_FRAME_LENGTH;    // ×Ü³¤¶È
+    upload_frame[3] = 0x01;                                     // ÃüÁîÂë
     upload_frame[4] = ANTICO_Mesg_Stru.err_state | Encoder_Mesg_Stru.err_state;//                                       
     upload_frame[5] = MCU_VISION;
     upload_frame[6] = PLC_TO_HUB_Mesg_Stru.inputL_state;
     upload_frame[7] = PLC_TO_HUB_Mesg_Stru.inputH_state;
     upload_frame[8] = PLC_TO_HUB_Mesg_Stru.output_state;
-    upload_frame[9] = PLC_TO_HUB_Mesg_Stru.charge_state;//å……ç”µçŠ¶æ€
-    upload_frame[10] = PLC_TO_HUB_Mesg_Stru.set_music_id;//æ’­æ”¾éŸ³ä¹id
+    upload_frame[9] = PLC_TO_HUB_Mesg_Stru.charge_state;//³äµç×´Ì¬
+    upload_frame[10] = PLC_TO_HUB_Mesg_Stru.set_music_id;//²¥·ÅÒôÀÖid
     
-    upload_frame[11] = Motor_Lift_Stru.unit_type;//ä¸Šè£…åŠ¨ä½œç±»å‹
-    upload_frame[12] = Motor_Lift_Stru.unit_ctrl_mode;//ä¸Šè£…æ§åˆ¶æ¨¡å¼
-    upload_frame[13] = Motor_Lift_Stru.unit_act_state;//ä¸Šè£…æ‰§è¡Œåé¦ˆçŠ¶æ€
+    upload_frame[11] = Motor_Lift_Stru.unit_type;//ÉÏ×°¶¯×÷ÀàĞÍ
+    upload_frame[12] = Motor_Lift_Stru.unit_ctrl_mode;//ÉÏ×°¿ØÖÆÄ£Ê½
+    upload_frame[13] = Motor_Lift_Stru.unit_act_state;//ÉÏ×°Ö´ĞĞ·´À¡×´Ì¬
 
-    if(send_step == 0)//äº¤æ›¿å‘
-    {
-        upload_frame[14] = EM_UNIT_ACT_ID_LEFT;//1-å·¦å‰é½¿
-        upload_frame[15] = GET_LOW_BYTE(Motor_Lift_Stru.unit_act_data[0]);//åé¦ˆå‚æ•°L
-        upload_frame[16] = GET_HIGH_BYTE(Motor_Lift_Stru.unit_act_data[0]);//åé¦ˆå‚æ•°H
-        upload_frame[17] = GET_LOW_BYTE(Motor_Lift_Stru.unit_err_code[0]);//æ•…éšœç L
-        upload_frame[18] = GET_HIGH_BYTE(Motor_Lift_Stru.unit_err_code[0]);//æ•…éšœç H
-        send_step = 1;//åˆ‡æ¢
-    }
-    else if(send_step == 1)
-    {
-        upload_frame[14] = EM_UNIT_ACT_ID_RIGHT;//2-å³å‰é½¿
-        upload_frame[15] = GET_LOW_BYTE(Motor_Lift_Stru.unit_act_data[1]);//åé¦ˆå‚æ•°L
-        upload_frame[16] = GET_HIGH_BYTE(Motor_Lift_Stru.unit_act_data[1]);//åé¦ˆå‚æ•°H
-        upload_frame[17] = GET_LOW_BYTE(Motor_Lift_Stru.unit_err_code[1]);//æ•…éšœç L
-        upload_frame[18] = GET_HIGH_BYTE(Motor_Lift_Stru.unit_err_code[1]);//æ•…éšœç H
-        send_step = 0;//åˆ‡æ¢
-    }
+    upload_frame[14] = EM_UNIT_ACT_ID_ALL;                    // 0-×óÓÒ²æ³İÍ¬²½¿ìÕÕ
+    upload_frame[15] = GET_LOW_BYTE(Motor_Lift_Stru.unit_act_data[0]);  // ×ó²æ³ßÎ»ÖÃL
+    upload_frame[16] = GET_HIGH_BYTE(Motor_Lift_Stru.unit_act_data[0]); // ×ó²æ³ßÎ»ÖÃH
+    upload_frame[17] = GET_LOW_BYTE(Motor_Lift_Stru.unit_err_code[0]);  // ×ó²æ³İ¹ÊÕÏÂëL
+    upload_frame[18] = GET_HIGH_BYTE(Motor_Lift_Stru.unit_err_code[0]); // ×ó²æ³İ¹ÊÕÏÂëH
+    upload_frame[19] = GET_LOW_BYTE(Motor_Lift_Stru.unit_act_data[1]);  // ÓÒ²æ³ßÎ»ÖÃL
+    upload_frame[20] = GET_HIGH_BYTE(Motor_Lift_Stru.unit_act_data[1]); // ÓÒ²æ³ßÎ»ÖÃH
+    upload_frame[21] = GET_LOW_BYTE(Motor_Lift_Stru.unit_err_code[1]);  // ÓÒ²æ³İ¹ÊÕÏÂëL
+    upload_frame[22] = GET_HIGH_BYTE(Motor_Lift_Stru.unit_err_code[1]); // ÓÒ²æ³İ¹ÊÕÏÂëH
 
-    upload_frame[19] = Bsp_XorCheck(upload_frame, NEW_UP_FRAME_LENGTH-1);
+    upload_frame[23] = Bsp_XorCheck(upload_frame, NEW_UP_FRAME_LENGTH-1);
 
     Bsp_Usart_Usr_SendArray(PLC_TO_HUB_Mesg_Stru.commun_port, upload_frame,upload_frame[2]);
 

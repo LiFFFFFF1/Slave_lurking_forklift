@@ -12,7 +12,7 @@
 #endif
 
    
-#define USART_REC_LEN  QUEUE_LENGTH  	//å®šä¹‰æœ€å¤§æ¥æ”¶å­—èŠ‚æ•° 200
+#define USART_REC_LEN  QUEUE_LENGTH  	//¶¨Òå×î´ó½ÓÊÕ×Ö½ÚÊı 200
    
 typedef __packed struct
 {
@@ -25,15 +25,15 @@ typedef __packed struct
 	u16 count;
     
 }USART_STRU;  
-                                                            // å®šä¹‰ç»“æ„ä½“
+                                                            // ¶¨Òå½á¹¹Ìå
 USART_EXT USART_STRU Usart1_Serial_Stru,Usart2_Serial_Stru,Usart3_Serial_Stru,Usart4_Serial_Stru,Usart5_Serial_Stru;        
  
 
 
-/* ä¸²å£#1æ¥æ”¶å®Œæˆå›è°ƒå‡½æ•°*/
+/* ´®¿Ú#1½ÓÊÕÍê³É»Øµ÷º¯Êı*/
 //extern void(*Usart1_RX_Complete_CallBack)(uint8_t *buffer, uint8_t buffer_Len);
 
-/* ä¸²å£#1å‘é€å®Œæˆå›è°ƒå‡½æ•°*/
+/* ´®¿Ú#1·¢ËÍÍê³É»Øµ÷º¯Êı*/
 //extern void(*Usart1_TX_Complete_CallBack)(void);
 
 

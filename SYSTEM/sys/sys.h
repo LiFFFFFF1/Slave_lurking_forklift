@@ -13,28 +13,28 @@
 
 
 
-//定义IAP更新方式1-W5500网口，2-串口
+//����IAP���·�ʽ1-W5500���ڣ�2-����
 #define IAP_1_W5500_2_Serial     2
 
-// 配置APP与BOOTLOADER沟通的变量地址，该地址一般为RAM最末尾的16字节，并且需要在keil中设置为NOINIT属性
+// ����APP��BOOTLOADER��ͨ�ı�����ַ���õ�ַһ��ΪRAM��ĩβ��16�ֽڣ�������Ҫ��keil������ΪNOINIT����
 #define APP_BOOT_COMM_VAR_ADDR 0x2000BFF0
 
-// APP启动BOOTLOADER的标志 "HXPC" 
+// APP����BOOTLOADER�ı�־ "HXPC" 
 #define APP_BOOTLOADER_REQ_FLAG 0x48585043ul
 
-// APP起始地址(存放在FLASH)
+// APP��ʼ��ַ(�����FLASH)
 #define FLASH_APP1_START_ADDR    0x8003000UL
 
 
 
 
-//位带操作,实现51类似的GPIO控制功能
-//具体实现思想,参考<<CM3权威指南>>第五章(87页~92页).
-//IO口操作宏定义
+//λ������,ʵ��51���Ƶ�GPIO���ƹ���
+//����ʵ��˼��,�ο�<<CM3Ȩ��ָ��>>������(87ҳ~92ҳ).
+//IO�ڲ����궨��
 #define BITBAND(addr, bitnum) ((addr & 0xF0000000)+0x2000000+((addr &0xFFFFF)<<5)+(bitnum<<2)) 
 #define MEM_ADDR(addr)  *((volatile unsigned long  *)(addr)) 
 #define BIT_ADDR(addr, bitnum)   MEM_ADDR(BITBAND(addr, bitnum)) 
-//IO口地址映射
+//IO�ڵ�ַӳ��
 #define GPIOA_ODR_Addr    (GPIOA_BASE+12) //0x4001080C 
 #define GPIOB_ODR_Addr    (GPIOB_BASE+12) //0x40010C0C 
 #define GPIOC_ODR_Addr    (GPIOC_BASE+12) //0x4001100C 
@@ -51,39 +51,39 @@
 #define GPIOF_IDR_Addr    (GPIOF_BASE+8) //0x40011A08 
 #define GPIOG_IDR_Addr    (GPIOG_BASE+8) //0x40011E08 
  
-//IO口操作,只对单一的IO口!
-//确保n的值小于16!
-#define PAout(n)   BIT_ADDR(GPIOA_ODR_Addr,n)  //输出 
-#define PAin(n)    BIT_ADDR(GPIOA_IDR_Addr,n)  //输入 
+//IO�ڲ���,ֻ�Ե�һ��IO��!
+//ȷ��n��ֵС��16!
+#define PAout(n)   BIT_ADDR(GPIOA_ODR_Addr,n)  //��� 
+#define PAin(n)    BIT_ADDR(GPIOA_IDR_Addr,n)  //���� 
 
-#define PBout(n)   BIT_ADDR(GPIOB_ODR_Addr,n)  //输出 
-#define PBin(n)    BIT_ADDR(GPIOB_IDR_Addr,n)  //输入 
+#define PBout(n)   BIT_ADDR(GPIOB_ODR_Addr,n)  //��� 
+#define PBin(n)    BIT_ADDR(GPIOB_IDR_Addr,n)  //���� 
 
-#define PCout(n)   BIT_ADDR(GPIOC_ODR_Addr,n)  //输出 
-#define PCin(n)    BIT_ADDR(GPIOC_IDR_Addr,n)  //输入 
+#define PCout(n)   BIT_ADDR(GPIOC_ODR_Addr,n)  //��� 
+#define PCin(n)    BIT_ADDR(GPIOC_IDR_Addr,n)  //���� 
 
-#define PDout(n)   BIT_ADDR(GPIOD_ODR_Addr,n)  //输出 
-#define PDin(n)    BIT_ADDR(GPIOD_IDR_Addr,n)  //输入 
+#define PDout(n)   BIT_ADDR(GPIOD_ODR_Addr,n)  //��� 
+#define PDin(n)    BIT_ADDR(GPIOD_IDR_Addr,n)  //���� 
 
-#define PEout(n)   BIT_ADDR(GPIOE_ODR_Addr,n)  //输出 
-#define PEin(n)    BIT_ADDR(GPIOE_IDR_Addr,n)  //输入
+#define PEout(n)   BIT_ADDR(GPIOE_ODR_Addr,n)  //��� 
+#define PEin(n)    BIT_ADDR(GPIOE_IDR_Addr,n)  //����
 
-#define PFout(n)   BIT_ADDR(GPIOF_ODR_Addr,n)  //输出 
-#define PFin(n)    BIT_ADDR(GPIOF_IDR_Addr,n)  //输入
+#define PFout(n)   BIT_ADDR(GPIOF_ODR_Addr,n)  //��� 
+#define PFin(n)    BIT_ADDR(GPIOF_IDR_Addr,n)  //����
 
-#define PGout(n)   BIT_ADDR(GPIOG_ODR_Addr,n)  //输出 
-#define PGin(n)    BIT_ADDR(GPIOG_IDR_Addr,n)  //输入
+#define PGout(n)   BIT_ADDR(GPIOG_ODR_Addr,n)  //��� 
+#define PGin(n)    BIT_ADDR(GPIOG_IDR_Addr,n)  //����
 
-//位操作公用函数
-#define setbit(x,y)     x|=((u32)1<<y)          // 将X的第Y位置1
-#define clrbit(x,y)      x&=~((u32)1<<y)        // 将X的第Y位清0
-#define getbit(a,b)    (((u32)a>>b)&0x01)       // 获取a的第b位
+//λ�������ú���
+#define setbit(x,y)     x|=((u32)1<<y)          // ��X�ĵ�Yλ��1
+#define clrbit(x,y)      x&=~((u32)1<<y)        // ��X�ĵ�Yλ��0
+#define getbit(a,b)    (((u32)a>>b)&0x01)       // ��ȡa�ĵ�bλ
 
-//以下为汇编函数
-void WFI_SET(void);		//执行WFI指令
-void INTX_DISABLE(void);//关闭所有中断
-void INTX_ENABLE(void);	//开启所有中断
-void MSR_MSP(u32 addr);	//设置堆栈地址
+//����Ϊ��ຯ��
+void WFI_SET(void);		//ִ��WFIָ��
+void INTX_DISABLE(void);//�ر������ж�
+void INTX_ENABLE(void);	//���������ж�
+void MSR_MSP(u32 addr);	//���ö�ջ��ַ
 
 #endif
 

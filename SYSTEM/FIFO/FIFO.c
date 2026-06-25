@@ -1,10 +1,10 @@
 /*
 *********************************************************************************************************
-*	æ–‡ä»¶å: FIFO.c
-*   ä½œ è€…:  èµµä¸–æ³‰
-*	ç‰ˆ æœ¬:  V1.4.0
-*	æ—¥ æœŸï¼š 2022-03-24
-*	å¤‡ æ³¨: 
+*	ÎÄ¼þÃû: FIFO.c
+*   ×÷ Õß:  ÕÔÊÀÈª
+*	°æ ±¾:  V1.4.0
+*	ÈÕ ÆÚ£º 2022-03-24
+*	±¸ ×¢: 
 *********************************************************************************************************
 */
 #define FIFO_GLOBALS
@@ -12,10 +12,10 @@
 
 /*
 *********************************************************************************************************
-*	å‡½ æ•° å: void FIFO_BuffInit(QUEUE *QUEUE_com)
-*	åŠŸèƒ½è¯´æ˜Ž: åˆå§‹åŒ–
-*	å½¢    å‚ï¼šuint8_t element 
-*	è¿” å›ž å€¼: æ— 
+*	º¯ Êý Ãû: void FIFO_BuffInit(QUEUE *QUEUE_com)
+*	¹¦ÄÜËµÃ÷: ³õÊ¼»¯
+*	ÐÎ    ²Î£ºuint8_t element 
+*	·µ »Ø Öµ: ÎÞ
 *
 *********************************************************************************************************
 */
@@ -29,11 +29,11 @@ void FIFO_BuffInit(QUEUE *QUEUE_com)
 }
 /*
 *********************************************************************************************************
-*	å‡½ æ•° å: FIFO_ComQueueIn
-*	åŠŸèƒ½è¯´æ˜Ž: å…¥é˜Ÿåˆ—
-*	å½¢    å‚ï¼šuint8_t element 
-*	è¿” å›ž å€¼: æ— 
-*   ä½¿ç”¨èŒƒä¾‹: xFIFO_ComQueueIn(test);   æŠŠtestå­˜åœ¨çŽ¯å½¢é˜Ÿåˆ—
+*	º¯ Êý Ãû: FIFO_ComQueueIn
+*	¹¦ÄÜËµÃ÷: Èë¶ÓÁÐ
+*	ÐÎ    ²Î£ºuint8_t element 
+*	·µ »Ø Öµ: ÎÞ
+*   Ê¹ÓÃ·¶Àý: xFIFO_ComQueueIn(test);   °Ñtest´æÔÚ»·ÐÎ¶ÓÁÐ
 *********************************************************************************************************
 */
 void FIFO_ComQueueIn(QUEUE *QUEUE_com,u8 element)                       
@@ -47,7 +47,7 @@ void FIFO_ComQueueIn(QUEUE *QUEUE_com,u8 element)
 		QUEUE_com->fifo_bufferB[QUEUE_com->RecLen] = element;
 	 }
      QUEUE_com->RecLen++;
-	 if(QUEUE_com->RecLen >= QUEUE_LENGTH)//å†™å®Œä¸€ä¸ªç¼“å†²åŒº
+	 if(QUEUE_com->RecLen >= QUEUE_LENGTH)//Ð´ÍêÒ»¸ö»º³åÇø
      {
         QUEUE_com->RecLen = 0;
         if(QUEUE_com->FIFO_buffer_status == 0)
@@ -62,11 +62,11 @@ void FIFO_ComQueueIn(QUEUE *QUEUE_com,u8 element)
 }
 
 /*********************************************************************************************************
-*	å‡½ æ•° å: FIFO_ComQueueOut
-*	åŠŸèƒ½è¯´æ˜Ž: å‡ºé˜Ÿåˆ—
-*	å½¢    å‚ï¼šuint8_t* element
-*	è¿” å›ž å€¼: è¿”å›žå€¼ï¼Œç©ºä¸º0ï¼Œå‡ºé˜Ÿåˆ—æˆåŠŸä¸º1
-* ä½¿ç”¨èŒƒä¾‹: xFIFO_ComQueueOut(&test);  å‡ºé˜Ÿåˆ—çš„æ•°å­˜åœ¨testå˜é‡
+*	º¯ Êý Ãû: FIFO_ComQueueOut
+*	¹¦ÄÜËµÃ÷: ³ö¶ÓÁÐ
+*	ÐÎ    ²Î£ºuint8_t* element
+*	·µ »Ø Öµ: ·µ»ØÖµ£¬¿ÕÎª0£¬³ö¶ÓÁÐ³É¹¦Îª1
+* Ê¹ÓÃ·¶Àý: xFIFO_ComQueueOut(&test);  ³ö¶ÓÁÐµÄÊý´æÔÚtest±äÁ¿
 *********************************************************************************************************
 */
 u8 FIFO_ComQueueOut(QUEUE *QUEUE_com,u8 *Data_buf)
@@ -104,9 +104,9 @@ u8 FIFO_ComQueueOut(QUEUE *QUEUE_com,u8 *Data_buf)
 	   QUEUE_com->rear = QUEUE_LENGTH;
     }
 
-    if(QUEUE_com->front < QUEUE_com->rear)                  //é˜Ÿåˆ—ä¸­æœ‰æ•°æ®
+    if(QUEUE_com->front < QUEUE_com->rear)                  //¶ÓÁÐÖÐÓÐÊý¾Ý
    	{
-   	     if(QUEUE_com->read_buffer_status == 0)             //èŽ·å–ä¸€ä¸ªå­—èŠ‚çš„æ•°æ®
+   	     if(QUEUE_com->read_buffer_status == 0)             //»ñÈ¡Ò»¸ö×Ö½ÚµÄÊý¾Ý
 		 {                                                  
 			*Data_buf = QUEUE_com->fifo_bufferA[QUEUE_com->front];
 		 }
@@ -115,8 +115,8 @@ u8 FIFO_ComQueueOut(QUEUE *QUEUE_com,u8 *Data_buf)
 			*Data_buf = QUEUE_com->fifo_bufferB[QUEUE_com->front];
 		 }
           
-         QUEUE_com->front++;                                //é‡æ–°è°ƒæ•´é˜Ÿåˆ—çš„é•¿åº¦
-         if(QUEUE_com->front >= QUEUE_LENGTH)               //è¯»å®Œä¸€ä¸ªç¼“å†²åŒº
+         QUEUE_com->front++;                                //ÖØÐÂµ÷Õû¶ÓÁÐµÄ³¤¶È
+         if(QUEUE_com->front >= QUEUE_LENGTH)               //¶ÁÍêÒ»¸ö»º³åÇø
          {
             QUEUE_com->front = 0;
             if(QUEUE_com->read_buffer_status == 0)
@@ -138,7 +138,7 @@ u8 FIFO_ComQueueOut(QUEUE *QUEUE_com,u8 *Data_buf)
 	   }
 	   temp = FIFO_ERROR_EMPTY;
     }   
-    return temp;//è¿”å›žé˜Ÿåˆ—ä¸ºç©º
+    return temp;//·µ»Ø¶ÓÁÐÎª¿Õ
 }
 
 /***************************endif*****************************************/

@@ -1,18 +1,18 @@
 #include "obs_xs_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "obs_area_upper.h"
 #include "plc_hub_upper.h"
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_Com_Read_XSData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šè‡ªå®šä¹‰åè®®æ¥æ”¶
+*º¯    Êı: void Obs_Com_Read_XSData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æ
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º×Ô¶¨ÒåĞ­Òé½ÓÊÕ
 ****************************************************************************************/
 static void Obs_Com_Read_XSData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -30,7 +30,7 @@ static void Obs_Com_Read_XSData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 if(Serial->step==0)
                 {
                     Serial->recv_pbuffer[0] = dat;
-                    if(dat == OBS_Mesg_Stru.device_adr)     // èµ·å§‹ç 
+                    if(dat == OBS_Mesg_Stru.device_adr)     // ÆğÊ¼Âë
                     {
                         Serial->step++;
                         Serial->count = 1;
@@ -39,12 +39,12 @@ static void Obs_Com_Read_XSData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 else if(Serial->step== 1)
                 {
                     Serial->recv_pbuffer[1] = dat;
-                    if(dat == 0x04)               // åŠŸèƒ½ç 
+                    if(dat == 0x04)               // ¹¦ÄÜÂë
                     {
                         Serial->step =2;
                         Serial->count = 2;
                     }
-                    else if(dat == 0x10)              // åŠŸèƒ½ç 
+                    else if(dat == 0x10)              // ¹¦ÄÜÂë
                     {
                         Serial->step =3;
                         Serial->count = 2;
@@ -100,13 +100,13 @@ static void Obs_Com_Read_XSData(USART_STRU *Serial,QUEUE *QUEUE_com)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_AreaXs_Send_Task(void)
-*åŠŸ    èƒ½: modbusé—®è¯¢æ¨¡å¼æŒ‡ä»¤
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void Obs_AreaXs_Send_Task(void)
+*¹¦    ÄÜ: modbusÎÊÑ¯Ä£Ê½Ö¸Áî
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º
 *
 ****************************************************************************************/
 void Obs_AreaXs_Send_Task(void)
@@ -118,15 +118,15 @@ void Obs_AreaXs_Send_Task(void)
     if(OBS_Mesg_Stru.can_com_type == EM_SET_PORT_COM)
     {
         // adr
-        if(_obs_send_num == 0)                                  // æŸ¥è¯¢é¿éšœçŠ¶æ€
+        if(_obs_send_num == 0)                                  // ²éÑ¯±ÜÕÏ×´Ì¬
         {
             obs_ask_buf[0] = OBS_Mesg_Stru.device_adr;
             obs_ask_buf[1] = 0x04;                              // cmd
             obs_ask_buf[2] = 0x03;                              // star_H8
             obs_ask_buf[3] = 0xE8;                              // star_L8-----1000
 
-            obs_ask_buf[4] = 0x00;                              // å¯„å­˜å™¨ä¸ªæ•°H8
-            obs_ask_buf[5] = 0x05;                              // å¯„å­˜å™¨ä¸ªæ•°L8
+            obs_ask_buf[4] = 0x00;                              // ¼Ä´æÆ÷¸öÊıH8
+            obs_ask_buf[5] = 0x05;                              // ¼Ä´æÆ÷¸öÊıL8
             obs_crc_val =Bsp_ModbusRTU_CRC(obs_ask_buf,6);
             obs_ask_buf[6] =GET_LOW_BYTE(obs_crc_val);
             obs_ask_buf[7] =GET_HIGH_BYTE(obs_crc_val);
@@ -134,23 +134,23 @@ void Obs_AreaXs_Send_Task(void)
             Bsp_Usart_Usr_SendArray(OBS_Mesg_Stru.commun_port, obs_ask_buf,8);
             _obs_send_num =1;
         }
-        else                                                    // è®¾ç½®åŒºåŸŸ
+        else                                                    // ÉèÖÃÇøÓò
         {
             obs_ask_buf[0] = OBS_Mesg_Stru.device_adr;
             obs_ask_buf[1] = 0x10;                              // cmd
             obs_ask_buf[2] = 0x07;                              // star_H8
             obs_ask_buf[3] = 0xD1;                              // star_L8-----2001
 
-            obs_ask_buf[4] = 0x00;                              // å¯„å­˜å™¨ä¸ªæ•°H8
-            obs_ask_buf[5] = 0x01;                              // å¯„å­˜å™¨ä¸ªæ•°L8
+            obs_ask_buf[4] = 0x00;                              // ¼Ä´æÆ÷¸öÊıH8
+            obs_ask_buf[5] = 0x01;                              // ¼Ä´æÆ÷¸öÊıL8
 
-            obs_ask_buf[6] = 0x02;                              // æ•°æ®é•¿åº¦
+            obs_ask_buf[6] = 0x02;                              // Êı¾İ³¤¶È
 
-            obs_ask_buf[7] = 0x00;                              // æ•°æ®æ®µ
+            obs_ask_buf[7] = 0x00;                              // Êı¾İ¶Î
 
 
 
-            obs_ask_buf[8] = PLC_TO_HUB_Mesg_Stru.set_run_obs;        // æ•°æ®æ®µ
+            obs_ask_buf[8] = PLC_TO_HUB_Mesg_Stru.set_run_obs;        // Êı¾İ¶Î
 
             obs_crc_val =Bsp_ModbusRTU_CRC(obs_ask_buf,9);
             obs_ask_buf[9] =GET_LOW_BYTE(obs_crc_val);
@@ -165,13 +165,13 @@ void Obs_AreaXs_Send_Task(void)
         {
             OBS_Mesg_Stru.com_timer++;
         }
-        if(OBS_Mesg_Stru.com_timer == 100)//æ‰çº¿
+        if(OBS_Mesg_Stru.com_timer == 100)//µôÏß
         {
             PLC_TO_HUB_Mesg_Stru.upload_obs_alarm =0xFF;
         }
 
-        //æ¸…é›¶
-        if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_obs_alarm)           //  å¤ä½
+        //ÇåÁã
+        if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_obs_alarm)           //  ¸´Î»
         {
             PLC_TO_HUB_Mesg_Stru.upload_obs_alarm = 0;
             OBS_Mesg_Stru.com_timer = 0;
@@ -182,12 +182,12 @@ void Obs_AreaXs_Send_Task(void)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_AreaXs_RX_Task(void)
-*åŠŸ    èƒ½:
-*å‚    æ•°:  Serial-å¯¹åº”ä¸²å£å‘é€ç»“æ„ä½“ï¼ŒQUEUE_com-å¯¹åº”æ¥æ”¶ä¸²å£ç»“æ„ä½“
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Obs_AreaXs_RX_Task(void)
+*¹¦    ÄÜ:
+*²Î    Êı:  Serial-¶ÔÓ¦´®¿Ú·¢ËÍ½á¹¹Ìå£¬QUEUE_com-¶ÔÓ¦½ÓÊÕ´®¿Ú½á¹¹Ìå
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Obs_AreaXs_RX_Task(void)
 {
@@ -226,12 +226,12 @@ void Obs_AreaXs_RX_Task(void)
         return;
     }
 
-    Obs_Com_Read_XSData(Serial,QUEUE_com);                  // è‡ªå®šä¹‰è§£ç 
+    Obs_Com_Read_XSData(Serial,QUEUE_com);                  // ×Ô¶¨Òå½âÂë
 
     if(Serial->recv_complete_bit & 0x8000)
     {
         get_len =Serial->recv_complete_bit&0x7FFF;
-        /* CRCæ ¡éªŒåˆ¤æ–­ */
+        /* CRCĞ£ÑéÅĞ¶Ï */
         tem16_val = Bsp_ModbusRTU_CRC(Serial->recv_pbuffer,(get_len-2));
 
         if((GET_LOW_BYTE(tem16_val)==Serial->recv_pbuffer[get_len-2]) &&
@@ -240,13 +240,13 @@ void Obs_AreaXs_RX_Task(void)
             switch(Serial->recv_pbuffer[1])
             {
 
-                case 0x04:      // è¯»æ•°æ®
+                case 0x04:      // ¶ÁÊı¾İ
                     OBS_Mesg_Stru.com_timer =0;
 
-                    OBS_Mesg_Stru.upload_cur_obs    = Serial->recv_pbuffer[4];      // å½“å‰é€šé“
-                    OBS_Mesg_Stru.upload_out1_state = Serial->recv_pbuffer[6];      // æœ€å¤–
-                    OBS_Mesg_Stru.upload_out2_state = Serial->recv_pbuffer[8];      // ä¸­é—´
-                    OBS_Mesg_Stru.upload_out3_state = Serial->recv_pbuffer[10];     // æœ€å†…
+                    OBS_Mesg_Stru.upload_cur_obs    = Serial->recv_pbuffer[4];      // µ±Ç°Í¨µÀ
+                    OBS_Mesg_Stru.upload_out1_state = Serial->recv_pbuffer[6];      // ×îÍâ
+                    OBS_Mesg_Stru.upload_out2_state = Serial->recv_pbuffer[8];      // ÖĞ¼ä
+                    OBS_Mesg_Stru.upload_out3_state = Serial->recv_pbuffer[10];     // ×îÄÚ
 
 
                     if(OBS_Mesg_Stru.upload_out3_state)
@@ -268,7 +268,7 @@ void Obs_AreaXs_RX_Task(void)
                     PLC_TO_HUB_Mesg_Stru.upload_obs_alarm   = Serial->recv_pbuffer[12];
 
                     break;
-                case 0x10:      // å†™æ•°æ®
+                case 0x10:      // Ğ´Êı¾İ
                     OBS_Mesg_Stru.com_timer =0;
 
                     break;
@@ -284,12 +284,12 @@ void Obs_AreaXs_RX_Task(void)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_AreaXs_IO_Send_Task(void)
-*åŠŸ    èƒ½: å…´é¢‚é¿éšœå™¨è¾“å‡ºIO-è®¾ç½®é¿éšœåŒºåŸŸ
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Obs_AreaXs_IO_Send_Task(void)
+*¹¦    ÄÜ: ĞËËÌ±ÜÕÏÆ÷Êä³öIO-ÉèÖÃ±ÜÕÏÇøÓò
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Obs_AreaXs_IO_Send_Task(void)
 {
@@ -405,10 +405,10 @@ void Obs_AreaXs_IO_Send_Task(void)
     }
 
     OBS_Mesg_Stru.upload_cur_obs = OBS_XS_IO_IN4*8+OBS_XS_IO_IN3*4+
-                                   OBS_XS_IO_IN2*2+OBS_XS_IO_IN1;// å½“å‰é€šé“
+                                   OBS_XS_IO_IN2*2+OBS_XS_IO_IN1;// µ±Ç°Í¨µÀ
 
-    //æ¸…é›¶
-    if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_obs_alarm)           //  å¤ä½
+    //ÇåÁã
+    if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_obs_alarm)           //  ¸´Î»
     {
         PLC_TO_HUB_Mesg_Stru.upload_obs_alarm = 0;
 
@@ -417,20 +417,20 @@ void Obs_AreaXs_IO_Send_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_AreaXs_IO_RX_Task(void)
-*åŠŸ    èƒ½: å…´é¢‚é¿éšœå™¨è¾“å…¥IO-é¿éšœçŠ¶æ€
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Obs_AreaXs_IO_RX_Task(void)
+*¹¦    ÄÜ: ĞËËÌ±ÜÕÏÆ÷ÊäÈëIO-±ÜÕÏ×´Ì¬
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Obs_AreaXs_IO_RX_Task(void)
 {
-    OBS_Mesg_Stru.upload_out1_state = OBS_XS_IO_OUT1;       // æœ€å¤–
-    OBS_Mesg_Stru.upload_out2_state = OBS_XS_IO_OUT2;       // ä¸­é—´
-    OBS_Mesg_Stru.upload_out3_state = OBS_XS_IO_OUT3;       // æœ€å†…
+    OBS_Mesg_Stru.upload_out1_state = OBS_XS_IO_OUT1;       // ×îÍâ
+    OBS_Mesg_Stru.upload_out2_state = OBS_XS_IO_OUT2;       // ÖĞ¼ä
+    OBS_Mesg_Stru.upload_out3_state = OBS_XS_IO_OUT3;       // ×îÄÚ
 
-    if(OBS_Mesg_Stru.upload_out3_state)                     // è¿‘é¿éšœ
+    if(OBS_Mesg_Stru.upload_out3_state)                     // ½ü±ÜÕÏ
     {
         PLC_TO_HUB_Mesg_Stru.upload_run_warning |=0x01;
     }
@@ -439,7 +439,7 @@ void Obs_AreaXs_IO_RX_Task(void)
         PLC_TO_HUB_Mesg_Stru.upload_run_warning &=0xFE;
     }
 
-    if(OBS_Mesg_Stru.upload_out1_state)                     // è¿œé¿éšœ
+    if(OBS_Mesg_Stru.upload_out1_state)                     // Ô¶±ÜÕÏ
     {
         PLC_TO_HUB_Mesg_Stru.upload_run_warning |=0x02;
     }
@@ -448,7 +448,7 @@ void Obs_AreaXs_IO_RX_Task(void)
         PLC_TO_HUB_Mesg_Stru.upload_run_warning &=0xFD;
     }
 
-    PLC_TO_HUB_Mesg_Stru.upload_obs_alarm = OBS_XS_IO_OUT4;//éšœç¢ç‰©æ•…éšœ
+    PLC_TO_HUB_Mesg_Stru.upload_obs_alarm = OBS_XS_IO_OUT4;//ÕÏ°­Îï¹ÊÕÏ
 
 }
 

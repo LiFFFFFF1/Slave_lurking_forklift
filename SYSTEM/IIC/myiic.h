@@ -4,7 +4,7 @@
   * @author  zsq
   * @version V1.1.0
   * @date    10-04-2022
-  * @brief   æ–‡ä»¶åŒ…å«IICå¯¹å¤–æ‰€æœ‰å‡½æ•°æ¥å£
+  * @brief   ÎÄ¼ş°üº¬IIC¶ÔÍâËùÓĞº¯Êı½Ó¿Ú
   ******************************************************************************
   * @attention
   *
@@ -21,15 +21,15 @@
 #define    delay_us(x)    Bsp_Delay_US(x)
 #define    delay_ms(x)    Bsp_Delay_MS(x)
 
-//IICæ‰€æœ‰æ“ä½œå‡½æ•°
-extern void Bsp_My_IIC_Init(void);                                                  //åˆå§‹åŒ–IICçš„IOå£				 
-extern void Bsp_My_IIC_Start(void);				                                    //å‘é€IICå¼€å§‹ä¿¡å·
-extern void Bsp_My_IIC_Stop(void);	  			                                    //å‘é€IICåœæ­¢ä¿¡å·
-extern void Bsp_My_IIC_Send_Byte(u8 txd);			                                //IICå‘é€ä¸€ä¸ªå­—èŠ‚
-extern u8 Bsp_My_IIC_Read_Byte(unsigned char ack);                                  //IICè¯»å–ä¸€ä¸ªå­—èŠ‚
-extern u8 Bsp_My_IIC_Wait_Ack(void); 				                                //IICç­‰å¾…ACKä¿¡å·
-extern void Bsp_My_IIC_Ack(void);					                                //IICå‘é€ACKä¿¡å·
-extern void Bsp_My_IIC_NAck(void);				                                    //IICä¸å‘é€ACKä¿¡å·
+//IICËùÓĞ²Ù×÷º¯Êı
+extern void Bsp_My_IIC_Init(void);                                                  //³õÊ¼»¯IICµÄIO¿Ú				 
+extern void Bsp_My_IIC_Start(void);				                                    //·¢ËÍIIC¿ªÊ¼ĞÅºÅ
+extern void Bsp_My_IIC_Stop(void);	  			                                    //·¢ËÍIICÍ£Ö¹ĞÅºÅ
+extern void Bsp_My_IIC_Send_Byte(u8 txd);			                                //IIC·¢ËÍÒ»¸ö×Ö½Ú
+extern u8 Bsp_My_IIC_Read_Byte(unsigned char ack);                                  //IIC¶ÁÈ¡Ò»¸ö×Ö½Ú
+extern u8 Bsp_My_IIC_Wait_Ack(void); 				                                //IICµÈ´ıACKĞÅºÅ
+extern void Bsp_My_IIC_Ack(void);					                                //IIC·¢ËÍACKĞÅºÅ
+extern void Bsp_My_IIC_NAck(void);				                                    //IIC²»·¢ËÍACKĞÅºÅ
 
 extern void Bsp_My_IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
 extern u8 Bsp_My_IIC_Read_One_Byte(u8 daddr,u8 addr);	  

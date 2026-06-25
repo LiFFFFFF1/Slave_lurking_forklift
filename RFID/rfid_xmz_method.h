@@ -16,7 +16,7 @@
 #endif 
 
 
-#define  RFID_XMZ_REC_LEN            10  //Х╔©И≈╗Е╜░RFIDХ╞╩Е█║Е░▌Д╦┼Д╪═Ф∙╟Ф█╝И∙©Е╨╕
+#define  RFID_XMZ_REC_LEN            10  //нВцевсRFID╤а©╗╨Сио╢╚йЩ╬щЁ╓╤х
 
 
 RFID_XMZ_EXT void RFID_XMZ_232_RX_Complete_Handler(void);

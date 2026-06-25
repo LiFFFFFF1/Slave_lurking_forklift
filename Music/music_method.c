@@ -1,16 +1,16 @@
 #include "music_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 
 
 /***************************************************************************************
-*å‡½    æ•°: void music_com_read_buf(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šè‡ªå®šä¹‰åè®®æ¥æ”¶
+*º¯    Êı: void music_com_read_buf(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æ
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º×Ô¶¨ÒåĞ­Òé½ÓÊÕ
 ****************************************************************************************/
 static void music_com_read_buf(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -80,12 +80,12 @@ static void music_com_read_buf(USART_STRU *Serial,QUEUE *QUEUE_com)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_AreaXs_RX_Task(void)
-*åŠŸ    èƒ½:
-*å‚    æ•°:  Serial-å¯¹åº”ä¸²å£å‘é€ç»“æ„ä½“ï¼ŒQUEUE_com-å¯¹åº”æ¥æ”¶ä¸²å£ç»“æ„ä½“
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Obs_AreaXs_RX_Task(void)
+*¹¦    ÄÜ:
+*²Î    Êı:  Serial-¶ÔÓ¦´®¿Ú·¢ËÍ½á¹¹Ìå£¬QUEUE_com-¶ÔÓ¦½ÓÊÕ´®¿Ú½á¹¹Ìå
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Music_Play_Send_API(u8 music_type,u8 music_volume)
 {
@@ -93,8 +93,8 @@ void Music_Play_Send_API(u8 music_type,u8 music_volume)
     u16 u16_crc_temp=0;
     u8 ack_buf[15]= {0};
 
-    //æ¥æ”¶
-    music_com_read_buf(&Usart4_Serial_Stru,&COM4_Serial);            // è‡ªå®šä¹‰è§£ç 
+    //½ÓÊÕ
+    music_com_read_buf(&Usart4_Serial_Stru,&COM4_Serial);            // ×Ô¶¨Òå½âÂë
     
     if(Usart4_Serial_Stru.recv_complete_bit & 0x8000)
     {
@@ -103,18 +103,18 @@ void Music_Play_Send_API(u8 music_type,u8 music_volume)
         if((Usart4_Serial_Stru.recv_pbuffer[6] == GET_LOW_BYTE(u16_crc_temp)) &&
            (Usart4_Serial_Stru.recv_pbuffer[7] == GET_HIGH_BYTE(u16_crc_temp)))
         {
-            if(music_type ==0) // è¨é©°æ’­æ”¾å™¨
+            if(music_type ==0) // Èø³Û²¥·ÅÆ÷
             {
-                _upload_music_number = Usart4_Serial_Stru.recv_pbuffer[5];    // éŸ³ä¹ç¼–å·
+                _upload_music_number = Usart4_Serial_Stru.recv_pbuffer[5];    // ÒôÀÖ±àºÅ
             }
         }
         Usart4_Serial_Stru.recv_complete_bit =0;
     }
 
-    //å‘é€
+    //·¢ËÍ
     switch(music_type)
     {
-        case 0:// è¨é©°485
+        case 0:// Èø³Û485
             if(_upload_music_number !=PLC_TO_HUB_Mesg_Stru.set_music_id)
             {
                 music_send_cnt++;
@@ -128,12 +128,12 @@ void Music_Play_Send_API(u8 music_type,u8 music_volume)
             {
                 music_send_cnt =0;
 
-                ack_buf[0] = 0x01;                  // é¦–ç 
-                ack_buf[1] = 0x06;                  // åŠŸèƒ½ç 
+                ack_buf[0] = 0x01;                  // Ê×Âë
+                ack_buf[1] = 0x06;                  // ¹¦ÄÜÂë
                 ack_buf[2] = 0x00;                  // ADD-H
-                ack_buf[3] = 0x04;                  // ADD-L--04-æ’­æ”¾æ–‡ä»¶å¤¹ 05-éŸ³é‡ 0-255
+                ack_buf[3] = 0x04;                  // ADD-L--04-²¥·ÅÎÄ¼ş¼Ğ 05-ÒôÁ¿ 0-255
                 ack_buf[4] = 0x00;                  // ADD-H
-                ack_buf[5] = PLC_TO_HUB_Mesg_Stru.set_music_id;     // ADD-L---å¯¹åº”æ’­æ”¾æ–‡ä»¶
+                ack_buf[5] = PLC_TO_HUB_Mesg_Stru.set_music_id;     // ADD-L---¶ÔÓ¦²¥·ÅÎÄ¼ş
                 u16_crc_temp =Bsp_ModbusRTU_CRC(ack_buf, 6);
                 ack_buf[6] = GET_LOW_BYTE(u16_crc_temp);             // CRC-H
                 ack_buf[7] = GET_HIGH_BYTE(u16_crc_temp);            // CRC-L
@@ -141,28 +141,28 @@ void Music_Play_Send_API(u8 music_type,u8 music_volume)
             }
             break;
             
-        case 1:// é›¶åŠ¨485+éŸ³é‡æ§åˆ¶
+        case 1:// Áã¶¯485+ÒôÁ¿¿ØÖÆ
             if(++music_send_cnt>=5)                // 50ms*
             {
                 music_send_cnt =0;
 
-                ack_buf[0] = 0x01;                  // é¦–ç 
-                ack_buf[1] = 0x10;                  // åŠŸèƒ½ç 
+                ack_buf[0] = 0x01;                  // Ê×Âë
+                ack_buf[1] = 0x10;                  // ¹¦ÄÜÂë
                 ack_buf[2] = 0x00;                  // ADD-H
                 ack_buf[3] = 0x03;                  // ADD-L--
 
                 ack_buf[4] = 0x00;                  // -H
-                ack_buf[5] = 0x03;                  // -L--å¯„å­˜å™¨ä¸ªæ•°
-                ack_buf[6] = 0x06;                  // å­—èŠ‚æ•°
+                ack_buf[5] = 0x03;                  // -L--¼Ä´æÆ÷¸öÊı
+                ack_buf[6] = 0x06;                  // ×Ö½ÚÊı
 
                 ack_buf[7] = 0x00;                  // ADD-H--03
-                ack_buf[8]= PLC_TO_HUB_Mesg_Stru.set_music_id;                  // ADD-L---å¯¹åº”æ’­æ”¾æ–‡ä»¶
+                ack_buf[8]= PLC_TO_HUB_Mesg_Stru.set_music_id;                  // ADD-L---¶ÔÓ¦²¥·ÅÎÄ¼ş
 
                 ack_buf[9] = 0x00;                  // ADD-H---04
-                ack_buf[10] = music_volume;   // éŸ³é‡æ§åˆ¶ 0-100
+                ack_buf[10] = music_volume;   // ÒôÁ¿¿ØÖÆ 0-100
 
                 ack_buf[11] = 0x00;                 // ADD-H
-                ack_buf[12] = 0x00;                 // ADD-L-å¾ªç¯æ¨¡å¼ 00-å¾ªç¯ï¼Œ01-å•æ¬¡
+                ack_buf[12] = 0x00;                 // ADD-L-Ñ­»·Ä£Ê½ 00-Ñ­»·£¬01-µ¥´Î
 
                 u16_crc_temp =Bsp_ModbusRTU_CRC(ack_buf, 13);
                 ack_buf[13] = GET_LOW_BYTE(u16_crc_temp);               // CRC-H

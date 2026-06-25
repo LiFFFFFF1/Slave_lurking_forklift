@@ -2,37 +2,37 @@
 #define __ADC_H
 
 
-/* åŒ…å«å¤´æ–‡ä»¶ ----------------------------------------------------------------*/
+/* °üº¬Í·ÎÄ¼ş ----------------------------------------------------------------*/
 #include "sys.h"
 
-/* ç±»å‹å®šä¹‰ ------------------------------------------------------------------*/
-/* å®å®šä¹‰ --------------------------------------------------------------------*/
-// æ³¨æ„ï¼šç”¨ä½œADCé‡‡é›†çš„IOå¿…é¡»æ²¡æœ‰å¤ç”¨ï¼Œå¦åˆ™é‡‡é›†ç”µå‹ä¼šæœ‰å½±å“
-/********************ADCè¾“å…¥é€šé“ï¼ˆå¼•è„šï¼‰é…ç½®**************************/
+/* ÀàĞÍ¶¨Òå ------------------------------------------------------------------*/
+/* ºê¶¨Òå --------------------------------------------------------------------*/
+// ×¢Òâ£ºÓÃ×÷ADC²É¼¯µÄIO±ØĞëÃ»ÓĞ¸´ÓÃ£¬·ñÔò²É¼¯µçÑ¹»áÓĞÓ°Ïì
+/********************ADCÊäÈëÍ¨µÀ£¨Òı½Å£©ÅäÖÃ**************************/
 
-#define ADC1_Channel_Count 2   //é‡‡é›†é€šé“æ•°é‡   
-#define ADC_Filter_Count   16  //ADCé‡‡é›†æ•°å­—æ»¤æ³¢ä¸ªæ•°
+#define ADC1_Channel_Count 2   //²É¼¯Í¨µÀÊıÁ¿   
+#define ADC_Filter_Count   16  //ADC²É¼¯Êı×ÖÂË²¨¸öÊı
 
-extern __IO uint16_t ADC_ConvertedValue[ADC_Filter_Count][ADC1_Channel_Count];             //é‡‡é›†æ•°æ®å­˜æ”¾æ•°ç»„ï¼ŒäºŒç»´æ•°ç»„ï¼Œ16è¡Œ 2åˆ—
+extern __IO uint16_t ADC_ConvertedValue[ADC_Filter_Count][ADC1_Channel_Count];             //²É¼¯Êı¾İ´æ·ÅÊı×é£¬¶şÎ¬Êı×é£¬16ĞĞ 2ÁĞ
 
-extern uint16_t Current_Num;                                             //å½“å‰é‡‡é›†æ•°é‡
+extern uint16_t Current_Num;                                             //µ±Ç°²É¼¯ÊıÁ¿
 
-extern uint32_t ADC_Channel_Sum[ADC1_Channel_Count];                     //æ¯ä¸€é€šé“çš„é‡‡æ ·æ€»å€¼
-extern uint16_t ADC_Channel_Max[ADC1_Channel_Count];                     //æ¯ä¸€é€šé“çš„é‡‡æ ·æœ€å¤§å€¼
-extern uint16_t ADC_Channel_Min[ADC1_Channel_Count];                     //æ¯ä¸€é€šé“çš„é‡‡æ ·æœ€å°å€¼
-extern uint16_t ADC_Everage_Value[ADC1_Channel_Count];                   //ADCé‡‡æ ·ï¼Œæ•°å­—æ»¤æ³¢åçš„æœ€ç»ˆå¹³å‡æ•°æ®
+extern uint32_t ADC_Channel_Sum[ADC1_Channel_Count];                     //Ã¿Ò»Í¨µÀµÄ²ÉÑù×ÜÖµ
+extern uint16_t ADC_Channel_Max[ADC1_Channel_Count];                     //Ã¿Ò»Í¨µÀµÄ²ÉÑù×î´óÖµ
+extern uint16_t ADC_Channel_Min[ADC1_Channel_Count];                     //Ã¿Ò»Í¨µÀµÄ²ÉÑù×îĞ¡Öµ
+extern uint16_t ADC_Everage_Value[ADC1_Channel_Count];                   //ADC²ÉÑù£¬Êı×ÖÂË²¨ºóµÄ×îÖÕÆ½¾ùÊı¾İ
 
 
 void ADC1_Init(void);
 
-//ADC é‡‡é›† DAMä¼ è¾“å®Œæˆä¸­æ–­å›è°ƒå‡½æ•°
+//ADC ²É¼¯ DAM´«ÊäÍê³ÉÖĞ¶Ï»Øµ÷º¯Êı
 extern void (*ADC_DMA_Trans_Complete_CallBack)(void);
 
-//void Get_Max(uint16_t * p,int length);//å¾—åˆ°æ•°ç»„æœ€å¤§å€¼
+//void Get_Max(uint16_t * p,int length);//µÃµ½Êı×é×î´óÖµ
 
-//void Get_Min(uint16_t * p,int length);//å¾—åˆ°æ•°ç»„æœ€å°å€¼
+//void Get_Min(uint16_t * p,int length);//µÃµ½Êı×é×îĞ¡Öµ
 
-//void Filter_Handler(void);            //æ»¤æ³¢ç®—æ³•ï¼Œæ»‘åŠ¨ + ä¸­ä½ + å¹³å‡æ»¤æ³¢æ³•
+//void Filter_Handler(void);            //ÂË²¨Ëã·¨£¬»¬¶¯ + ÖĞÎ» + Æ½¾ùÂË²¨·¨
 
 #endif
 

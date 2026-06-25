@@ -9,10 +9,10 @@
 #include "public_def_type.h"
 #include "encoder_upper.h"
 
-/* æ¥æ”¶å¤„ç†ä»»åŠ¡ */
+/* ½ÓÊÕ´¦ÀíÈÎÎñ */
 extern void PLC_Hub_CustomRX_Task(void);
 
-/* å‘é€å¤„ç†ä»»åŠ¡ */
+/* ·¢ËÍ´¦ÀíÈÎÎñ */
 extern void PLC_Hub_CustomTX_Mesg_Ask(void);
 
 static void Parse_NewProtocol_Down_Frame(u8 *frame);

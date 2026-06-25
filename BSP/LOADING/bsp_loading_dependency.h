@@ -15,12 +15,12 @@
    
 #define   CAN_RX_API_LEN    3
 
-/* CAN鎺ユ敹瀹屾垚澶勭悊*/
+/* CAN接收完成处理*/
 extern void(*CAN_RX_Complete_Process[CAN_RX_API_LEN])(CanRxMsg* RxMessage);
 
 
 
-/* 鎷ㄧ爜妯″紡瀵煎叆鍙傛暟 */
+/* 拨码模式导入参数 */
 extern void Bsp_Loading_Config_Parameters(void);
 
 #endif

@@ -16,38 +16,38 @@
    #define OBS_AREA_EXT  extern
 #endif
 
-////å…´é¢‚é¿éšœå™¨-IOå£å®šä¹‰
-//#define OBS_XS_IO_IN1   MCU_GPIO_OUT3           //é¿éšœå™¨è¾“å…¥1 -åŒºåŸŸé€‰æ‹©1
-//#define OBS_XS_IO_IN2   MCU_GPIO_OUT4           //é¿éšœå™¨è¾“å…¥2 -åŒºåŸŸé€‰æ‹©2
-//#define OBS_XS_IO_IN3   MCU_GPIO_OUT5           //é¿éšœå™¨è¾“å…¥3 -åŒºåŸŸé€‰æ‹©3
-//#define OBS_XS_IO_IN4   MCU_GPIO_OUT6           //é¿éšœå™¨è¾“å…¥4 -åŒºåŸŸé€‰æ‹©4
+////ĞËËÌ±ÜÕÏÆ÷-IO¿Ú¶¨Òå
+//#define OBS_XS_IO_IN1   MCU_GPIO_OUT3           //±ÜÕÏÆ÷ÊäÈë1 -ÇøÓòÑ¡Ôñ1
+//#define OBS_XS_IO_IN2   MCU_GPIO_OUT4           //±ÜÕÏÆ÷ÊäÈë2 -ÇøÓòÑ¡Ôñ2
+//#define OBS_XS_IO_IN3   MCU_GPIO_OUT5           //±ÜÕÏÆ÷ÊäÈë3 -ÇøÓòÑ¡Ôñ3
+//#define OBS_XS_IO_IN4   MCU_GPIO_OUT6           //±ÜÕÏÆ÷ÊäÈë4 -ÇøÓòÑ¡Ôñ4
 
-//#define OBS_XS_IO_OUT1   MCU_GPIO_IN5           //é¿éšœå™¨è¾“å‡º1-æœ€å¤–
-//#define OBS_XS_IO_OUT2   MCU_GPIO_IN6           //é¿éšœå™¨è¾“å‡º2-ä¸­é—´
-//#define OBS_XS_IO_OUT3   MCU_GPIO_IN7           //é¿éšœå™¨è¾“å‡º3-æœ€å†…
-//#define OBS_XS_IO_OUT4   MCU_GPIO_IN8           //é¿éšœå™¨è¾“å‡º4-æ•…éšœ
+//#define OBS_XS_IO_OUT1   MCU_GPIO_IN5           //±ÜÕÏÆ÷Êä³ö1-×îÍâ
+//#define OBS_XS_IO_OUT2   MCU_GPIO_IN6           //±ÜÕÏÆ÷Êä³ö2-ÖĞ¼ä
+//#define OBS_XS_IO_OUT3   MCU_GPIO_IN7           //±ÜÕÏÆ÷Êä³ö3-×îÄÚ
+//#define OBS_XS_IO_OUT4   MCU_GPIO_IN8           //±ÜÕÏÆ÷Êä³ö4-¹ÊÕÏ
 
 
 typedef __packed struct
 {
-    USART_TypeDef* commun_port;                             // è®¾ç½®é€šä¿¡ç«¯å£å·,ä¸²å£ç«¯å£
-    u8 can_com_type;                                        // 1-CAN, 2-comæ¨¡å¼
+    USART_TypeDef* commun_port;                             // ÉèÖÃÍ¨ĞÅ¶Ë¿ÚºÅ,´®¿Ú¶Ë¿Ú
+    u8 can_com_type;                                        // 1-CAN, 2-comÄ£Ê½
     u8 device_type;                                         // 
-    u8 device_adr;                                          // è®¾å¤‡åœ°å€
-    u8 commun_ask_mode;                                     // é€šä¿¡åº”ç­”æ¨¡å¼
+    u8 device_adr;                                          // Éè±¸µØÖ·
+    u8 commun_ask_mode;                                     // Í¨ĞÅÓ¦´ğÄ£Ê½
     
-    u32 baud_rate;                                          // æ³¢ç‰¹ç‡
-    u16 wordlength;                                         // æ•°æ®å®½åº¦
+    u32 baud_rate;                                          // ²¨ÌØÂÊ
+    u16 wordlength;                                         // Êı¾İ¿í¶È
     u16 parity; 
 	
 	u8 com_timer;
 	
 	
 	
-	u8 upload_cur_obs;										// å£éšœå™¨ä¸ŠæŠ¥å½“å‰é¿éšœåŒºåŸŸ
-	u8 upload_out1_state;									// å£éšœå™¨è¾“å‡ºOUT1--æœ€å¤–
-	u8 upload_out2_state;									// å£éšœå™¨è¾“å‡ºOUT2--ä¸­é—´
-	u8 upload_out3_state;									// å£éšœå™¨è¾“å‡ºOUT3--æœ€å†…
+	u8 upload_cur_obs;										// ±ÚÕÏÆ÷ÉÏ±¨µ±Ç°±ÜÕÏÇøÓò
+	u8 upload_out1_state;									// ±ÚÕÏÆ÷Êä³öOUT1--×îÍâ
+	u8 upload_out2_state;									// ±ÚÕÏÆ÷Êä³öOUT2--ÖĞ¼ä
+	u8 upload_out3_state;									// ±ÚÕÏÆ÷Êä³öOUT3--×îÄÚ
 	
 	
     
@@ -55,10 +55,10 @@ typedef __packed struct
 
 OBS_AREA_EXT OBS_COMM_STRU OBS_Mesg_Stru;
 
-/* OBSå¯¹å¤–æ¥å£-å‘é€å¤„ç†ä»»åŠ¡ */
+/* OBS¶ÔÍâ½Ó¿Ú-·¢ËÍ´¦ÀíÈÎÎñ */
 extern void Obs_Area_UpperTX_Task(void);
 
-/* OBSå¯¹å¤–æ¥å£-æ¥æ”¶å¤„ç†ä»»åŠ¡ */
+/* OBS¶ÔÍâ½Ó¿Ú-½ÓÊÕ´¦ÀíÈÎÎñ */
 extern void Obs_Area_UpperRX_Task(void);
 
 

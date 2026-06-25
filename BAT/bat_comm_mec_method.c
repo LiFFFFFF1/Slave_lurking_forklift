@@ -1,17 +1,17 @@
 #include "bat_comm_mec_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "bat_comm_upper.h"
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Bat_CommReadMecData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–é˜Ÿåˆ—ç¼“å­˜æ•°æ®
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å›ž å€¼: æ— 
-*å¤‡    æ³¨ï¼šè‡ªå®šä¹‰åè®®æŽ¥æ”¶ 
+*º¯    Êý: void Bat_CommReadMecData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡¶ÓÁÐ»º´æÊý¾Ý
+*²Î    Êý:         
+*×÷    Õß: 
+*ÐÞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎÞ
+*±¸    ×¢£º×Ô¶¨ÒåÐ­Òé½ÓÊÕ 
 ****************************************************************************************/
 static void Bat_CommReadMecData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -28,7 +28,7 @@ static void Bat_CommReadMecData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 Serial->the_over_time =0;
                 if(Serial->step==0)
                 {
-                    if(dat == 0x3A)                         // èµ·å§‹ç 
+                    if(dat == 0x3A)                         // ÆðÊ¼Âë
                     {
                        Serial->step++;
                        Serial->recv_pbuffer[0] = dat;
@@ -37,7 +37,7 @@ static void Bat_CommReadMecData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step== 1)
                 {
-                    if(dat == 0x16)                             // åœ°å€ç 
+                    if(dat == 0x16)                             // µØÖ·Âë
                     {
                        Serial->step++;
                        Serial->recv_pbuffer[1] = dat;
@@ -51,7 +51,7 @@ static void Bat_CommReadMecData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step== 2)
                 {
-                    if(dat == 0x22)                         //å‘½ä»¤
+                    if(dat == 0x22)                         //ÃüÁî
                     {
                        Serial->step++;
                        Serial->recv_pbuffer[2] = dat;
@@ -64,7 +64,7 @@ static void Bat_CommReadMecData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step== 3)
                 {
-                    if(dat == 0x05)                         // æŽ¥æ”¶æ•°æ®å­—èŠ‚-é•¿åº¦
+                    if(dat == 0x05)                         // ½ÓÊÕÊý¾Ý×Ö½Ú-³¤¶È
                     {
                        Serial->step++;
                        Serial->recv_pbuffer[2] = dat;
@@ -78,7 +78,7 @@ static void Bat_CommReadMecData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 else
                 {
                     Serial->recv_pbuffer[Serial->count++] = dat;
-                    if(Serial->count>=11)//è¿”å›ž11ä¸ªå­—èŠ‚
+                    if(Serial->count>=11)//·µ»Ø11¸ö×Ö½Ú
                     {
                         
                         Serial->recv_complete_bit=Serial->count;
@@ -109,19 +109,19 @@ static void Bat_CommReadMecData(USART_STRU *Serial,QUEUE *QUEUE_com)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Bat_Comm_MecSend_Ask(void)
-*åŠŸ    èƒ½: å‘é€è¿›ç¨‹
-*å‚    æ•°:      
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å›ž å€¼: æ— 
-*å¤‡    æ³¨ï¼šè‡ªå®šä¹‰åè®®
+*º¯    Êý: void Bat_Comm_MecSend_Ask(void)
+*¹¦    ÄÜ: ·¢ËÍ½ø³Ì
+*²Î    Êý:      
+*×÷    Õß: 
+*ÐÞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎÞ
+*±¸    ×¢£º×Ô¶¨ÒåÐ­Òé
 *    
 ****************************************************************************************/
 void Bat_Comm_MecSend_Ask(void)
 {
 
-    u8 bat_ask_buf[7]= {0x3A, 0x16, 0x22, 0x01, 0xAA, 0xE3, 0x00};// è‡ªå®šä¹‰åè®®
+    u8 bat_ask_buf[7]= {0x3A, 0x16, 0x22, 0x01, 0xAA, 0xE3, 0x00};// ×Ô¶¨ÒåÐ­Òé
     
     Bsp_Usart_Usr_SendArray(Bat_Mesg_Stru.commun_port, bat_ask_buf, 7);
     
@@ -132,12 +132,12 @@ void Bat_Comm_MecSend_Ask(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void Bat_Comm_HxCustom_Handler(void)
-*åŠŸ    èƒ½: æŽ¥æ”¶å¤„ç†
-*å‚    æ•°:  Serial-å¯¹åº”ä¸²å£å‘é€ç»“æž„ä½“ï¼ŒQUEUE_com-å¯¹åº”æŽ¥æ”¶ä¸²å£ç»“æž„ä½“     
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å›ž å€¼: æ— 
+*º¯    Êý: void Bat_Comm_HxCustom_Handler(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êý:  Serial-¶ÔÓ¦´®¿Ú·¢ËÍ½á¹¹Ìå£¬QUEUE_com-¶ÔÓ¦½ÓÊÕ´®¿Ú½á¹¹Ìå     
+*×÷    Õß: 
+*ÐÞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎÞ
 ****************************************************************************************/
 void Bat_Comm_Mec_Handler(void)
 {
@@ -174,17 +174,17 @@ void Bat_Comm_Mec_Handler(void)
         return;
     }
     
-    Bat_CommReadMecData(Serial, QUEUE_com);               // è‡ªå®šä¹‰è§£ç 
+    Bat_CommReadMecData(Serial, QUEUE_com);               // ×Ô¶¨Òå½âÂë
     
     if(Serial->recv_complete_bit & 0x8000)
     {
-                                                            // ç”µæ± ç”µåŽ‹H8---æ•´æ•°å€¼-----å•ä½0.001V
+                                                            // µç³ØµçÑ¹H8---ÕûÊýÖµ-----µ¥Î»0.001V
        Bat_Mesg_Stru.voltage =(u16)((Serial->recv_pbuffer[7]<<8)+Serial->recv_pbuffer[6]);   //*10                          
         
-                                                            // ç”µæ± SOCç™¾åˆ†æ¯” 0-100%
+                                                            // µç³ØSOC°Ù·Ö±È 0-100%
        Bat_Mesg_Stru.soc_percent =Serial->recv_pbuffer[5];
 
-       Bat_Mesg_Stru.com_timer = 0;//æ¸…é›¶
+       Bat_Mesg_Stru.com_timer = 0;//ÇåÁã
        
        LED2_RED_UART4_RX =! LED2_RED_UART4_RX;
        

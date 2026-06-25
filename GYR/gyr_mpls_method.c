@@ -1,16 +1,16 @@
 #include "gyr_mpls_method.h"
 
-// ÂåÖÂê´‰ΩøÁî®Ê®°Âùó xxx_xxx_upper.h
+// ∞¸∫¨ π”√ƒ£øÈ xxx_xxx_upper.h
 #include "gyr_comm_upper.h"
 
 /***************************************************************************************
-*ÂáΩ    Êï∞: void GYR_Read_MPI240Data(USART_STRU *Serial,QUEUE *QUEUE_com)
-*Âäü    ËÉΩ: ËØªÂèñÁºìÂ≠ò
-*ÂèÇ    Êï∞:         
-*‰Ωú    ËÄÖ: 
-*‰øÆÊîπÊó∂Èó¥: 
-*Ëøî Âõû ÂÄº: Êó†
-*Â§á    Ê≥®ÔºöËá™ÂÆö‰πâÂçèËÆÆÊé•Êî∂
+*∫Ø     ˝: void GYR_Read_MPI240Data(USART_STRU *Serial,QUEUE *QUEUE_com)
+*π¶    ƒ‹: ∂¡»°ª∫¥Ê
+*≤Œ     ˝:         
+*◊˜    ’ﬂ: 
+*–ﬁ∏ƒ ±º‰: 
+*∑µ ªÿ ÷µ: Œﬁ
+*±∏    ◊¢£∫◊‘∂®“Â–≠“ÈΩ” ’
 ****************************************************************************************/
 static void GYR_Read_MPI240Data(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -27,7 +27,7 @@ static void GYR_Read_MPI240Data(USART_STRU *Serial,QUEUE *QUEUE_com)
                 Serial->the_over_time =0;
                 if(Serial->step==0)
                 {
-                    if(dat == GYR_Mesg_Stru.device_adr)     // Ëµ∑ÂßãÁ†Å
+                    if(dat == GYR_Mesg_Stru.device_adr)     // ∆ º¬Î
                     {
                        Serial->step++;
                        Serial->recv_pbuffer[0] = dat;
@@ -36,7 +36,7 @@ static void GYR_Read_MPI240Data(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step== 1)
                 {
-                    if(dat == 0x03 || dat == 0x10)          // ÂäüËÉΩÁ†Å
+                    if(dat == 0x03 || dat == 0x10)          // π¶ƒ‹¬Î
                     {
                        Serial->step++;
                        Serial->recv_pbuffer[1] = dat;
@@ -80,13 +80,13 @@ static void GYR_Read_MPI240Data(USART_STRU *Serial,QUEUE *QUEUE_com)
 }
 
 /***************************************************************************************
-*ÂáΩ    Êï∞: void GYR_Mpls_Send_Task(void)
-*Âäü    ËÉΩ: modbusÈóÆËØ¢Ê®°ÂºèÊåá‰ª§
-*ÂèÇ    Êï∞:      
-*‰Ωú    ËÄÖ: 
-*‰øÆÊîπÊó∂Èó¥: 
-*Ëøî Âõû ÂÄº: Êó†
-*Â§á    Ê≥®Ôºö
+*∫Ø     ˝: void GYR_Mpls_Send_Task(void)
+*π¶    ƒ‹: modbusŒ —Øƒ£ Ω÷∏¡Ó
+*≤Œ     ˝:      
+*◊˜    ’ﬂ: 
+*–ﬁ∏ƒ ±º‰: 
+*∑µ ªÿ ÷µ: Œﬁ
+*±∏    ◊¢£∫
 *    
 ****************************************************************************************/
 void GYR_Mpls_Send_Task(void)
@@ -133,13 +133,13 @@ void GYR_Mpls_Send_Task(void)
 
 
 /***************************************************************************************
-*ÂáΩ    Êï∞: void GYR_Mpls_ZeroSet_Task(void)
-*Âäü    ËÉΩ: modbus-ËßíÂ∫¶Ê∏ÖÈõ∂
-*ÂèÇ    Êï∞:      
-*‰Ωú    ËÄÖ: 
-*‰øÆÊîπÊó∂Èó¥: 
-*Ëøî Âõû ÂÄº: Êó†
-*Â§á    Ê≥®Ôºö
+*∫Ø     ˝: void GYR_Mpls_ZeroSet_Task(void)
+*π¶    ƒ‹: modbus-Ω«∂»«Â¡„
+*≤Œ     ˝:      
+*◊˜    ’ﬂ: 
+*–ﬁ∏ƒ ±º‰: 
+*∑µ ªÿ ÷µ: Œﬁ
+*±∏    ◊¢£∫
 *    
 ****************************************************************************************/
 void GYR_Mpls_ZeroSet_Task(void)
@@ -147,7 +147,7 @@ void GYR_Mpls_ZeroSet_Task(void)
     u16 gyr_crc_val=0;
     u8 gyr_zero_buf[13]= {0};
     
-    if(GYR_Mesg_Stru.can_com_type == GYR_COM_MODE)          // COMÈÄö‰ø°-Ê∏Ö0Êåá‰ª§
+    if(GYR_Mesg_Stru.can_com_type == GYR_COM_MODE)          // COMÕ®–≈-«Â0÷∏¡Ó
     {
                                                             // adr
         gyr_zero_buf[0] = GYR_Mesg_Stru.device_adr;                        
@@ -172,7 +172,7 @@ void GYR_Mpls_ZeroSet_Task(void)
         
     }
     
-    else if(GYR_Mesg_Stru.can_com_type == GYR_CAN_MODE)     // CANÈÄö‰ø°-Ê∏Ö0Êåá‰ª§
+    else if(GYR_Mesg_Stru.can_com_type == GYR_CAN_MODE)     // CANÕ®–≈-«Â0÷∏¡Ó
     {                                                  
         gyr_zero_buf[0] = 0xCE;                        
         gyr_zero_buf[1] = 0x04;     
@@ -187,12 +187,12 @@ void GYR_Mpls_ZeroSet_Task(void)
 
 
 /***************************************************************************************
-*ÂáΩ    Êï∞: void GYR_Mpls_RX_Task(void)
-*Âäü    ËÉΩ:  GYR-MPI240Â§ÑÁêÜËß£ÊûêÈòüÂàóÊï∞ÊçÆ
-*ÂèÇ    Êï∞:  Serial-ÂØπÂ∫î‰∏≤Âè£ÂèëÈÄÅÁªìÊûÑ‰ΩìÔºåQUEUE_com-ÂØπÂ∫îÊé•Êî∂‰∏≤Âè£ÁªìÊûÑ‰Ωì     
-*‰Ωú    ËÄÖ: 
-*‰øÆÊîπÊó∂Èó¥: 
-*Ëøî Âõû ÂÄº: Êó†
+*∫Ø     ˝: void GYR_Mpls_RX_Task(void)
+*π¶    ƒ‹:  GYR-MPI240¥¶¿ÌΩ‚Œˆ∂”¡– ˝æ›
+*≤Œ     ˝:  Serial-∂‘”¶¥Æø⁄∑¢ÀÕΩ·ππÃÂ£¨QUEUE_com-∂‘”¶Ω” ’¥Æø⁄Ω·ππÃÂ     
+*◊˜    ’ﬂ: 
+*–ﬁ∏ƒ ±º‰: 
+*∑µ ªÿ ÷µ: Œﬁ
 ****************************************************************************************/
 void GYR_Mpls_RX_Task(void)
 {
@@ -231,12 +231,12 @@ void GYR_Mpls_RX_Task(void)
         return;
     }
     
-    GYR_Read_MPI240Data(Serial,QUEUE_com);                  // Ëá™ÂÆö‰πâËß£Á†Å
+    GYR_Read_MPI240Data(Serial,QUEUE_com);                  // ◊‘∂®“ÂΩ‚¬Î
     
     if(Serial->recv_complete_bit & 0x8000)
     {
         get_len =Serial->recv_complete_bit&0x7FFF;
-        /* CRCÊ†°È™åÂà§Êñ≠ */
+        /* CRC–£—È≈–∂œ */
         tem16_val = Bsp_ModbusRTU_CRC(Serial->recv_pbuffer,(get_len-2));                                           
         
         if((GET_LOW_BYTE(tem16_val)==Serial->recv_pbuffer[get_len-2]) &&    
@@ -245,11 +245,11 @@ void GYR_Mpls_RX_Task(void)
             switch(Serial->recv_pbuffer[1])
             {
                 case 0x03:                                  
-                                                            // ËØªËßíÂ∫¶
+                                                            // ∂¡Ω«∂»
                     GYR_Mesg_Stru.angle =(float)((s16)(Serial->recv_pbuffer[3]<<8)+Serial->recv_pbuffer[4])/10.0F;
                     GYR_Mesg_Stru.angle_rawdata = (Serial->recv_pbuffer[3]<<8)+Serial->recv_pbuffer[4];
                     
-                                                            // ËØªËßíÈÄüÂ∫¶
+                                                            // ∂¡Ω«ÀŸ∂»
                     GYR_Mesg_Stru.angle_speed =(float)((s16)(Serial->recv_pbuffer[5]<<8)+Serial->recv_pbuffer[6])/10.0F;
                     GYR_Mesg_Stru.angle_speed_rawdata = (Serial->recv_pbuffer[5]<<8)+Serial->recv_pbuffer[6];
 
@@ -259,9 +259,9 @@ void GYR_Mpls_RX_Task(void)
                     
                     break;
                     
-                case 0x10:                                  // Ê∏ÖËßíÂ∫¶-ËøîÂõûÂÄº
+                case 0x10:                                  // «ÂΩ«∂»-∑µªÿ÷µ
                     if(GYR_Mesg_Stru.angle_clear_bit)
-                    {                                       // Ê∏ÖÈõ∂ÊàêÂäü
+                    {                                       // «Â¡„≥…π¶
                         if(Serial->recv_pbuffer[3] == 0x04)
                         {
                             GYR_Mesg_Stru.angle_clear_bit =0;   
@@ -281,19 +281,19 @@ void GYR_Mpls_RX_Task(void)
 }
 
 /***************************************************************************************
-*ÂáΩ    Êï∞: void GYR_Mpls_CAN_RX_Handler(USART_TypeDef* USARTx,u8 id_code)
-*Âäü    ËÉΩ: GYR-CANÊé•Êî∂Â§ÑÁêÜ
-*ÂèÇ    Êï∞:         
-*‰Ωú    ËÄÖ: 
-*‰øÆÊîπÊó∂Èó¥: 
-*Ëøî Âõû ÂÄº: Êó†
+*∫Ø     ˝: void GYR_Mpls_CAN_RX_Handler(USART_TypeDef* USARTx,u8 id_code)
+*π¶    ƒ‹: GYR-CANΩ” ’¥¶¿Ì
+*≤Œ     ˝:         
+*◊˜    ’ﬂ: 
+*–ﬁ∏ƒ ±º‰: 
+*∑µ ªÿ ÷µ: Œﬁ
 ****************************************************************************************/
 void GYR_Mpls_CAN_RX_Handler(CanRxMsg* RxMessage)
 {
 
     if(RxMessage->StdId == (0x580+GYR_Mesg_Stru.device_adr))
     {
-        /* MPLS_CAN ÈóÆËØ¢Ê®°Âºè*/
+        /* MPLS_CAN Œ —Øƒ£ Ω*/
         if(GYR_Mesg_Stru.commun_ask_mode == GYR_ASK_HAND && 
            GYR_Mesg_Stru.can_com_type == GYR_CAN_MODE &&
            GYR_Mesg_Stru.device_type  == GYR_TYPE_MPI240 &&
@@ -310,7 +310,7 @@ void GYR_Mpls_CAN_RX_Handler(CanRxMsg* RxMessage)
 
         }
         
-        /* MPLS_CAN ÈóÆËØ¢Ê®°Âºè--Ê∏Ö0 ÂõûÂ§ç */
+        /* MPLS_CAN Œ —Øƒ£ Ω--«Â0 ªÿ∏¥ */
         else if(GYR_Mesg_Stru.commun_ask_mode == GYR_ASK_HAND && 
            GYR_Mesg_Stru.can_com_type == GYR_CAN_MODE &&
            GYR_Mesg_Stru.device_type  == GYR_TYPE_MPI240 &&
@@ -324,7 +324,7 @@ void GYR_Mpls_CAN_RX_Handler(CanRxMsg* RxMessage)
             }
         }
         
-        /* MPLS_CAN ‰∏ªÂä®‰∏ä‰º†Ê®°Âºè*/
+        /* MPLS_CAN ÷˜∂Ø…œ¥´ƒ£ Ω*/
         else if(GYR_Mesg_Stru.commun_ask_mode == GYR_ASK_AUTO && 
                 GYR_Mesg_Stru.can_com_type == GYR_CAN_MODE &&
                 GYR_Mesg_Stru.device_type  == GYR_TYPE_MPI240 && 

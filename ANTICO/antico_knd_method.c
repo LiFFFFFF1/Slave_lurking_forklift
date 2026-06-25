@@ -1,16 +1,16 @@
 #include "antico_knd_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "antico_upper.h"
 
 /***************************************************************************************
-*å‡½    æ•°: void ANTICO_Read_KND_Data(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void ANTICO_Read_KND_Data(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æ
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º
 ****************************************************************************************/
 static void ANTICO_Read_KND_Data(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -28,7 +28,7 @@ static void ANTICO_Read_KND_Data(USART_STRU *Serial,QUEUE *QUEUE_com)
 
                 if(Serial->step==0)
                 {
-                    if(dat == ANTICO_Mesg_Stru.device_adr)     // èµ·å§‹ç 
+                    if(dat == ANTICO_Mesg_Stru.device_adr)     // ÆğÊ¼Âë
                     {
                         Serial->step++;
                         Serial->recv_pbuffer[0] = dat;
@@ -38,7 +38,7 @@ static void ANTICO_Read_KND_Data(USART_STRU *Serial,QUEUE *QUEUE_com)
 
                 else if(Serial->step== 1)
                 {
-                    if(dat == 0x03)          // åŠŸèƒ½ç  || dat == 0x10
+                    if(dat == 0x03)          // ¹¦ÄÜÂë || dat == 0x10
                     {
                         Serial->step++;
                         Serial->recv_pbuffer[1] = dat;
@@ -51,7 +51,7 @@ static void ANTICO_Read_KND_Data(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step== 2)
                 {
-                    if(dat == 0x08)          //é•¿åº¦
+                    if(dat == 0x08)          //³¤¶È
                     {
                         Serial->step++;
                         Serial->recv_pbuffer[2] = dat;
@@ -97,13 +97,13 @@ static void ANTICO_Read_KND_Data(USART_STRU *Serial,QUEUE *QUEUE_com)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void ANTICO_KND_Send_Task(void)
-*åŠŸ    èƒ½: modbusé—®è¯¢æ¨¡å¼æŒ‡ä»¤
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void ANTICO_KND_Send_Task(void)
+*¹¦    ÄÜ: modbusÎÊÑ¯Ä£Ê½Ö¸Áî
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º
 *
 ****************************************************************************************/
 void ANTICO_KND_Send_Task(void)
@@ -112,11 +112,11 @@ void ANTICO_KND_Send_Task(void)
     u8 antico_ask_buf[8]= {0};
     u8 fork_tip_touch_flag = 0;
 
-    //ä¸Šç”µå»¶æ—¶8ç§’ï¼Œç­‰å¾…æ¨¡å—å‡†å¤‡å°±ç»ª
+    //ÉÏµçÑÓÊ±8Ãë£¬µÈ´ıÄ£¿é×¼±¸¾ÍĞ÷
     if(ANTICO_Mesg_Stru.power_on_delay < 160)//160*50ms=8000ms=8s
     {
         ANTICO_Mesg_Stru.power_on_delay++;
-        return;//å»¶æ—¶æœŸé—´ç›´æ¥è¿”å›ï¼Œä¸æ‰§è¡Œä»»ä½•ä¸¾å‡æ“ä½œ
+        return;//ÑÓÊ±ÆÚ¼äÖ±½Ó·µ»Ø£¬²»Ö´ĞĞÈÎºÎ¾ÙÉı²Ù×÷
     }
 
     if(ANTICO_Mesg_Stru.commun_ask_mode != EM_ANTICO_ASK_MODBUS)
@@ -149,18 +149,18 @@ void ANTICO_KND_Send_Task(void)
     }
 
 
-    if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 5) == 0)//è§¦è¾¹æœªå±è”½
+    if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 5) == 0)//´¥±ßÎ´ÆÁ±Î
     {
-        //è¶…æ—¶è®¡æ—¶
+        //³¬Ê±¼ÆÊ±
         if(++ANTICO_Mesg_Stru.com_timer > 20)//x50ms
         {
             ANTICO_Mesg_Stru.com_timer = 0;
-            setbit(ANTICO_Mesg_Stru.err_state, 1);//è§¦è¾¹æ¨¡å—æ‰çº¿
-            ANTICO_Mesg_Stru.get_adc_voltage[0] = 0;//æ•°æ®æ¸…é›¶
+            setbit(ANTICO_Mesg_Stru.err_state, 1);//´¥±ßÄ£¿éµôÏß
+            ANTICO_Mesg_Stru.get_adc_voltage[0] = 0;//Êı¾İÇåÁã
             ANTICO_Mesg_Stru.get_adc_voltage[1] = 0;
         }
 
-        //è§¦è¾¹æ–­çº¿æ£€æµ‹
+        //´¥±ß¶ÏÏß¼ì²â
         if(ANTICO_Mesg_Stru.get_adc_voltage[0] < ADC_VOLT_MIN)
 	    ANTICO_Mesg_Stru.lineoff_timer[0] ++;
         else ANTICO_Mesg_Stru.lineoff_timer[0] = 0;
@@ -168,7 +168,7 @@ void ANTICO_KND_Send_Task(void)
         if(ANTICO_Mesg_Stru.lineoff_timer[0] > 20)//x50ms
         {
 	    ANTICO_Mesg_Stru.lineoff_timer[0] = 0;
-	    setbit(ANTICO_Mesg_Stru.err_state, 2);//è½¦ä½“è§¦è¾¹æ–­çº¿
+	    setbit(ANTICO_Mesg_Stru.err_state, 2);//³µÌå´¥±ß¶ÏÏß
         }
 
         if(ANTICO_Mesg_Stru.get_adc_voltage[1] < ADC_VOLT_MIN)
@@ -178,42 +178,42 @@ void ANTICO_KND_Send_Task(void)
         if(ANTICO_Mesg_Stru.lineoff_timer[1] > 20)//x50ms
         {
 	    ANTICO_Mesg_Stru.lineoff_timer[1] = 0;
-            if(ANTICO_Mesg_Stru.tray_connect_state == 1)//æ‰˜ç›˜å·²è¿æ¥
-	        setbit(ANTICO_Mesg_Stru.err_state, 3);//æ‰˜ç›˜è§¦è¾¹æ–­çº¿
+            if(ANTICO_Mesg_Stru.tray_connect_state == 1)//ÍĞÅÌÒÑÁ¬½Ó
+	        setbit(ANTICO_Mesg_Stru.err_state, 3);//ÍĞÅÌ´¥±ß¶ÏÏß
         }
     
-        //è§¦è¾¹è§¦å‘æ£€æµ‹
+        //´¥±ß´¥·¢¼ì²â
         if(ANTICO_Mesg_Stru.get_adc_voltage[0] > ADC_VOLT_MAX)
         {
-	    setbit(ANTICO_Mesg_Stru.err_state, 4);//è½¦ä½“è§¦è¾¹è§¦å‘
+	    setbit(ANTICO_Mesg_Stru.err_state, 4);//³µÌå´¥±ß´¥·¢
         }
 
         if((ANTICO_Mesg_Stru.get_adc_voltage[1] > ADC_VOLT_MAX
             && ANTICO_Mesg_Stru.tray_connect_state == 1)
             || fork_tip_touch_flag == 1)
         {
-	       setbit(ANTICO_Mesg_Stru.err_state, 5);//æ‰˜ç›˜è§¦è¾¹è§¦å‘/å‰å°–è§¦è¾¹å¤ç”¨
+	       setbit(ANTICO_Mesg_Stru.err_state, 5);//ÍĞÅÌ´¥±ß´¥·¢/²æ¼â´¥±ß¸´ÓÃ
         }
         
     }
-    else if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 5) == 1)//è§¦è¾¹å±è”½
+    else if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 5) == 1)//´¥±ßÆÁ±Î
     {
         ANTICO_Mesg_Stru.com_timer = 0;
-        clrbit(ANTICO_Mesg_Stru.err_state, 1);//è§¦è¾¹æ¨¡å—æ‰çº¿-å±è”½
+        clrbit(ANTICO_Mesg_Stru.err_state, 1);//´¥±ßÄ£¿éµôÏß-ÆÁ±Î
 
 	ANTICO_Mesg_Stru.lineoff_timer[0] = 0;
-	clrbit(ANTICO_Mesg_Stru.err_state, 2);//è½¦ä½“è§¦è¾¹æ–­çº¿-å±è”½
+	clrbit(ANTICO_Mesg_Stru.err_state, 2);//³µÌå´¥±ß¶ÏÏß-ÆÁ±Î
 
 	ANTICO_Mesg_Stru.lineoff_timer[1] = 0;
-	clrbit(ANTICO_Mesg_Stru.err_state, 3);//æ‰˜ç›˜è§¦è¾¹æ–­çº¿-å±è”½
+	clrbit(ANTICO_Mesg_Stru.err_state, 3);//ÍĞÅÌ´¥±ß¶ÏÏß-ÆÁ±Î
 
-	clrbit(ANTICO_Mesg_Stru.err_state, 4);//è½¦ä½“è§¦è¾¹è§¦å‘-å±è”½
-	clrbit(ANTICO_Mesg_Stru.err_state, 5);//å‰å°ºè§¦è¾¹è§¦å‘-å±è”½
+	clrbit(ANTICO_Mesg_Stru.err_state, 4);//³µÌå´¥±ß´¥·¢-ÆÁ±Î
+	clrbit(ANTICO_Mesg_Stru.err_state, 5);//²æ³ß´¥±ß´¥·¢-ÆÁ±Î
 
     }
     
     
-    //æŠ¥è­¦å¤ä½
+    //±¨¾¯¸´Î»
     if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 0) == 1
         &&ANTICO_Mesg_Stru.err_state > 0)  
     {
@@ -224,12 +224,12 @@ void ANTICO_KND_Send_Task(void)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void ANTICO_KND_RX_Task(void)
-*åŠŸ    èƒ½:  å¤„ç†è§£æé˜Ÿåˆ—æ•°æ®
-*å‚    æ•°:  Serial-å¯¹åº”ä¸²å£å‘é€ç»“æ„ä½“ï¼ŒQUEUE_com-å¯¹åº”æ¥æ”¶ä¸²å£ç»“æ„ä½“
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void ANTICO_KND_RX_Task(void)
+*¹¦    ÄÜ:  ´¦Àí½âÎö¶ÓÁĞÊı¾İ
+*²Î    Êı:  Serial-¶ÔÓ¦´®¿Ú·¢ËÍ½á¹¹Ìå£¬QUEUE_com-¶ÔÓ¦½ÓÊÕ´®¿Ú½á¹¹Ìå
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void ANTICO_KND_RX_Task(void)
 {
@@ -268,13 +268,13 @@ void ANTICO_KND_RX_Task(void)
         return;
     }
 
-    ANTICO_Read_KND_Data(Serial,QUEUE_com);                  // è‡ªå®šä¹‰è§£ç 
+    ANTICO_Read_KND_Data(Serial,QUEUE_com);                  // ×Ô¶¨Òå½âÂë
 
     if(Serial->recv_complete_bit & 0x8000)
     {
         get_len =Serial->recv_complete_bit&0x7FFF;
 
-        /* CRCæ ¡éªŒåˆ¤æ–­ */
+        /* CRCĞ£ÑéÅĞ¶Ï */
         tem16_val = Bsp_ModbusRTU_CRC(Serial->recv_pbuffer,(get_len-2));
 
         if((GET_LOW_BYTE(tem16_val)==Serial->recv_pbuffer[get_len-2]) &&

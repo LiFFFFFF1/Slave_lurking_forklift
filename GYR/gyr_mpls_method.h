@@ -2,21 +2,21 @@
 #define _GYR_MPLS_METHOD_H
 
 
-// ä½¿ç”¨åˆ°çš„åº•å±‚åŸºç¡€æ–‡ä»¶
+// Ê¹ÓÃµ½µÄµ×²ã»ù´¡ÎÄ¼ş
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"	
 #include "bsp_modbusrtu.h"
 
-/* GYR-æ¸…0 æŒ‡ä»¤*/   
+/* GYR-Çå0 Ö¸Áî*/   
 extern void GYR_Mpls_ZeroSet_Task(void);  
 
-/* GYR-å‘é€æŸ¥è¯¢ä»»åŠ¡*/
+/* GYR-·¢ËÍ²éÑ¯ÈÎÎñ*/
 extern void GYR_Mpls_Send_Task(void);
 
-/* GYR-æ¥æ”¶å¤„ç†ä»»åŠ¡*/
+/* GYR-½ÓÊÕ´¦ÀíÈÎÎñ*/
 extern void GYR_Mpls_RX_Task(void);
 
-/* GYR-CANæ¥æ”¶å¤„ç†ä»»åŠ¡*/
+/* GYR-CAN½ÓÊÕ´¦ÀíÈÎÎñ*/
 extern void GYR_Mpls_CAN_RX_Handler(CanRxMsg* RxMessage);
 #endif
 

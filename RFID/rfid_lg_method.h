@@ -16,8 +16,8 @@
 #endif 
 
 
-#define  RFID_LG_REC_LEN1            33  //é‡Œæ ¼RFIDè¯»å¡åä¸Šä¼ æ•°æ®é•¿åº¦
-#define  RFID_LG_REC_LEN2            25  //é‡Œæ ¼RFIDæ— å¡æ—¶ä¸Šä¼ æ•°æ®é•¿åº¦
+#define  RFID_LG_REC_LEN1            33  //Àï¸ñRFID¶Á¿¨ºóÉÏ´«Êı¾İ³¤¶È
+#define  RFID_LG_REC_LEN2            25  //Àï¸ñRFIDÎŞ¿¨Ê±ÉÏ´«Êı¾İ³¤¶È
 
 void RFID_LG_485_RX_Complete_Handler(u8 port_com);
 RFID_LG_EXT void RFID_LG_485_Write_Send(void);

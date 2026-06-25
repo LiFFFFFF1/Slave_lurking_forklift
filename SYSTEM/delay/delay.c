@@ -3,101 +3,101 @@
 
 #define USR_CONFIG_TICK_HZ      (1000)
 
-static u8  fac_us=0;                            //uså»¶æ—¶å€ä¹˜æ•°
+static u8  fac_us=0;                            //usÑÓÊ±±¶³ËÊı
 
 /**
-  * å‡½æ•°åŠŸèƒ½: åˆå§‹åŒ–å»¶è¿Ÿå‡½æ•°
-  * SYSCLK:ç³»ç»Ÿæ—¶é’Ÿ
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜:
+  * º¯Êı¹¦ÄÜ: ³õÊ¼»¯ÑÓ³Ùº¯Êı
+  * SYSCLK:ÏµÍ³Ê±ÖÓ
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷:
   */
 void Bsp_Delay_Init(unsigned int sys_Clock)
 {
 
     u32 reload =0;
 
-    SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);   //é€‰æ‹©å¤–éƒ¨æ—¶é’Ÿ  HCLK/8
-    fac_us=sys_Clock/8000000;                               //ä¸ºç³»ç»Ÿæ—¶é’Ÿçš„1/8
-    reload =SystemCoreClock/8000000;                        //æ¯ç§’é’Ÿçš„è®¡æ•°æ¬¡æ•° å•ä½ä¸ºM
-    reload *=(1000000/USR_CONFIG_TICK_HZ);                  //æ ¹æ®configTICK_RATE_HZè®¾å®šæº¢å‡ºæ—¶é—´
-    //reloadä¸º24ä½å¯„å­˜å™¨,æœ€å¤§å€¼:16777216,åœ¨72Mä¸‹,çº¦åˆ0.233så·¦å³
-    // fac_ms=1000/USR_CONFIG_TICK_HZ;                           //éOSä¸‹,ä»£è¡¨æ¯ä¸ªmséœ€è¦çš„systickæ—¶é’Ÿæ•°
+    SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);   //Ñ¡ÔñÍâ²¿Ê±ÖÓ  HCLK/8
+    fac_us=sys_Clock/8000000;                               //ÎªÏµÍ³Ê±ÖÓµÄ1/8
+    reload =SystemCoreClock/8000000;                        //Ã¿ÃëÖÓµÄ¼ÆÊı´ÎÊı µ¥Î»ÎªM
+    reload *=(1000000/USR_CONFIG_TICK_HZ);                  //¸ù¾İconfigTICK_RATE_HZÉè¶¨Òç³öÊ±¼ä
+    //reloadÎª24Î»¼Ä´æÆ÷,×î´óÖµ:16777216,ÔÚ72MÏÂ,Ô¼ºÏ0.233s×óÓÒ
+    // fac_ms=1000/USR_CONFIG_TICK_HZ;                           //·ÇOSÏÂ,´ú±íÃ¿¸ömsĞèÒªµÄsystickÊ±ÖÓÊı
 
-    SysTick->CTRL|=SysTick_CTRL_TICKINT_Msk;                //å¼€å¯SYSTICKä¸­æ–­
-    SysTick->LOAD=reload;                                   //æ¯1/configTICK_RATE_HZç§’ä¸­æ–­ä¸€æ¬¡
-    SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk;                 //å¼€å¯SYSTICK
+    SysTick->CTRL|=SysTick_CTRL_TICKINT_Msk;                //¿ªÆôSYSTICKÖĞ¶Ï
+    SysTick->LOAD=reload;                                   //Ã¿1/configTICK_RATE_HZÃëÖĞ¶ÏÒ»´Î
+    SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk;                 //¿ªÆôSYSTICK
 }
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: å»¶æ—¶nus
-  * nusä¸ºè¦å»¶æ—¶çš„usæ•°.
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜:
+  * º¯Êı¹¦ÄÜ: ÑÓÊ±nus
+  * nusÎªÒªÑÓÊ±µÄusÊı.
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷:
   */
 void Bsp_Delay_US(u32 nus)
 {
     u32 ticks;
     u32 told,tnow,tcnt=0;
-    u32 reload=SysTick->LOAD;               //LOADçš„å€¼
-    ticks=nus*fac_us;                       //éœ€è¦çš„èŠ‚æ‹æ•°
-    told=SysTick->VAL;                      //åˆšè¿›å…¥æ—¶çš„è®¡æ•°å™¨å€¼
+    u32 reload=SysTick->LOAD;               //LOADµÄÖµ
+    ticks=nus*fac_us;                       //ĞèÒªµÄ½ÚÅÄÊı
+    told=SysTick->VAL;                      //¸Õ½øÈëÊ±µÄ¼ÆÊıÆ÷Öµ
     while(1)
     {
         tnow=SysTick->VAL;
         if(tnow!=told)
         {
-            if(tnow<told)tcnt+=told-tnow;   //è¿™é‡Œæ³¨æ„ä¸€ä¸‹SYSTICKæ˜¯ä¸€ä¸ªé€’å‡çš„è®¡æ•°å™¨å°±å¯ä»¥äº†.
+            if(tnow<told)tcnt+=told-tnow;   //ÕâÀï×¢ÒâÒ»ÏÂSYSTICKÊÇÒ»¸öµİ¼õµÄ¼ÆÊıÆ÷¾Í¿ÉÒÔÁË.
             else tcnt+=reload-tnow+told;
             told=tnow;
-            if(tcnt>=ticks)break;           //æ—¶é—´è¶…è¿‡/ç­‰äºè¦å»¶è¿Ÿçš„æ—¶é—´,åˆ™é€€å‡º.
+            if(tcnt>=ticks)break;           //Ê±¼ä³¬¹ı/µÈÓÚÒªÑÓ³ÙµÄÊ±¼ä,ÔòÍË³ö.
         }
     };
 }
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: å»¶æ—¶nms
-  * nmsä¸ºè¦å»¶æ—¶çš„msæ•°.
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜:
-    æ³¨æ„nmsçš„èŒƒå›´
-    SysTick->LOADä¸º24ä½å¯„å­˜å™¨,æ‰€ä»¥,æœ€å¤§å»¶æ—¶ä¸º:
+  * º¯Êı¹¦ÄÜ: ÑÓÊ±nms
+  * nmsÎªÒªÑÓÊ±µÄmsÊı.
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷:
+    ×¢ÒânmsµÄ·¶Î§
+    SysTick->LOADÎª24Î»¼Ä´æÆ÷,ËùÒÔ,×î´óÑÓÊ±Îª:
     nms<=0xffffff*8*1000/SYSCLK
-    SYSCLKå•ä½ä¸ºHz,nmså•ä½ä¸ºms
-    å¯¹72Mæ¡ä»¶ä¸‹,nms<=1864
+    SYSCLKµ¥Î»ÎªHz,nmsµ¥Î»Îªms
+    ¶Ô72MÌõ¼şÏÂ,nms<=1864
   */
 void Bsp_Delay_MS(u16 nms)
 {
-    Bsp_Delay_US((u32)(nms*1000));              //æ™®é€šæ–¹å¼å»¶æ—¶
+    Bsp_Delay_US((u32)(nms*1000));              //ÆÕÍ¨·½Ê½ÑÓÊ±
 }
 
 /**
-  * å‡½æ•°åŠŸèƒ½: æ»´ç­”æ—¶é’Ÿä¸­æ–­-1ms
+  * º¯Êı¹¦ÄÜ: µÎ´ğÊ±ÖÓÖĞ¶Ï-1ms
   *
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜:
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷:
   */
 void SysTick_Handler()
 {
     static u16 time_all_cnt=0;
     time_all_cnt++;
 
-    Tick_Time_Stru.rx_deal_ms_bit =1;               // å¤„ç†æ¥æ”¶
+    Tick_Time_Stru.rx_deal_ms_bit =1;               // ´¦Àí½ÓÊÕ
 
     if((time_all_cnt%5) == 0)
     {
-        Tick_Time_Stru.io_deal_ms_bit=1;       //  IOå¤„ç†æ—¶é—´é—´éš”
+        Tick_Time_Stru.io_deal_ms_bit=1;       //  IO´¦ÀíÊ±¼ä¼ä¸ô
     }    
     
     if((time_all_cnt%10) == 0)
     {
-        Tick_Time_Stru.motor_send_time_bit =1;      //  å‘é€è¡Œèµ°ç”µæœºå‘¨æœŸ
+        Tick_Time_Stru.motor_send_time_bit =1;      //  ·¢ËÍĞĞ×ßµç»úÖÜÆÚ
     }
 
     if((time_all_cnt%15) == 0)
     {
-        Tick_Time_Stru.magnet_send_time_bit =1;     //  ç£å¯¼èˆªå‘é€æŸ¥è¯¢æ—¶é—´é—´éš”
+        Tick_Time_Stru.magnet_send_time_bit =1;     //  ´Åµ¼º½·¢ËÍ²éÑ¯Ê±¼ä¼ä¸ô
     }
     
     if((time_all_cnt%20) == 0)
@@ -107,20 +107,20 @@ void SysTick_Handler()
     
     if((time_all_cnt%30) == 0)
     {
-        Tick_Time_Stru.plc_to_hub_ask_bit =1;     //  ç£å¯¼èˆªå‘é€æŸ¥è¯¢æ—¶é—´é—´éš”
+        Tick_Time_Stru.plc_to_hub_ask_bit =1;     //  ´Åµ¼º½·¢ËÍ²éÑ¯Ê±¼ä¼ä¸ô
     }
     
     if((time_all_cnt%50) == 0)
     {
-        Tick_Time_Stru.rfid_send_time_bit =1;       //  å‘é€RFIDæ—¶é—´é—´éš”
+        Tick_Time_Stru.rfid_send_time_bit =1;       //  ·¢ËÍRFIDÊ±¼ä¼ä¸ô
     }
 
     if((time_all_cnt%100) == 0)
     {
-        Tick_Time_Stru.obs_send_time_bit =1;        //  å£éšœå™¨å‘é€æŸ¥è¯¢æ—¶é—´é—´éš”
+        Tick_Time_Stru.obs_send_time_bit =1;        //  ±ÚÕÏÆ÷·¢ËÍ²éÑ¯Ê±¼ä¼ä¸ô
     }
 
-    if((time_all_cnt%500) == 0)                     //  ç³»ç»ŸæŒ‡ç¤ºç¯
+    if((time_all_cnt%500) == 0)                     //  ÏµÍ³Ö¸Ê¾µÆ
     {
         Tick_Time_Stru.time_sys_ms =1;
         time_all_cnt = 0;

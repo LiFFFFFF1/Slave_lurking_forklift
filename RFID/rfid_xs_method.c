@@ -1,19 +1,19 @@
 #define RFID_XS_GLOBALS
 #include "rfid_xs_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "rfid_upper.h"
 
-// ç§æœ‰å®šä¹‰
+// Ë½ÓĞ¶¨Òå
 static u8 XS_Write_SendBuf[16] = {0};
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜æ•°æ®ä¸€å¸§
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æÊı¾İÒ»Ö¡
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 static void RFID_XS_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -134,12 +134,12 @@ static void RFID_XS_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_485_RX_Complete_Handler(void)
-*åŠŸ    èƒ½: æ¥æ”¶å¤„ç†
-*å‚    æ•°:   
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void RFID_485_RX_Complete_Handler(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êı:   
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void RFID_XS_485_RX_Complete_Handler(void)
 {
@@ -147,7 +147,7 @@ void RFID_XS_485_RX_Complete_Handler(void)
     USART_STRU *Serial;
     QUEUE *QUEUE_com;
     
-    /* éCOMæ¨¡å¼ä¸‹ */
+    /* ·ÇCOMÄ£Ê½ÏÂ */
     if(RFID_Upper_Mesg_Stru.can_com_type != EM_SET_PORT_COM )
     {
         return;
@@ -183,17 +183,17 @@ void RFID_XS_485_RX_Complete_Handler(void)
         return;
     }
 
-    RFID_XS_ReadbufData(Serial,QUEUE_com);                   // è·å–å¯¹åº”ä¸²å£å¯¹æ¥æ•°æ®
+    RFID_XS_ReadbufData(Serial,QUEUE_com);                   // »ñÈ¡¶ÔÓ¦´®¿Ú¶Ô½ÓÊı¾İ
 
     if(Serial->recv_complete_bit & 0x8000)
     { 
-        /* CRCæ ¡éªŒåˆ¤æ–­ */
+        /* CRCĞ£ÑéÅĞ¶Ï */
         crc_val = Bsp_ModbusRTU_CRC(Serial->recv_pbuffer,RFID_XS_REC_LEN-2);
-        // æ ¡éªŒ é€šè¿‡
+        // Ğ£Ñé Í¨¹ı
         if(GET_LOW_BYTE(crc_val)==Serial->recv_pbuffer[RFID_XS_REC_LEN-2] &&     
            GET_HIGH_BYTE(crc_val)==Serial->recv_pbuffer[RFID_XS_REC_LEN-1])
         {
-            //RFIDç¼–å·
+            //RFID±àºÅ
             RFID_Upper_Mesg_Stru.read_number  = (Serial->recv_pbuffer[8]&0x0f)*1000;   
             RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[9]&0x0f)*100;   
             RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[10]&0x0f)*10;   
@@ -209,14 +209,14 @@ void RFID_XS_485_RX_Complete_Handler(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_XS_485_Write_Send(void)
-*åŠŸ    èƒ½: 
-*å‚    æ•°:    
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void RFID_XS_485_Write_Send(void)
+*¹¦    ÄÜ: 
+*²Î    Êı:    
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
-void RFID_XS_485_Write_Send(void)//å†™å¡æ—¶å‘é€æ•°æ®
+void RFID_XS_485_Write_Send(void)//Ğ´¿¨Ê±·¢ËÍÊı¾İ
 {
     u16 crctemp = 0;
     
@@ -230,10 +230,10 @@ void RFID_XS_485_Write_Send(void)//å†™å¡æ—¶å‘é€æ•°æ®
             XS_Write_SendBuf[3] = 0x64;
             XS_Write_SendBuf[4] = 0x65;
             XS_Write_SendBuf[5] = 0x01;
-            XS_Write_SendBuf[6] = RFID_Upper_Mesg_Stru.write_number / 1000;//ç¼–å·
-            XS_Write_SendBuf[7] = (RFID_Upper_Mesg_Stru.write_number % 1000) / 100;//ç¼–å·
-            XS_Write_SendBuf[8] = (RFID_Upper_Mesg_Stru.write_number % 1000) % 100 / 10;//ç¼–å·
-            XS_Write_SendBuf[9] = (RFID_Upper_Mesg_Stru.write_number % 1000) % 100 % 10;//ç¼–å·
+            XS_Write_SendBuf[6] = RFID_Upper_Mesg_Stru.write_number / 1000;//±àºÅ
+            XS_Write_SendBuf[7] = (RFID_Upper_Mesg_Stru.write_number % 1000) / 100;//±àºÅ
+            XS_Write_SendBuf[8] = (RFID_Upper_Mesg_Stru.write_number % 1000) % 100 / 10;//±àºÅ
+            XS_Write_SendBuf[9] = (RFID_Upper_Mesg_Stru.write_number % 1000) % 100 % 10;//±àºÅ
             XS_Write_SendBuf[10] = 0x00;
             XS_Write_SendBuf[11] = 0x00;
             XS_Write_SendBuf[12] = 0x00;
@@ -243,10 +243,10 @@ void RFID_XS_485_Write_Send(void)//å†™å¡æ—¶å‘é€æ•°æ®
             XS_Write_SendBuf[14] = crctemp&0x00ff;
             XS_Write_SendBuf[15] = (crctemp>>8)&0x00ff;
             
-            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &XS_Write_SendBuf[0],16);//å‘é€æ•°æ®
+            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &XS_Write_SendBuf[0],16);//·¢ËÍÊı¾İ
            
             
-            RFID_Upper_Mesg_Stru.write_number = 0;//æ¸…é›¶
+            RFID_Upper_Mesg_Stru.write_number = 0;//ÇåÁã
             
         }
 

@@ -16,57 +16,57 @@
    
 typedef enum
 {
-    GYR_TYPE_MPI240     = 1,                                // æ›¼æ™®æ‹‰æ–¯-MPI240é™€èºä»ª
+    GYR_TYPE_MPI240     = 1,                                // ÂüÆÕÀ­Ë¹-MPI240ÍÓÂİÒÇ
 
     
 }GYR_TYPE_MODE;   
    
 typedef enum
 {
-    GYR_CAN_MODE            = 1,                            //  CAN-é€šä¿¡æ¨¡å¼
-    GYR_COM_MODE            = 2,                            //  COM-æ¨¡å¼
+    GYR_CAN_MODE            = 1,                            //  CAN-Í¨ĞÅÄ£Ê½
+    GYR_COM_MODE            = 2,                            //  COM-Ä£Ê½
     
 }GYR_CAN_COM_MODE;  
 
 typedef enum
 {
-    GYR_ASK_AUTO   = 1,                                     //  ä¸»åŠ¨ä¸Šä¼ 
-    GYR_ASK_HAND   = 2,                                     //  é—®è¯¢æ¨¡å¼
+    GYR_ASK_AUTO   = 1,                                     //  Ö÷¶¯ÉÏ´«
+    GYR_ASK_HAND   = 2,                                     //  ÎÊÑ¯Ä£Ê½
     
 }GYR_ASK_MODE; 
 
 typedef __packed struct
 {
-    USART_TypeDef* commun_port;                             // è®¾ç½®é€šä¿¡ç«¯å£å·,ä¸²å£ç«¯å£
-    u8 can_com_type;                                        // 1-CAN, 2-comæ¨¡å¼
+    USART_TypeDef* commun_port;                             // ÉèÖÃÍ¨ĞÅ¶Ë¿ÚºÅ,´®¿Ú¶Ë¿Ú
+    u8 can_com_type;                                        // 1-CAN, 2-comÄ£Ê½
     u8 device_type;                                         // 
-    u8 device_adr;                                          // è®¾å¤‡åœ°å€
-    u8 commun_ask_mode;                                     // é€šä¿¡åº”ç­”æ¨¡å¼
+    u8 device_adr;                                          // Éè±¸µØÖ·
+    u8 commun_ask_mode;                                     // Í¨ĞÅÓ¦´ğÄ£Ê½
     
-    u32 baud_rate;                                          // æ³¢ç‰¹ç‡
-    u16 wordlength;                                         // æ•°æ®å®½åº¦
+    u32 baud_rate;                                          // ²¨ÌØÂÊ
+    u16 wordlength;                                         // Êı¾İ¿í¶È
     u16 parity; 
     
-    float angle;                                            // å½“å‰è§’åº¦
-    float angle_speed;                                      // å½“å‰è§’é€Ÿåº¦
-    bool angle_clear_bit;                                   // æ¸…é›¶æ ‡å¿—
+    float angle;                                            // µ±Ç°½Ç¶È
+    float angle_speed;                                      // µ±Ç°½ÇËÙ¶È
+    bool angle_clear_bit;                                   // ÇåÁã±êÖ¾
 
-    u16 angle_rawdata;                                  //è§’åº¦-é™€èºä»ªä¸Šä¼ åŸå§‹æ•°æ®
-    u16 angle_speed_rawdata;                        //è§’é€Ÿåº¦-é™€èºä»ªä¸Šä¼ åŸå§‹æ•°æ®
+    u16 angle_rawdata;                                  //½Ç¶È-ÍÓÂİÒÇÉÏ´«Ô­Ê¼Êı¾İ
+    u16 angle_speed_rawdata;                        //½ÇËÙ¶È-ÍÓÂİÒÇÉÏ´«Ô­Ê¼Êı¾İ
 
-    u16 com_timer;                                      //é€šä¿¡è®¡æ—¶
+    u16 com_timer;                                      //Í¨ĞÅ¼ÆÊ±
 
 }GYR_COMM_STRU;
 
 GYR_COMM_EXT GYR_COMM_STRU GYR_Mesg_Stru;
 
-/* GYRå¯¹å¤–æ¥å£-å‘é€å¤„ç†ä»»åŠ¡ */
+/* GYR¶ÔÍâ½Ó¿Ú-·¢ËÍ´¦ÀíÈÎÎñ */
 extern void GYR_UpperTX_Task(void);
 
-/* GYRå¯¹å¤–æ¥å£-æ¥æ”¶å¤„ç†ä»»åŠ¡ */
+/* GYR¶ÔÍâ½Ó¿Ú-½ÓÊÕ´¦ÀíÈÎÎñ */
 extern void GYR_UpperRX_Task(void);
 
-/* GYR-CANä¸­æ–­æ¥æ”¶å¤„ç† */
+/* GYR-CANÖĞ¶Ï½ÓÊÕ´¦Àí */
 extern void GYR_UpperRX_CAN_Handler_Task(CanRxMsg* RxMessage);
 
 #endif

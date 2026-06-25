@@ -4,7 +4,7 @@
   * @author  zsq
   * @version V1.1.0
   * @date    10-04-2022
-  * @brief   æ–‡ä»¶åŒ…å«IICå¯¹å¤–æ‰€æœ‰å‡½æ•°æ¥å£
+  * @brief   ÎÄ¼ş°üº¬IIC¶ÔÍâËùÓĞº¯Êı½Ó¿Ú
   ******************************************************************************
   * @attention
   *
@@ -17,10 +17,10 @@
 
 #include "stm32f10x.h"
 
-extern void Myiic_init_api(void);                                   // 24c64  IICç¡¬ä»¶åˆå§‹åŒ–              
+extern void Myiic_init_api(void);                                   // 24c64  IICÓ²¼ş³õÊ¼»¯              
 
-extern int myiic_read_24c64_api(u16 addr, u16 lenth,u8 *redbuf);    // 24C64  è¯»å–å‚æ•°æ¥å£
-extern int myiic_write_24c64_api(u16 addr, u16 lenth,u8 *pbuf);     // 24c64  å†™å…¥å‚æ•°æ¥å£
+extern int myiic_read_24c64_api(u16 addr, u16 lenth,u8 *redbuf);    // 24C64  ¶ÁÈ¡²ÎÊı½Ó¿Ú
+extern int myiic_write_24c64_api(u16 addr, u16 lenth,u8 *pbuf);     // 24c64  Ğ´Èë²ÎÊı½Ó¿Ú
 
 
 

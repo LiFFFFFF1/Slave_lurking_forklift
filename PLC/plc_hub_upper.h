@@ -2,7 +2,7 @@
 #define _PLC_HUB_UPPER_H
 
 
-// ä½¿ç”¨åˆ°çš„åº•å±‚åŸºç¡€æ–‡ä»¶
+// Ê¹ÓÃµ½µÄµ×²ã»ù´¡ÎÄ¼ş
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"
 #include "bsp_modbusrtu.h"
@@ -16,41 +16,41 @@
 #define PLC_HUB_UPPER_EXT  extern
 #endif
 
-#define    DEFAULT_ID    0x10//CANé»˜è®¤idåœ°å€
+#define    DEFAULT_ID    0x10//CANÄ¬ÈÏidµØÖ·
 
-#define    T_HARBE    200//å¿ƒè·³é—´éš”æ—¶é—´ï¼ŒT*5ms
-#define    T_SEND_DEFAULT    6//é»˜è®¤ä¸Šä¼ é—´éš”æ—¶é—´ï¼ŒT*5ms
+#define    T_HARBE    200//ĞÄÌø¼ä¸ôÊ±¼ä£¬T*5ms
+#define    T_SEND_DEFAULT    6//Ä¬ÈÏÉÏ´«¼ä¸ôÊ±¼ä£¬T*5ms
 
-#define    T_FLASH_SLOW    200//æ…¢é—ªæ—¶é—´T*5ms
-#define    T_FLASH_FAST    100//å¿«é—ªæ—¶é—´T*5ms
-#define    T_FLASH_BRUST    50//çˆ†é—ªæ—¶é—´T*5ms
-
-typedef enum
-{
-    EM_INIT   = 0,                       //åˆå§‹
-    EM_NORM   = 1,                    // æ­£å¸¸
-
-} EM_CANOPEN_STATE;                          // CANçŠ¶æ€
-
+#define    T_FLASH_SLOW    200//ÂıÉÁÊ±¼äT*5ms
+#define    T_FLASH_FAST    100//¿ìÉÁÊ±¼äT*5ms
+#define    T_FLASH_BRUST    50//±¬ÉÁÊ±¼äT*5ms
 
 typedef enum
 {
-    EM_LIGHT_INIT = 0,//åˆå§‹çŠ¶æ€-å…¨ç­
-    EM_LIGHT_STOP = 1,//åœæ­¢
-    EM_LIGHT_ERROR = 2,//æ•…éšœ
-    EM_LIGHT_BZ_OFF = 3,//é¿éšœå…³é—­
-    EM_LIGHT_BZ_NEAR = 4,//è¿‘é¿éšœ
-    EM_LIGHT_LOWBAT = 5,//ä½ç”µå‹
-    EM_LIGHT_IPC_NOTE = 6,//IPCä¸‹å‘æç¤º
-    EM_LIGHT_HAND = 7,//æ‰‹åŠ¨
-    EM_LIGHT_TURN_L = 8,//å·¦è½¬
-    EM_LIGHT_TURN_R = 9,//å³è½¬
-    EM_LIGHT_RUN = 0x0A,//è¿è¡Œ
-    EM_LIGHT_CCW = 0x0B,//å·¦æ—‹è½¬
-    EM_LIGHT_CW = 0x0C,//å³æ—‹è½¬
-    EM_LIGHT_IPC_OFFLINE = 0x0D,//IPCæ‰çº¿
+    EM_INIT   = 0,                       //³õÊ¼
+    EM_NORM   = 1,                    // Õı³£
+
+} EM_CANOPEN_STATE;                          // CAN×´Ì¬
+
+
+typedef enum
+{
+    EM_LIGHT_INIT = 0,//³õÊ¼×´Ì¬-È«Ãğ
+    EM_LIGHT_STOP = 1,//Í£Ö¹
+    EM_LIGHT_ERROR = 2,//¹ÊÕÏ
+    EM_LIGHT_BZ_OFF = 3,//±ÜÕÏ¹Ø±Õ
+    EM_LIGHT_BZ_NEAR = 4,//½ü±ÜÕÏ
+    EM_LIGHT_LOWBAT = 5,//µÍµçÑ¹
+    EM_LIGHT_IPC_NOTE = 6,//IPCÏÂ·¢ÌáÊ¾
+    EM_LIGHT_HAND = 7,//ÊÖ¶¯
+    EM_LIGHT_TURN_L = 8,//×ó×ª
+    EM_LIGHT_TURN_R = 9,//ÓÒ×ª
+    EM_LIGHT_RUN = 0x0A,//ÔËĞĞ
+    EM_LIGHT_CCW = 0x0B,//×óĞı×ª
+    EM_LIGHT_CW = 0x0C,//ÓÒĞı×ª
+    EM_LIGHT_IPC_OFFLINE = 0x0D,//IPCµôÏß
     
-    EM_LIGHT_RCS_OFFLINE = 0x10,//RCSä¸‹çº¿ä¸­
+    EM_LIGHT_RCS_OFFLINE = 0x10,//RCSÏÂÏßÖĞ
     
     EM_LIGHT_IPC_1 = 0x11,//IPC1-
     EM_LIGHT_IPC_2 = 0x12,//IPC2-
@@ -62,7 +62,7 @@ typedef enum
     EM_LIGHT_IPC_8 = 0x18,//IPC8-
     EM_LIGHT_IPC_9 = 0x19,//IPC9-
 
-} EM_LIGHT_STATE; //ä¸‰è‰²ç¯çŠ¶æ€
+} EM_LIGHT_STATE; //ÈıÉ«µÆ×´Ì¬
 
 
 
@@ -70,78 +70,78 @@ typedef enum
 
 typedef __packed struct
 {
-    // é…ç½®å‚æ•°
-    USART_TypeDef* commun_port;                             // è®¾ç½®é€šä¿¡ç«¯å£å·,ä¸²å£ç«¯å£
-    u8 device_type;                                         // è®¾å¤‡ç±»å‹
-    u8 commun_ask_mode;                                     // é€šä¿¡åº”ç­”æ¨¡å¼
+    // ÅäÖÃ²ÎÊı
+    USART_TypeDef* commun_port;                             // ÉèÖÃÍ¨ĞÅ¶Ë¿ÚºÅ,´®¿Ú¶Ë¿Ú
+    u8 device_type;                                         // Éè±¸ÀàĞÍ
+    u8 commun_ask_mode;                                     // Í¨ĞÅÓ¦´ğÄ£Ê½
 
-    u32 baud_rate;                                          // æ³¢ç‰¹ç‡
-    u16 wordlength;                                         // æ•°æ®å®½åº¦
-    u16 parity;                                             // æ ¡éªŒ
+    u32 baud_rate;                                          // ²¨ÌØÂÊ
+    u16 wordlength;                                         // Êı¾İ¿í¶È
+    u16 parity;                                             // Ğ£Ñé
 
     //---------------------------------------------------------------
-    u8 err_id;//æ•…éšœID
-    u8 err_data;//æ•…éšœç 
+    u8 err_id;//¹ÊÕÏID
+    u8 err_data;//¹ÊÕÏÂë
 
-    //u8 off_line;//æ‰çº¿çŠ¶æ€
+    //u8 off_line;//µôÏß×´Ì¬
 
-    u8 set_type;                    // è®¾ç½®-ç±»å‹
-    u8 set_cmd;                     // è®¾ç½®-å‘½ä»¤ç 
-    u8 set_mode;                    // è®¾ç½®-æ¨¡å¼
-    u8 set_start_msg;               // è®¾ç½®-å¯åœä¿¡æ¯
-    u8 set_run_dir;                 // è®¾ç½®-è¿è¡Œæ–¹å‘
-    u8 set_run_sped;                // è®¾ç½®-è¿è¡Œé€Ÿåº¦
-    u8 set_run_obs;                 // è®¾ç½®-è¿è¡ŒåŒºåŸŸ
-    u8 set_run_branch;              // è®¾ç½®-è¿è¡Œåˆ†æ”¯
-    s8 set_hand_sped[3];            // è®¾ç½®-é¥æ§é€Ÿåº¦
-    float set_wheel_cir;            // è®¾ç½®-è¡Œèµ°è½®å‘¨é•¿
-    float set_gear_ratio;           // è®¾ç½®-è¡Œèµ°é½¿è½®æ¯”
-    u8 set_walk_pid[3];             // è®¾ç½®-è¡Œèµ°è½®PIDå‚æ•°
-    u8 set_custom_cmdbit;           // è®¾ç½®-è‡ªå®šä¹‰åŠŸèƒ½ä½
-    u8 set_run_segment;             // è®¾ç½®-èµ°å½¢ç£æ®µæ£€æµ‹æ•°
-    u16 set_rfid_cur_val;           // è®¾ç½®-rfidå½“å‰ä½ç½®å€¼
-    u16 set_wrtie_rfid_val;         // è®¾ç½®-å†™rfidè¯»å¤´ä¸‹åœ°æ ‡å€¼
+    u8 set_type;                    // ÉèÖÃ-ÀàĞÍ
+    u8 set_cmd;                     // ÉèÖÃ-ÃüÁîÂë
+    u8 set_mode;                    // ÉèÖÃ-Ä£Ê½
+    u8 set_start_msg;               // ÉèÖÃ-ÆôÍ£ĞÅÏ¢
+    u8 set_run_dir;                 // ÉèÖÃ-ÔËĞĞ·½Ïò
+    u8 set_run_sped;                // ÉèÖÃ-ÔËĞĞËÙ¶È
+    u8 set_run_obs;                 // ÉèÖÃ-ÔËĞĞÇøÓò
+    u8 set_run_branch;              // ÉèÖÃ-ÔËĞĞ·ÖÖ§
+    s8 set_hand_sped[3];            // ÉèÖÃ-Ò£¿ØËÙ¶È
+    float set_wheel_cir;            // ÉèÖÃ-ĞĞ×ßÂÖÖÜ³¤
+    float set_gear_ratio;           // ÉèÖÃ-ĞĞ×ß³İÂÖ±È
+    u8 set_walk_pid[3];             // ÉèÖÃ-ĞĞ×ßÂÖPID²ÎÊı
+    u8 set_custom_cmdbit;           // ÉèÖÃ-×Ô¶¨Òå¹¦ÄÜÎ»
+    u8 set_run_segment;             // ÉèÖÃ-×ßĞÎ´Å¶Î¼ì²âÊı
+    u16 set_rfid_cur_val;           // ÉèÖÃ-rfidµ±Ç°Î»ÖÃÖµ
+    u16 set_wrtie_rfid_val;         // ÉèÖÃ-Ğ´rfid¶ÁÍ·ÏÂµØ±êÖµ
 
-    u8  set_music_type;             // è®¾ç½®éŸ³ä¹ç±»å‹
-    u8  set_music_id;               // è®¾ç½®æ’­æ”¾IDæ›²ç›®
-    u8  set_music_volume;           // è®¾ç½®æ’­æ”¾éŸ³é‡å¤§å°
+    u8  set_music_type;             // ÉèÖÃÒôÀÖÀàĞÍ
+    u8  set_music_id;               // ÉèÖÃ²¥·ÅIDÇúÄ¿
+    u8  set_music_volume;           // ÉèÖÃ²¥·ÅÒôÁ¿´óĞ¡
 
-    u8 upload_start_msg;            // åé¦ˆ-è¿è¡Œä¿¡å·
-    s8 upload_run_magnet;           // èµ°å½¢æ•°æ®
-    u8 upload_run_warning;          // è­¦å‘Šæç¤ºä¿¡æ¯
-    u16 upload_rfid_site;           // å½“å‰åœ°æ ‡ä½ç½®
-    float upload_run_mileage;       // è¿è¡Œé‡Œç¨‹
+    u8 upload_start_msg;            // ·´À¡-ÔËĞĞĞÅºÅ
+    s8 upload_run_magnet;           // ×ßĞÎÊı¾İ
+    u8 upload_run_warning;          // ¾¯¸æÌáÊ¾ĞÅÏ¢
+    u16 upload_rfid_site;           // µ±Ç°µØ±êÎ»ÖÃ
+    float upload_run_mileage;       // ÔËĞĞÀï³Ì
 
-    u8 upolad_general_alarm;        // å¸¸è§„æŠ¥è­¦
-    u8 upload_obs_alarm;            // å£éšœå™¨æ•…éšœä»£ç 
-    u8 upload_rfid_alarm;           // RFIDæ•…éšœä»£ç 
-    u8 upload_motor1_alarm;         // ç”µæœº1-æ•…éšœä»£ç 
-    u8 upload_motor2_alarm;         // ç”µæœº2-æ•…éšœä»£ç 
-    u8 upload_magnet_alarm;         // èµ°å½¢-æ•…éšœä»£ç 
+    u8 upolad_general_alarm;        // ³£¹æ±¨¾¯
+    u8 upload_obs_alarm;            // ±ÚÕÏÆ÷¹ÊÕÏ´úÂë
+    u8 upload_rfid_alarm;           // RFID¹ÊÕÏ´úÂë
+    u8 upload_motor1_alarm;         // µç»ú1-¹ÊÕÏ´úÂë
+    u8 upload_motor2_alarm;         // µç»ú2-¹ÊÕÏ´úÂë
+    u8 upload_magnet_alarm;         // ×ßĞÎ-¹ÊÕÏ´úÂë
 
 
-    //--------------ä¸ä¸Šä¼ å®šä¹‰
+    //--------------²»ÉÏ´«¶¨Òå
 
     u16 recv_over_time;
     u16 over_time_set;
-    u8 set_walk_locat_sped;         // è®¾ç½®-è¡Œèµ°ç²¾å‡†åœè½¦é€Ÿåº¦
+    u8 set_walk_locat_sped;         // ÉèÖÃ-ĞĞ×ß¾«×¼Í£³µËÙ¶È
 
-    u8 canopen_state;//cançŠ¶æ€
-    u8 light_cmd;//ä¸‰è‰²ç¯çŠ¶æ€
-    u8 ctrl_cmd;//æ§åˆ¶æŒ‡ä»¤
-    u8 charge_cmd;//å……ç”µå‘½ä»¤
-    u8 charge_state;//å……ç”µçŠ¶æ€
-    u8 ctrl_state;//æ§åˆ¶çŠ¶æ€
-    u8 send_time;//ä¸Šä¼ å‘¨æœŸ
+    u8 canopen_state;//can×´Ì¬
+    u8 light_cmd;//ÈıÉ«µÆ×´Ì¬
+    u8 ctrl_cmd;//¿ØÖÆÖ¸Áî
+    u8 charge_cmd;//³äµçÃüÁî
+    u8 charge_state;//³äµç×´Ì¬
+    u8 ctrl_state;//¿ØÖÆ×´Ì¬
+    u8 send_time;//ÉÏ´«ÖÜÆÚ
 
-    u8 inputH_state;//è¾“å…¥H
-    u8 inputL_state;//è¾“å…¥L
-    u8 output_state;//è¾“å‡º
+    u8 inputH_state;//ÊäÈëH
+    u8 inputL_state;//ÊäÈëL
+    u8 output_state;//Êä³ö
 
-    u8 function_Code;//åŠŸèƒ½ç 
-    u8 function_value;//åŠŸèƒ½å€¼
+    u8 function_Code;//¹¦ÄÜÂë
+    u8 function_value;//¹¦ÄÜÖµ
 
-    u8 enter_iap_update_flag;//è¿›å…¥IAPæ›´æ–°æ ‡å¿—
+    u8 enter_iap_update_flag;//½øÈëIAP¸üĞÂ±êÖ¾
     u16 enter_iap_update_dalay_timer;
     
 } PLC_HUB_UPPER_STRU;
@@ -155,7 +155,7 @@ extern void PLC_Hub_UpperTX_Mesg_Task(void);
 
 extern void PLC_Hub_UpperRX_Task(void);
 
-/* CANæ¥æ”¶ä¸­æ–­ */
+/* CAN½ÓÊÕÖĞ¶Ï */
 extern void Host_UpperRX_CAN_Handler_Task(CanRxMsg* RxMessage);
 
 

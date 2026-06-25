@@ -1,7 +1,7 @@
 #ifndef _BAT_COMM_UPPER_H
 #define _BAT_COMM_UPPER_H
 
-// ä½¿ç”¨åˆ°çš„åº•å±‚åŸºç¡€æ–‡ä»¶
+// Ê¹ÓÃµ½µÄµ×²ã»ù´¡ÎÄ¼ş
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"	
 #include "bsp_modbusrtu.h"
@@ -17,45 +17,45 @@
 
 typedef enum
 {
-    BAT_TYPE_CUSTOM     = 1,                                // è‡ªå®šä¹‰--åè®®
-    BAT_TYPE_MODBUS     = 2,                                // è‡ªå®šä¹‰--Modbusåè®®
-    BAT_TYPE_MEC             = 3,                               //MECç”µæ± ---æ—§åè®®
+    BAT_TYPE_CUSTOM     = 1,                                // ×Ô¶¨Òå--Ğ­Òé
+    BAT_TYPE_MODBUS     = 2,                                // ×Ô¶¨Òå--ModbusĞ­Òé
+    BAT_TYPE_MEC             = 3,                               //MECµç³Ø---¾ÉĞ­Òé
      
 }BAT_TYPE_MODE;
 
 typedef enum
 {
-    BAT_CAN_MODE            = 1,                            //  CAN-é€šä¿¡æ¨¡å¼
-    BAT_COM_MODE            = 2,                            //  COM æ¨¡å¼
+    BAT_CAN_MODE            = 1,                            //  CAN-Í¨ĞÅÄ£Ê½
+    BAT_COM_MODE            = 2,                            //  COM Ä£Ê½
     
 }BAT_CAN_COM_MODE;  
 
 typedef __packed struct
 {
-    USART_TypeDef* commun_port;                             // è®¾ç½®é€šä¿¡ç«¯å£å·,ä¸²å£ç«¯å£
-    u8 device_type;                                         // 1-è‡ªå®šä¹‰åè®®ï¼Œ2-æ ‡å‡†Modbusåè®®
-    u8 can_com_type;                                        // 1-CAN, 2-comæ¨¡å¼
-    u8 device_adr;                                          // æ ‡å‡†Modbusåè®®è®¾å¤‡åœ°å€
+    USART_TypeDef* commun_port;                             // ÉèÖÃÍ¨ĞÅ¶Ë¿ÚºÅ,´®¿Ú¶Ë¿Ú
+    u8 device_type;                                         // 1-×Ô¶¨ÒåĞ­Òé£¬2-±ê×¼ModbusĞ­Òé
+    u8 can_com_type;                                        // 1-CAN, 2-comÄ£Ê½
+    u8 device_adr;                                          // ±ê×¼ModbusĞ­ÒéÉè±¸µØÖ·
     
-    u32 baud_rate;                                          // æ³¢ç‰¹ç‡
-    u16 wordlength;                                         // æ•°æ®å®½åº¦
+    u32 baud_rate;                                          // ²¨ÌØÂÊ
+    u16 wordlength;                                         // Êı¾İ¿í¶È
     u16 parity; 
     
-    u8 soc_percent;                                         // SOCç™¾åˆ†æ¯”
-    u16 voltage;                                            // ç”µå‹
-    s16 current;                                            // ç”µæµ
+    u8 soc_percent;                                         // SOC°Ù·Ö±È
+    u16 voltage;                                            // µçÑ¹
+    s16 current;                                            // µçÁ÷
 
-    u16 com_timer;                                      //ç¦»çº¿è®¡æ—¶
+    u16 com_timer;                                      //ÀëÏß¼ÆÊ±
 
 }BAT_COMM_STRU;
 
 BAT_COMM_EXT BAT_COMM_STRU Bat_Mesg_Stru;
 
 
-/* å‘é€ä»»åŠ¡å¤„ç† */
+/* ·¢ËÍÈÎÎñ´¦Àí */
 extern void Bat_Comm_UpperTX_Mesg_Task(void);         
 
-/* æ¥æ”¶ä»»åŠ¡å¤„ç† */
+/* ½ÓÊÕÈÎÎñ´¦Àí */
 extern void Bat_Comm_UpperRX_Task(void);
 
 #endif

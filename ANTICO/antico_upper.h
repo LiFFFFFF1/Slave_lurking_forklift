@@ -12,30 +12,30 @@
    #define ANTICO_EXIT  extern 
 #endif
 
-#define    ADC_VOLT_MIN    0.1f//è§¦è¾¹æ–­çº¿æœ€å°ç”µå‹/v
-#define    ADC_VOLT_MAX    2.2f//è§¦è¾¹è§¦å‘æŠ¥è­¦ç”µå‹/v
+#define    ADC_VOLT_MIN    0.1f//´¥±ß¶ÏÏß×îĞ¡µçÑ¹/v
+#define    ADC_VOLT_MAX    2.2f//´¥±ß´¥·¢±¨¾¯µçÑ¹/v
 
-#define   INPUT_TURE     0//è¾“å…¥æœ‰æ•ˆ
-#define   INPUT_FAUSE   1//è¾“å…¥æ— æ•ˆ
+#define   INPUT_TURE     0//ÊäÈëÓĞĞ§
+#define   INPUT_FAUSE   1//ÊäÈëÎŞĞ§
    
 typedef enum
 {
-    EM_ANTICO_TYPE_KND     = 1,     // åº·è€å¾·PAX0200-æ¨¡æ‹Ÿé‡æ£€æµ‹æ¨¡å—
+    EM_ANTICO_TYPE_KND     = 1,     // ¿µÄÍµÂPAX0200-Ä£ÄâÁ¿¼ì²âÄ£¿é
     
 }ANTICO_TYPE_MODE;   
    
 typedef enum
 {
-    EM_ANTICO_CAN_MODE            = 1,                            //  CAN-é€šä¿¡æ¨¡å¼
-    EM_ANTICO_COM_MODE            = 2,                            //  COM-æ¨¡å¼485
+    EM_ANTICO_CAN_MODE            = 1,                            //  CAN-Í¨ĞÅÄ£Ê½
+    EM_ANTICO_COM_MODE            = 2,                            //  COM-Ä£Ê½485
     
 }ANTICO_CAN_COM_MODE;  
 
 typedef enum
 {
-    EM_ANTICO_ASK_AUTO   = 1,                                     //  ä¸»åŠ¨ä¸Šä¼ 
-    EM_ANTICO_ASK_HAND   = 2,                                     //  é—®è¯¢æ¨¡å¼
-    EM_ANTICO_ASK_MODBUS   = 3,                                //  MODBUSåè®®
+    EM_ANTICO_ASK_AUTO   = 1,                                     //  Ö÷¶¯ÉÏ´«
+    EM_ANTICO_ASK_HAND   = 2,                                     //  ÎÊÑ¯Ä£Ê½
+    EM_ANTICO_ASK_MODBUS   = 3,                                //  MODBUSĞ­Òé
     
 }ANTICO_ASK_MODE; 
 
@@ -43,30 +43,30 @@ typedef enum
 
 typedef __packed struct
 {
-    USART_TypeDef* commun_port;                             // è®¾ç½®é€šä¿¡ç«¯å£å·,ä¸²å£ç«¯å£
+    USART_TypeDef* commun_port;                             // ÉèÖÃÍ¨ĞÅ¶Ë¿ÚºÅ,´®¿Ú¶Ë¿Ú
 
     u8 device_type;                                             // 
-    u8 can_com_type;                                        // 1-CAN, 2-comæ¨¡å¼
-    u8 device_adr;                                          // è®¾å¤‡åœ°å€
-    u8 commun_ask_mode;                          // é€šä¿¡åº”ç­”æ¨¡å¼
+    u8 can_com_type;                                        // 1-CAN, 2-comÄ£Ê½
+    u8 device_adr;                                          // Éè±¸µØÖ·
+    u8 commun_ask_mode;                          // Í¨ĞÅÓ¦´ğÄ£Ê½
     
-    u32 baud_rate;                                          // æ³¢ç‰¹ç‡
-    u16 wordlength;                                         // æ•°æ®å®½åº¦
+    u32 baud_rate;                                          // ²¨ÌØÂÊ
+    u16 wordlength;                                         // Êı¾İ¿í¶È
     u16 parity; 
 
     u16 power_on_delay;
-    u16 com_timer;                                      //é€šä¿¡è®¡æ—¶
+    u16 com_timer;                                      //Í¨ĞÅ¼ÆÊ±
 
     u16 lineoff_timer[2];
     u16 act_timer[2];
 
-    u8 tray_connect_state;			//æ‰˜ç›˜è¿æ¥çŠ¶æ€
-    u8 err_state;			   		    //é”™è¯¯ä¿¡æ¯
+    u8 tray_connect_state;			//ÍĞÅÌÁ¬½Ó×´Ì¬
+    u8 err_state;			   		    //´íÎóĞÅÏ¢
 
-    u32 get_adc_data[2];				//æ¨¡æ‹Ÿé‡ç”µå‹åŸå§‹æ•°æ®
-    float get_adc_voltage[2];			//æ¨¡æ‹Ÿé‡ç”µå‹æ•°æ®å•ä½/v
+    u32 get_adc_data[2];				//Ä£ÄâÁ¿µçÑ¹Ô­Ê¼Êı¾İ
+    float get_adc_voltage[2];			//Ä£ÄâÁ¿µçÑ¹Êı¾İµ¥Î»/v
 
-    //u8 real_state;					    //é˜²æ’çŠ¶æ€
+    //u8 real_state;					    //·À×²×´Ì¬
     
 
 }ANTICO_COMM_STRU;
@@ -75,10 +75,10 @@ ANTICO_EXIT ANTICO_COMM_STRU ANTICO_Mesg_Stru;
 
 
 
-/* GYRå¯¹å¤–æ¥å£-å‘é€å¤„ç†ä»»åŠ¡ */
+/* GYR¶ÔÍâ½Ó¿Ú-·¢ËÍ´¦ÀíÈÎÎñ */
 extern void ANTICO_UpperTX_Task(void);
 
-/* GYRå¯¹å¤–æ¥å£-æ¥æ”¶å¤„ç†ä»»åŠ¡ */
+/* GYR¶ÔÍâ½Ó¿Ú-½ÓÊÕ´¦ÀíÈÎÎñ */
 extern void ANTICO_UpperRX_Task(void);
 
 

@@ -1,18 +1,18 @@
 #include "host_hub_cc_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "plc_hub_upper.h"
 #include "public_def_type.h"
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Host_Hub_CAN_TX_Task(void)
-*åŠŸ    èƒ½: HUBå‘é€ç»™host  çš„æ•°æ®å¤„ç†
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å›ž å€¼:    æ— 
-*å¤‡    æ³¨ï¼š
+*º¯    Êý: void Host_Hub_CAN_TX_Task(void)
+*¹¦    ÄÜ: HUB·¢ËÍ¸øhost  µÄÊý¾Ý´¦Àí
+*²Î    Êý:
+*×÷    Õß:
+*ÐÞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ:    ÎÞ
+*±¸    ×¢£º
 *
 ****************************************************************************************/
 void Host_Hub_CAN_TX_Task(void)
@@ -20,11 +20,11 @@ void Host_Hub_CAN_TX_Task(void)
     u8 send_buf[8] = {0};
     static u16 send_timer = 0;
 
-    //ä¸Šä¼ çŠ¶æ€
+    //ÉÏ´«×´Ì¬
     switch(PLC_TO_HUB_Mesg_Stru.canopen_state)
     {
         case EM_INIT:
-            if(++send_timer > T_HARBE)//é—´éš”3s
+            if(++send_timer > T_HARBE)//¼ä¸ô3s
             {
                 send_timer = 0;
 
@@ -64,12 +64,12 @@ void Host_Hub_CAN_TX_Task(void)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Host_Hub_CAN_RX_Task(CanRxMsg* RxMessage)
-*åŠŸ    èƒ½: CANæŽ¥æ”¶å¤„ç†
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å›ž å€¼: æ— 
+*º¯    Êý: void Host_Hub_CAN_RX_Task(CanRxMsg* RxMessage)
+*¹¦    ÄÜ: CAN½ÓÊÕ´¦Àí
+*²Î    Êý:
+*×÷    Õß:
+*ÐÞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎÞ
 ****************************************************************************************/
 void Host_Hub_CAN_RX_Task(CanRxMsg* RxMessage)
 {
@@ -80,14 +80,14 @@ void Host_Hub_CAN_RX_Task(CanRxMsg* RxMessage)
         case 0x000:
             if(RxMessage->DLC == 0x02)
             {
-                //å¯åŠ¨èŠ‚ç‚¹
+                //Æô¶¯½Úµã
                 if(RxMessage->Data[0] == 0x01&&
                    (RxMessage->Data[1] == 0x00||RxMessage->Data[1] == DEFAULT_ID))
                 {
                     PLC_TO_HUB_Mesg_Stru.canopen_state = EM_NORM;
                 }
 
-                //å…³é—­èŠ‚ç‚¹
+                //¹Ø±Õ½Úµã
                 if(RxMessage->Data[0] == 0x02&&
                    (RxMessage->Data[1] == 0x00||RxMessage->Data[1] == DEFAULT_ID))
                 {
@@ -101,7 +101,7 @@ void Host_Hub_CAN_RX_Task(CanRxMsg* RxMessage)
             {
                 crc_data = Bsp_XorCheck(RxMessage->Data, 7);
 
-                //æ ¡éªŒé€šè¿‡
+                //Ð£ÑéÍ¨¹ý
                 if(crc_data == RxMessage->Data[7])
                 {
                     if(RxMessage->Data[1] > 0)

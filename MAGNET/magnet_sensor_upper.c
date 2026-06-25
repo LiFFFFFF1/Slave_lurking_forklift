@@ -1,33 +1,33 @@
 #define MAGNET_UPPER_GLOBALS
 #include "magnet_sensor_upper.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_method.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_method.h
 #include "magnet_mpls_sensor_method.h"
 #include "magnet_xs_sensor_method.h"
 #include "magnet_lg_sensor_method.h"
 
 
 /***************************************************************************************
-*å‡½    æ•°: void MAGNET_UpperTX_Mesg_Task(void)
-*åŠŸ    èƒ½: æŸ¥è¯¢æ¨¡å¼
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šæ­¤å‡½æ•°æ ¹æ®æ¯è°ƒç”¨ä¸€æ¬¡å‘é€ä¸€æ¬¡æŸ¥è¯¢é€šä¿¡æŒ‡ä»¤(æŸ¥è¯¢æ¨¡å¼æœ‰æ•ˆ)
+*º¯    Êı: void MAGNET_UpperTX_Mesg_Task(void)
+*¹¦    ÄÜ: ²éÑ¯Ä£Ê½
+*²Î    Êı:         
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º´Ëº¯Êı¸ù¾İÃ¿µ÷ÓÃÒ»´Î·¢ËÍÒ»´Î²éÑ¯Í¨ĞÅÖ¸Áî(²éÑ¯Ä£Ê½ÓĞĞ§)
 ****************************************************************************************/
 void MAGNET_UpperTX_Mesg_Task(void)
 {
     switch(Magnet_Upper_Stru.device_type)
     {
-        /*case MAGNET_TPYE_MPLS:                              // MPLSèµ°å½¢ä¼ æ„Ÿå™¨
+        /*case MAGNET_TPYE_MPLS:                              // MPLS×ßĞÎ´«¸ĞÆ÷
             MAGNET_Mpls_Send_Mesg_Task();
             break;
-        case EM_DEVICE_DEV_MAGNET_XS:                                // å…´é¢‚-èµ°å½¢ä¼ æ„Ÿå™¨
+        case EM_DEVICE_DEV_MAGNET_XS:                                // ĞËËÌ-×ßĞÎ´«¸ĞÆ÷
             MAGNET_Xs_Send_Mesg_Task();
             break;
 		*/
-		case EM_DEVICE_DEV_MAGNET_LG:								// é‡Œæ ¼-èµ°å½¢
+		case EM_DEVICE_DEV_MAGNET_LG:								// Àï¸ñ-×ßĞÎ
 			MAGNET_LG_Send_Mesg_Task();						// 
 			break;
         default:
@@ -37,25 +37,25 @@ void MAGNET_UpperTX_Mesg_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void MAGNET_UpperRX_Task(void)
-*åŠŸ    èƒ½: æ¥æ”¶å¤„ç†
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void MAGNET_UpperRX_Task(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êı:         
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º
 ****************************************************************************************/
 void MAGNET_UpperRX_Task(void)
 {
     switch(Magnet_Upper_Stru.device_type)
     {
-        /*case MAGNET_TPYE_MPLS:                              // MPLSèµ°å½¢ä¼ æ„Ÿå™¨
+        /*case MAGNET_TPYE_MPLS:                              // MPLS×ßĞÎ´«¸ĞÆ÷
             MAGNET_Mpls_COM_RX_Task();
             break;
-        case EM_DEVICE_DEV_MAGNET_XS:                                // å…´é¢‚-èµ°å½¢ä¼ æ„Ÿå™¨
+        case EM_DEVICE_DEV_MAGNET_XS:                                // ĞËËÌ-×ßĞÎ´«¸ĞÆ÷
             MAGNET_Xs_COM_RX_Task();
             break;*/
-		case EM_DEVICE_DEV_MAGNET_LG:								// é‡Œæ ¼-èµ°å½¢
+		case EM_DEVICE_DEV_MAGNET_LG:								// Àï¸ñ-×ßĞÎ
 			MAGNET_LG_COM_RX_Task();
 			break;
         default:
@@ -65,25 +65,25 @@ void MAGNET_UpperRX_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void MAGNET_UpperRX_CAN_Handler_Task(void)
-*åŠŸ    èƒ½: CANæ¥æ”¶-ä¸­æ–­æœåŠ¡
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void MAGNET_UpperRX_CAN_Handler_Task(void)
+*¹¦    ÄÜ: CAN½ÓÊÕ-ÖĞ¶Ï·şÎñ
+*²Î    Êı:         
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º
 ****************************************************************************************/
 void MAGNET_UpperRX_CAN_Handler_Task(CanRxMsg* RxMessage)
 {
     switch(Magnet_Upper_Stru.device_type)
     {
-        /*case MAGNET_TPYE_MPLS:                              // MPLSèµ°å½¢ä¼ æ„Ÿå™¨
+        /*case MAGNET_TPYE_MPLS:                              // MPLS×ßĞÎ´«¸ĞÆ÷
             Magnet_MPLS_CAN_RX_Handler(RxMessage);
             break;
-        case EM_DEVICE_DEV_MAGNET_XS:                                // å…´é¢‚-èµ°å½¢ä¼ æ„Ÿå™¨
+        case EM_DEVICE_DEV_MAGNET_XS:                                // ĞËËÌ-×ßĞÎ´«¸ĞÆ÷
             Magnet_XS_CAN_RX_Handler(RxMessage);
             break;*/
-		case EM_DEVICE_DEV_MAGNET_LG:								// é‡Œæ ¼-èµ°å½¢
+		case EM_DEVICE_DEV_MAGNET_LG:								// Àï¸ñ-×ßĞÎ
 			Magnet_LG_CAN_RX_Handler(RxMessage);
 			break;
         default:

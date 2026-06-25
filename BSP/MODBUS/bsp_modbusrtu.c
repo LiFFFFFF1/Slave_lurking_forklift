@@ -3,15 +3,15 @@
 
 
 /***************************************************************************************
-æ–‡ä»¶åŠŸèƒ½: 
-1ã€å®ç°åŸºäºmodbusRTUåè®®é€šä¿¡é€šä¿¡æ¥å£;
-2ã€å¯„å­˜å™¨åœ°å€æœ€å¤§å–äºmodbus_registerå¤§å°;
-3ã€å¯åšä¸ºä¸»æœºï¼Œä¹Ÿå¯ä»¥åšä¸ºä»æœºï¼›å»ºè®®ä¸è§¦æ‘¸å±é€šä¿¡ï¼Œå•ç‰‡æœºåšä»æœºï¼›
+ÎÄ¼ş¹¦ÄÜ: 
+1¡¢ÊµÏÖ»ùÓÚmodbusRTUĞ­ÒéÍ¨ĞÅÍ¨ĞÅ½Ó¿Ú;
+2¡¢¼Ä´æÆ÷µØÖ·×î´óÈ¡ÓÚmodbus_register´óĞ¡;
+3¡¢¿É×öÎªÖ÷»ú£¬Ò²¿ÉÒÔ×öÎª´Ó»ú£»½¨ÒéÓë´¥ÃşÆÁÍ¨ĞÅ£¬µ¥Æ¬»ú×ö´Ó»ú£»
 
-ä½œ    è€…:  èµµä¸–æ³‰
-ç‰ˆ    æœ¬:  V1.0
-æ—¥    æœŸï¼š 
-å¤‡    æ³¨:
+×÷    Õß:  ÕÔÊÀÈª
+°æ    ±¾:  V1.0
+ÈÕ    ÆÚ£º 
+±¸    ×¢:
 ****************************************************************************************/
 
 
@@ -71,15 +71,15 @@ static const unsigned char auc_crc_low[] =
 
 
 
-//-----------------------------------------å¯¹å¤–æ¥å£è°ƒç”¨-------------------------------------
+//-----------------------------------------¶ÔÍâ½Ó¿Úµ÷ÓÃ-------------------------------------
 
 /*
-*å‡½    æ•°: u16 Bsp_ModbusRTU_CRC( unsigned char * pucFrame, unsigned short len)
-*åŠŸ    èƒ½: CRC16æ ¡éªŒ
-*å‚    æ•°: 
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: u16 Bsp_ModbusRTU_CRC( unsigned char * pucFrame, unsigned short len)
+*¹¦    ÄÜ: CRC16Ğ£Ñé
+*²Î    Êı: 
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 */
 u16 Bsp_ModbusRTU_CRC( unsigned char * pucFrame, unsigned short len)
 {
@@ -99,12 +99,12 @@ u16 Bsp_ModbusRTU_CRC( unsigned char * pucFrame, unsigned short len)
 
 
 /*
-*å‡½    æ•°: u8 Bsp_CRC8_Check(u8* p_buffer, u8 buf_size)
-*åŠŸ    èƒ½: CRC-8æ ¡éªŒ
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: u8 Bsp_CRC8_Check(u8* p_buffer, u8 buf_size)
+*¹¦    ÄÜ: CRC-8Ğ£Ñé
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 */
 u8 Bsp_CRC8_Check(u8* p_buffer, u8 buf_size)
 {
@@ -142,14 +142,14 @@ u8 Bsp_CRC8_Check(u8* p_buffer, u8 buf_size)
 }
 
 /*
-*å‡½    æ•°: u8 Bsp_XorCheck(u8* buf,u8 Lenth)
-*åŠŸ    èƒ½: XORæ ¡éªŒ
-*å‚    æ•°: 
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: u8 Bsp_XorCheck(u8* buf,u8 Lenth)
+*¹¦    ÄÜ: XORĞ£Ñé
+*²Î    Êı: 
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 */
-u8 Bsp_XorCheck(u8* buf,u8 Lenth)//XORå¼‚æˆ–æ ¡éªŒ
+u8 Bsp_XorCheck(u8* buf,u8 Lenth)//XORÒì»òĞ£Ñé
 {
     u8 Result, n;
     Result=0;
@@ -162,12 +162,12 @@ u8 Bsp_XorCheck(u8* buf,u8 Lenth)//XORå¼‚æˆ–æ ¡éªŒ
 
 
 /*
-*å‡½    æ•°: u8 Bsp_HexToASCII(u8  data_hex)
-*åŠŸ    èƒ½: 16è¿›åˆ¶è½¬ä¸ºASCLLç 
-*å‚    æ•°: 
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: u8 Bsp_HexToASCII(u8  data_hex)
+*¹¦    ÄÜ: 16½øÖÆ×ªÎªASCLLÂë
+*²Î    Êı: 
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 */
 u8  Bsp_HexToASCII(u8  data_hex)
 {
@@ -175,23 +175,23 @@ u8  Bsp_HexToASCII(u8  data_hex)
     ASCII_Data=data_hex & 0x0F;
     if(ASCII_Data<10)
     {
-        ASCII_Data=ASCII_Data+0x30;    //â€˜0--9â€™
+        ASCII_Data=ASCII_Data+0x30;    //¡®0--9¡¯
     }
     else
     {
-        ASCII_Data=ASCII_Data+0x37;    //â€˜A--Fâ€™
+        ASCII_Data=ASCII_Data+0x37;    //¡®A--F¡¯
     }
     return ASCII_Data;
 }
 
 
 /*
-*å‡½    æ•°: float Bsp_U32ToFloat(u32 data)
-*åŠŸ    èƒ½: 16è¿›åˆ¶32ä½è½¬æ¢ä¸ºæµ®ç‚¹æ•°
-*å‚    æ•°: 
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æµ®ç‚¹æ•°
+*º¯    Êı: float Bsp_U32ToFloat(u32 data)
+*¹¦    ÄÜ: 16½øÖÆ32Î»×ª»»Îª¸¡µãÊı
+*²Î    Êı: 
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ¸¡µãÊı
 */
 float Bsp_U32ToFloat(u32 data)
 {

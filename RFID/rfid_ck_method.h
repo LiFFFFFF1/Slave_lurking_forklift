@@ -16,7 +16,7 @@
 #endif 
 
 
-#define  RFID_CK_REC_LEN            20  //æ™¨æ§RFIDè¯»å¡åä¸Šä¼ æ•°æ®é•¿åº¦
+#define  RFID_CK_REC_LEN            20  //³¿¿ØRFID¶Á¿¨ºóÉÏ´«Êı¾İ³¤¶È
 
 
 void RFID_CK_232_RX_Complete_Handler(u8 port_com);

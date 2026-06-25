@@ -1,19 +1,19 @@
 #define RFID_LG_GLOBALS
 #include "rfid_lg_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "rfid_upper.h"
 
-// ç§æœ‰å®šä¹‰
+// Ë½ÓĞ¶¨Òå
 static u8 LG_Write_SendBuf[33] = {0};
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜æ•°æ®ä¸€å¸§
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void RFID_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æÊı¾İÒ»Ö¡
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 static void RFID_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -100,7 +100,7 @@ static void RFID_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 else if(Serial->step== 5)//
                 {
                     Serial->recv_pbuffer[Serial->count++] = dat;
-                    if(Serial->count >= (Serial->recv_pbuffer[4] + 7))///25ã€33
+                    if(Serial->count >= (Serial->recv_pbuffer[4] + 7))///25¡¢33
                     {
 
                         Serial->recv_complete_bit=Serial->count;
@@ -134,12 +134,12 @@ static void RFID_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_485_RX_Complete_Handler(void)
-*åŠŸ    èƒ½: æ¥æ”¶å¤„ç†
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void RFID_485_RX_Complete_Handler(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void RFID_LG_485_RX_Complete_Handler(u8 port_com)
 {
@@ -175,57 +175,57 @@ void RFID_LG_485_RX_Complete_Handler(u8 port_com)
     }
 
 
-    RFID_LG_ReadbufData(Serial,QUEUE_com);                   // è·å–å¯¹åº”ä¸²å£å¯¹æ¥æ•°æ®
+    RFID_LG_ReadbufData(Serial,QUEUE_com);                   // »ñÈ¡¶ÔÓ¦´®¿Ú¶Ô½ÓÊı¾İ
 
     if(Serial->recv_complete_bit & 0x8000)
     {
 
         recv_len =Serial->recv_complete_bit&0x7FFF;
         Serial->recv_complete_bit =0;
-        //æ ¡éªŒ
+        //Ğ£Ñé
         crc8_val = Bsp_CRC8_Check(&Serial->recv_pbuffer[5], Serial->recv_pbuffer[4]);
-        // åˆ¤æ–­æ ¡éªŒå’Œé’ˆå°¾
+        // ÅĞ¶ÏĞ£ÑéºÍÕëÎ²
         if(crc8_val != Serial->recv_pbuffer[recv_len-2] || Serial->recv_pbuffer[recv_len-1] != 0xAA)
         {
             return;
         }
         
-        switch(Serial->recv_pbuffer[2])     // å‘½ä»¤ç 
+        switch(Serial->recv_pbuffer[2])     // ÃüÁîÂë
         {
             default:
                 break;
-            case 0x84:  //å¿ƒè·³è¿”å›+è¯»å¡çš„æ•°æ®
+            case 0x84:  //ĞÄÌø·µ»Ø+¶Á¿¨µÄÊı¾İ
                 RFID_Upper_Mesg_Stru.commun_timer = 0;  
-                PLC_TO_HUB_Mesg_Stru.upload_run_mileage = 0;//é‡Œç¨‹æ¸…é›¶
-                // æ•°æ®é•¿åº¦,08--è¯»åˆ°å¡ä¸ŠæŠ¥ï¼Œ00-å¿ƒè·³æ•°æ®
+                PLC_TO_HUB_Mesg_Stru.upload_run_mileage = 0;//Àï³ÌÇåÁã
+                // Êı¾İ³¤¶È,08--¶Áµ½¿¨ÉÏ±¨£¬00-ĞÄÌøÊı¾İ
                 if(Serial->recv_pbuffer[20]==0x00 && Serial->recv_pbuffer[21] ==0x08)
                 {
-                    //å…¼å®¹å…´é¢‚RFID                
+                    //¼æÈİĞËËÌRFID                
                     RFID_Upper_Mesg_Stru.read_number  = (Serial->recv_pbuffer[23]&0x0f)*1000;   
                     RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[24]&0x0f)*100;   
                     RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[25]&0x0f)*10;   
                     RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[26]&0x0f)*1;            
                     
-                    //ä¸Šä¼ 
+                    //ÉÏ´«
                     if(RFID_Upper_Mesg_Stru.read_number)
                     PLC_TO_HUB_Mesg_Stru.upload_rfid_site = RFID_Upper_Mesg_Stru.read_number;
                 }
                 
                 break;
-            case 0x85:   // å†™è¯»å¡è¿”å›
+            case 0x85:   // Ğ´¶Á¿¨·µ»Ø
                 RFID_Upper_Mesg_Stru.commun_timer = 0;
             
-                //å…¼å®¹å…´é¢‚RFID                
+                //¼æÈİĞËËÌRFID                
                 RFID_Upper_Mesg_Stru.read_number  = (Serial->recv_pbuffer[23]&0x0f)*1000;   
                 RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[24]&0x0f)*100;   
                 RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[25]&0x0f)*10;   
                 RFID_Upper_Mesg_Stru.read_number += (Serial->recv_pbuffer[26]&0x0f)*1;            
                 
-                //ä¸Šä¼ 
+                //ÉÏ´«
                 if(RFID_Upper_Mesg_Stru.read_number)
                 PLC_TO_HUB_Mesg_Stru.upload_rfid_site = RFID_Upper_Mesg_Stru.read_number;
 
-                PLC_TO_HUB_Mesg_Stru.upload_run_mileage = 0;//é‡Œç¨‹æ¸…é›¶
+                PLC_TO_HUB_Mesg_Stru.upload_run_mileage = 0;//Àï³ÌÇåÁã
                 
                 break;
         }
@@ -236,36 +236,36 @@ void RFID_LG_485_RX_Complete_Handler(u8 port_com)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void RFID_LG_485_Write_Send(void)
-*åŠŸ    èƒ½:
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void RFID_LG_485_Write_Send(void)
+*¹¦    ÄÜ:
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
-void RFID_LG_485_Write_Send(void)//å†™å¡æ—¶å‘é€æ•°æ®
+void RFID_LG_485_Write_Send(void)//Ğ´¿¨Ê±·¢ËÍÊı¾İ
 {
     u8 crc8temp = 0;
 
-    // åœ¨çº¿åˆ¤æ–­ 
+    // ÔÚÏßÅĞ¶Ï 
     if(RFID_Upper_Mesg_Stru.commun_timer < 1000)    RFID_Upper_Mesg_Stru.commun_timer ++;
 
-    if(RFID_Upper_Mesg_Stru.commun_timer > 20)			// ç¦»çº¿ *50ms
+    if(RFID_Upper_Mesg_Stru.commun_timer > 20)			// ÀëÏß *50ms
     {
         RFID_Upper_Mesg_Stru.offline_state = 1;
     }
-    else//åœ¨çº¿
+    else//ÔÚÏß
     {
         RFID_Upper_Mesg_Stru.offline_state = 0;
     }
 
-    //æ•…éšœæ£€æµ‹
-    if(RFID_Upper_Mesg_Stru.offline_state)				//	ç¦»çº¿
+    //¹ÊÕÏ¼ì²â
+    if(RFID_Upper_Mesg_Stru.offline_state)				//	ÀëÏß
 	{
 		PLC_TO_HUB_Mesg_Stru.upload_rfid_alarm = 0xff;
 	}
 	
-    if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_rfid_alarm)			//	å¤ä½
+    if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_rfid_alarm)			//	¸´Î»
     {
 		PLC_TO_HUB_Mesg_Stru.upload_rfid_alarm = 0;
 		RFID_Upper_Mesg_Stru.offline_state = 0;
@@ -273,7 +273,7 @@ void RFID_LG_485_Write_Send(void)//å†™å¡æ—¶å‘é€æ•°æ®
 		PLC_TO_HUB_Mesg_Stru.upload_run_mileage =0;
     }
 
-    //å†™å¡
+    //Ğ´¿¨
     if(RFID_Upper_Mesg_Stru.rfid_mode == RFID_WRITE_ONLY_MODE)
     {
         if(RFID_Upper_Mesg_Stru.write_number > 0 && RFID_Upper_Mesg_Stru.write_number < 0xffff)
@@ -306,10 +306,10 @@ void RFID_LG_485_Write_Send(void)//å†™å¡æ—¶å‘é€æ•°æ®
             //LG_Write_SendBuf[24] = (u8)((RFID_Upper_Mesg_Stru.write_number>>8)&0xff);
             //LG_Write_SendBuf[25] = 0x00;
             //LG_Write_SendBuf[26] = 0x00;
-			LG_Write_SendBuf[23] = RFID_Upper_Mesg_Stru.write_number / 1000;//åƒä½
-            LG_Write_SendBuf[24] = (RFID_Upper_Mesg_Stru.write_number % 1000) / 100;//ç™¾ä½
-            LG_Write_SendBuf[25] = (RFID_Upper_Mesg_Stru.write_number % 100) / 10;//åä½
-            LG_Write_SendBuf[26] = (RFID_Upper_Mesg_Stru.write_number % 10) / 1;//ä¸ªä½
+			LG_Write_SendBuf[23] = RFID_Upper_Mesg_Stru.write_number / 1000;//Ç§Î»
+            LG_Write_SendBuf[24] = (RFID_Upper_Mesg_Stru.write_number % 1000) / 100;//°ÙÎ»
+            LG_Write_SendBuf[25] = (RFID_Upper_Mesg_Stru.write_number % 100) / 10;//Ê®Î»
+            LG_Write_SendBuf[26] = (RFID_Upper_Mesg_Stru.write_number % 10) / 1;//¸öÎ»
 			
             LG_Write_SendBuf[27] = 0x00;
             LG_Write_SendBuf[28] = 0x00;
@@ -320,10 +320,10 @@ void RFID_LG_485_Write_Send(void)//å†™å¡æ—¶å‘é€æ•°æ®
             LG_Write_SendBuf[31] = crc8temp;
             LG_Write_SendBuf[32] = 0xAA;
 
-            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &LG_Write_SendBuf[0], 33);//å‘é€æ•°æ®
+            Bsp_Usart_Usr_SendArray(RFID_Upper_Mesg_Stru.commun_port, &LG_Write_SendBuf[0], 33);//·¢ËÍÊı¾İ
            
 
-            RFID_Upper_Mesg_Stru.write_number = 0;//æ¸…é›¶
+            RFID_Upper_Mesg_Stru.write_number = 0;//ÇåÁã
 
         }
 

@@ -2,7 +2,7 @@
 #define _MOTOR_FORK_METHOD_H
 
 
-// 浣跨敤鍒扮殑搴曞眰鍩虹鏂囦欢
+// 使用到的底层基础文件
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"	
 #include "bsp_modbusrtu.h"
@@ -11,10 +11,10 @@
 
 
 
-/*鍙夐娇浠诲姟澶勭悊*/  
+/*叉齿任务处理*/  
 void Fork_Task_Deal(void); 
 
-/* CAN鎺ユ敹澶勭悊浠诲姟*/
+/* CAN接收处理任务*/
 extern void Motor_WC_CAN_RX_Handler(CanRxMsg* rxmessage);
 
 

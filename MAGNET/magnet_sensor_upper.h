@@ -2,7 +2,7 @@
 #define _MAGNET_UPPER_SENSOR_H
 
 
-// ä½¿ç”¨åˆ°çš„åº•å±‚åŸºç¡€æ–‡ä»¶
+// Ê¹ÓÃµ½µÄµ×²ã»ù´¡ÎÄ¼ş
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"
 #include "bsp_modbusrtu.h"
@@ -20,71 +20,71 @@
 
 typedef enum
 {
-    EM_AGV_BRANCH_LINE   =0,       // ç›´è¡Œ
-    EM_AGV_BRANCH_LEFT   =1,       // å·¦è½¬
-    EM_AGV_BRANCH_RIGHT  =2,       // å³è½¬
+    EM_AGV_BRANCH_LINE   =0,       // Ö±ĞĞ
+    EM_AGV_BRANCH_LEFT   =1,       // ×ó×ª
+    EM_AGV_BRANCH_RIGHT  =2,       // ÓÒ×ª
 
-} EM_AGV_BRANCH_DIR;              // è¿åŠ¨åˆ†æ”¯
+} EM_AGV_BRANCH_DIR;              // ÔË¶¯·ÖÖ§
 
 
 typedef __packed struct
 {
-    USART_TypeDef* commun_port;                             // è®¾ç½®é€šä¿¡ç«¯å£å·,ä¸²å£ç«¯å£
-    u8 device_type;                                         // è®¾å¤‡å‹å·-ç±»å‹
-    u8 can_com_type;                                        // 1-CAN, 2-RS485æ¨¡å¼
-    u8 commun_ask_mode;                                     // é€šä¿¡åº”ç­”æ¨¡å¼ï¼Œ1-ä¸»åŠ¨ä¸Šä¼ ï¼Œ2-é—®ç­”æ¨¡å¼
+    USART_TypeDef* commun_port;                             // ÉèÖÃÍ¨ĞÅ¶Ë¿ÚºÅ,´®¿Ú¶Ë¿Ú
+    u8 device_type;                                         // Éè±¸ĞÍºÅ-ÀàĞÍ
+    u8 can_com_type;                                        // 1-CAN, 2-RS485Ä£Ê½
+    u8 commun_ask_mode;                                     // Í¨ĞÅÓ¦´ğÄ£Ê½£¬1-Ö÷¶¯ÉÏ´«£¬2-ÎÊ´ğÄ£Ê½
 
-    u8 canpen_state;                                        // canopençŠ¶æ€
+    u8 canpen_state;                                        // canopen×´Ì¬
 
-    u8 id_number;                                           // è®¾å¤‡idä¸ªæ•°
-    u32 baud_rate;                                          // æ³¢ç‰¹ç‡
-    u16 wordlength;                                         // æ•°æ®å®½åº¦
-    u16 parity;                                             // æ ¡éªŒ
+    u8 id_number;                                           // Éè±¸id¸öÊı
+    u32 baud_rate;                                          // ²¨ÌØÂÊ
+    u16 wordlength;                                         // Êı¾İ¿í¶È
+    u16 parity;                                             // Ğ£Ñé
 
-    u8 segment[4];                                          // ç£æ¡æ®µæ•°
-    //u8 group_number[4];                                   // ç»„å·
+    u8 segment[4];                                          // ´ÅÌõ¶ÎÊı
+    //u8 group_number[4];                                   // ×éºÅ
 
-    s8 offset_left[4];                                      // ç¬¬1æ®µå€¼
-    s8 offset_middle[4];                                    // ç¬¬2æ®µå€¼
-    s8 offset_right[4];                                     // ç¬¬3æ®µå€¼
+    s8 offset_left[4];                                      // µÚ1¶ÎÖµ
+    s8 offset_middle[4];                                    // µÚ2¶ÎÖµ
+    s8 offset_right[4];                                     // µÚ3¶ÎÖµ
 
-//    s16 new_offset_left[4];                                      // æ–°åè®®-ç¬¬1æ®µå€¼
-//    s16 new_offset_middle[4];                                    //  æ–°åè®®-ç¬¬2æ®µå€¼
-//    s16 new_offset_right[4];                                     //  æ–°åè®®-ç¬¬3æ®µå€¼
+//    s16 new_offset_left[4];                                      // ĞÂĞ­Òé-µÚ1¶ÎÖµ
+//    s16 new_offset_middle[4];                                    //  ĞÂĞ­Òé-µÚ2¶ÎÖµ
+//    s16 new_offset_right[4];                                     //  ĞÂĞ­Òé-µÚ3¶ÎÖµ
 
-    u8 err_code[4];					//é”™è¯¯ä»£ç 
-    u8 err_data[4];					//é”™è¯¯å‚æ•°
-    u8 magnet_width[4];				//ç£æ¡å®½åº¦
-    u8 io_num[4];					//ä¼ æ„Ÿå™¨ç‚¹ä½æ€»æ•°
+    u8 err_code[4];					//´íÎó´úÂë
+    u8 err_data[4];					//´íÎó²ÎÊı
+    u8 magnet_width[4];				//´ÅÌõ¿í¶È
+    u8 io_num[4];					//´«¸ĞÆ÷µãÎ»×ÜÊı
 
-    u8 new_io_low_low[4];			//ç‚¹ä½ä¿¡æ¯1-ä½ä½
-    u8 new_io_low_high[4];			//ç‚¹ä½ä¿¡æ¯2-ä½é«˜
-    u8 new_io_high_low[4];			//ç‚¹ä½ä¿¡æ¯3-é«˜ä½
-    u8 new_io_high_high[4];			//ç‚¹ä½ä¿¡æ¯4-é«˜é«˜
+    u8 new_io_low_low[4];			//µãÎ»ĞÅÏ¢1-µÍµÍ
+    u8 new_io_low_high[4];			//µãÎ»ĞÅÏ¢2-µÍ¸ß
+    u8 new_io_high_low[4];			//µãÎ»ĞÅÏ¢3-¸ßµÍ
+    u8 new_io_high_high[4];			//µãÎ»ĞÅÏ¢4-¸ß¸ß
     
-    u8 io_low[4];                                           // ç‚¹ä½å€¼
+    u8 io_low[4];                                           // µãÎ»Öµ
     u8 io_high[4];
-    u32 magnet_comm_time[4];                                // è¶…æ—¶æ£€æŸ¥
+    u32 magnet_comm_time[4];                                // ³¬Ê±¼ì²é
 
-    u8 branch_set;                                          //åˆ†æ”¯è®¾ç½®
-    u8 error_state[4];                                      //é”™è¯¯çŠ¶æ€
+    u8 branch_set;                                          //·ÖÖ§ÉèÖÃ
+    u8 error_state[4];                                      //´íÎó×´Ì¬
     s8 datatemp;
 
-    u8 offline;                                             // ç¦»çº¿æ ‡å¿—
-    u8 canopen_recv_bit;                                    // canæ¥æ”¶æ ‡å¿—
+    u8 offline;                                             // ÀëÏß±êÖ¾
+    u8 canopen_recv_bit;                                    // can½ÓÊÕ±êÖ¾
 
 } MAGNET_UPPER_STRU;
 
 MAGNET_UPPER_EXT MAGNET_UPPER_STRU  Magnet_Upper_Stru;
 
 
-/* å‘é€ä»»åŠ¡å¤„ç† */
+/* ·¢ËÍÈÎÎñ´¦Àí */
 extern void MAGNET_UpperTX_Mesg_Task(void);
 
-/* æ¥æ”¶ä»»åŠ¡å¤„ç† */
+/* ½ÓÊÕÈÎÎñ´¦Àí */
 extern void MAGNET_UpperRX_Task(void);
 
-/* èµ°å½¢-CANä¸­æ–­æ¥æ”¶å¤„ç† */
+/* ×ßĞÎ-CANÖĞ¶Ï½ÓÊÕ´¦Àí */
 extern void MAGNET_UpperRX_CAN_Handler_Task(CanRxMsg* RxMessage);
 
 #endif

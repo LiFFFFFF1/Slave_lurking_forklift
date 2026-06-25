@@ -2,23 +2,23 @@
 #define _OBS_XS_METHOD_H
 
 
-// ä½¿ç”¨åˆ°çš„åº•å±‚åŸºç¡€æ–‡ä»¶
+// Ê¹ÓÃµ½µÄµ×²ã»ù´¡ÎÄ¼ş
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"	
 #include "bsp_modbusrtu.h"
 
 
 
-/* OBS-å‘é€æŸ¥è¯¢ä»»åŠ¡*/
+/* OBS-·¢ËÍ²éÑ¯ÈÎÎñ*/
 extern void Obs_AreaXs_Send_Task(void);
 
-/*OBS-æ¥æ”¶å¤„ç†ä»»åŠ¡*/
+/*OBS-½ÓÊÕ´¦ÀíÈÎÎñ*/
 extern void Obs_AreaXs_RX_Task(void);
 
-/* OBS-IOè¾“å‡ºä»»åŠ¡*/
+/* OBS-IOÊä³öÈÎÎñ*/
 extern void Obs_AreaXs_IO_Send_Task(void);
 
-/* OBS-IOè¾“å…¥ä»»åŠ¡*/
+/* OBS-IOÊäÈëÈÎÎñ*/
 extern void Obs_AreaXs_IO_RX_Task(void);
 
 #endif

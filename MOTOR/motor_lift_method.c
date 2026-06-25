@@ -1,6 +1,6 @@
 #include "motor_lift_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "motor_upper.h"
 #include "plc_hub_upper.h"
 
@@ -20,7 +20,7 @@ static void _lift_err_check(void)
     static u8 input_timer[2] = {0};
     static u16 speed_timer[2] = {0};
 
-    //å‰ä¸¾å‡æ‰çº¿æ£€æµ‹*20ms
+    //Ç°¾ÙÉıµôÏß¼ì²â*20ms
     if(++Motor_Lift_Stru.comm_timer[0] > 20)//400ms
     {
         Motor_Lift_Stru.comm_timer[0] = 0;
@@ -32,7 +32,7 @@ static void _lift_err_check(void)
             setbit(Motor_Lift_Stru.can_state, 0);
         }
     }
-    //åä¸¾å‡æ‰çº¿æ£€æµ‹*20ms
+    //ºó¾ÙÉıµôÏß¼ì²â*20ms
     if(++Motor_Lift_Stru.comm_timer[1] > 20)//400ms
     {
         Motor_Lift_Stru.comm_timer[1] = 0;
@@ -45,8 +45,8 @@ static void _lift_err_check(void)
         }
     }
 
-    //ä¸¾å‡å‡é™æ—¶é—´æ£€æµ‹*20ms
-    if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)//è¿è¡Œä¸­
+    //¾ÙÉıÉı½µÊ±¼ä¼ì²â*20ms
+    if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)//ÔËĞĞÖĞ
     {
         if(Motor_Lift_Stru.run_timer < 10000)    Motor_Lift_Stru.run_timer ++;
     }
@@ -55,16 +55,16 @@ static void _lift_err_check(void)
         Motor_Lift_Stru.run_timer = 0;
     }
 
-    if(Motor_Lift_Stru.run_timer > LIFT_RUN_OVERTIME)//è¶…æ—¶è®¾ç½®
+    if(Motor_Lift_Stru.run_timer > LIFT_RUN_OVERTIME)//³¬Ê±ÉèÖÃ
     {
         if(PLC_TO_HUB_Mesg_Stru.err_id == 0)
         {
             PLC_TO_HUB_Mesg_Stru.err_id = ERR_ID_MOTOR_LIFT1;
-            PLC_TO_HUB_Mesg_Stru.err_data = 0x04;//å‡é™è¶…æ—¶
+            PLC_TO_HUB_Mesg_Stru.err_data = 0x04;//Éı½µ³¬Ê±
         }
     }
 
-    //å‰åç”µæœºé€Ÿåº¦è¶…å·®ï¼Œå³å‰åé«˜ä½è¯¯å·®è¿‡å¤§
+    //Ç°ºóµç»úËÙ¶È³¬²î£¬¼´Ç°ºó¸ßµÍÎó²î¹ı´ó
     if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP&&
        ((Motor_Lift_Stru.real_speed[0]-Motor_Lift_Stru.real_speed[1] > DEFAULT_LIFT_SPEED/2)
         ||(Motor_Lift_Stru.real_speed[0]-Motor_Lift_Stru.real_speed[1] < -DEFAULT_LIFT_SPEED/2)))
@@ -73,17 +73,17 @@ static void _lift_err_check(void)
     }
     else Motor_Lift_Stru.speed_timer = 0;
 
-    if(Motor_Lift_Stru.speed_timer > 250)//5000msé«˜åº¦æœªä¿®æ­£å®Œæ¯•æŠ¥è­¦
+    if(Motor_Lift_Stru.speed_timer > 250)//5000ms¸ß¶ÈÎ´ĞŞÕıÍê±Ï±¨¾¯
     {
         if(PLC_TO_HUB_Mesg_Stru.err_id == 0)
         {
             PLC_TO_HUB_Mesg_Stru.err_id = ERR_ID_MOTOR_LIFT1;
-            PLC_TO_HUB_Mesg_Stru.err_data = 0x05;//é€Ÿåº¦è¶…å·®
+            PLC_TO_HUB_Mesg_Stru.err_data = 0x05;//ËÙ¶È³¬²î
         }
     }
 
 
-    //å‰ç”µæœºé€Ÿåº¦åé¦ˆå¼‚å¸¸ï¼Œé€Ÿåº¦ä¸‹å‘åæ— åé¦ˆ
+    //Ç°µç»úËÙ¶È·´À¡Òì³££¬ËÙ¶ÈÏÂ·¢ºóÎŞ·´À¡
     if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)
     {
         if((Motor_Lift_Stru.set_speed_front > 0&&Motor_Lift_Stru.real_speed[0] < DEFAULT_LIFT_SPEED/2)
@@ -104,7 +104,7 @@ static void _lift_err_check(void)
         }
     }
 
-    //åç”µæœºé€Ÿåº¦åé¦ˆå¼‚å¸¸ï¼Œé€Ÿåº¦ä¸‹å‘åæ— åé¦ˆ
+    //ºóµç»úËÙ¶È·´À¡Òì³££¬ËÙ¶ÈÏÂ·¢ºóÎŞ·´À¡
     if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)
     {
         if((Motor_Lift_Stru.set_speed_back > 0&&Motor_Lift_Stru.real_speed[1] < DEFAULT_LIFT_SPEED/2)
@@ -127,48 +127,48 @@ static void _lift_err_check(void)
 
 
 
-    //åˆ°ä½ä¿¡å·å¼‚å¸¸-  å‰
-    if(Input_Lift_Front_Upside == GET_INPUT_TURE&&Input_Lift_Front_Downside == GET_INPUT_TURE)//ä¸¤ä¸ªåˆ°ä½-å¼‚å¸¸
+    //µ½Î»ĞÅºÅÒì³£-  Ç°
+    if(Input_Lift_Front_Upside == GET_INPUT_TURE&&Input_Lift_Front_Downside == GET_INPUT_TURE)//Á½¸öµ½Î»-Òì³£
     {
-        if(++input_timer[0] > INPUT_UP_TIMESET)//æ¶ˆæŠ–
+        if(++input_timer[0] > INPUT_UP_TIMESET)//Ïû¶¶
         {
             input_timer[0] = 0;
             if(PLC_TO_HUB_Mesg_Stru.err_id == 0)
             {
                 PLC_TO_HUB_Mesg_Stru.err_id = ERR_ID_MOTOR_LIFT1;
-                PLC_TO_HUB_Mesg_Stru.err_data = 0x06;//åˆ°ä½ä¿¡å·å¼‚å¸¸
+                PLC_TO_HUB_Mesg_Stru.err_data = 0x06;//µ½Î»ĞÅºÅÒì³£
             }
         }
     }
     else input_timer[0] = 0;
 
-    //åˆ°ä½ä¿¡å·å¼‚å¸¸-  å
-    if(Input_Lift_Back_Upside == GET_INPUT_TURE&&Input_Lift_Back_Downside == GET_INPUT_TURE)//ä¸¤ä¸ªåˆ°ä½-å¼‚å¸¸
+    //µ½Î»ĞÅºÅÒì³£-  ºó
+    if(Input_Lift_Back_Upside == GET_INPUT_TURE&&Input_Lift_Back_Downside == GET_INPUT_TURE)//Á½¸öµ½Î»-Òì³£
     {
-        if(++input_timer[1] > INPUT_UP_TIMESET)//æ¶ˆæŠ–
+        if(++input_timer[1] > INPUT_UP_TIMESET)//Ïû¶¶
         {
             input_timer[1] = 0;
             if(PLC_TO_HUB_Mesg_Stru.err_id == 0)
             {
                 PLC_TO_HUB_Mesg_Stru.err_id = ERR_ID_MOTOR_LIFT2;
-                PLC_TO_HUB_Mesg_Stru.err_data = 0x07;//åˆ°ä½ä¿¡å·å¼‚å¸¸
+                PLC_TO_HUB_Mesg_Stru.err_data = 0x07;//µ½Î»ĞÅºÅÒì³£
             }
         }
     }
     else input_timer[1] = 0;
 
 
-    //å¤ä½
+    //¸´Î»
     if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 0) == 1
        &&(PLC_TO_HUB_Mesg_Stru.err_id == ERR_ID_MOTOR_LIFT1
-          ||PLC_TO_HUB_Mesg_Stru.err_id == ERR_ID_MOTOR_LIFT2))//æœ‰æŠ¥è­¦æ—¶
+          ||PLC_TO_HUB_Mesg_Stru.err_id == ERR_ID_MOTOR_LIFT2))//ÓĞ±¨¾¯Ê±
     {
         PLC_TO_HUB_Mesg_Stru.err_id = 0;
         PLC_TO_HUB_Mesg_Stru.err_data = 0;
 
         Motor_Lift_Stru.can_state = 0;
 
-        Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_RESET;//å¤ä½
+        Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_RESET;//¸´Î»
     }
 
 }
@@ -186,19 +186,19 @@ static void _lift_canopen_senddata(u8 id, u8 mode, u16 ctl_word, s32 send_val)
 {
     u8 can_buf[8]= {0};
 
-    can_buf[0] = mode;           // æ¨¡å¼ 3-PVé€Ÿåº¦,1-PPä½ç½®
+    can_buf[0] = mode;           // Ä£Ê½ 3-PVËÙ¶È,1-PPÎ»ÖÃ
 
     can_buf[1] = ctl_word;       //
-    can_buf[2] = ctl_word>>8;    // æ§åˆ¶å­—
+    can_buf[2] = ctl_word>>8;    // ¿ØÖÆ×Ö
 
-    can_buf[3] = send_val;           // speed_vx>0å‰è¿› speed_vx<0åé€€
-    can_buf[4] = send_val>>8;    // è®¾ç½®è¡Œèµ°è½®è½¬é€Ÿ /   ä½ç½®
+    can_buf[3] = send_val;           // speed_vx>0Ç°½ø speed_vx<0ºóÍË
+    can_buf[4] = send_val>>8;    // ÉèÖÃĞĞ×ßÂÖ×ªËÙ /   Î»ÖÃ
     can_buf[5] = send_val>>16;
     can_buf[6] = send_val>>24;
 
     can_buf[7] = 0;
 
-    CAN1_Send_One_Frame_Data(0x200+id, can_buf, 8);    // é©±åŠ¨å™¨-ä½å­—èŠ‚åœ¨å‰
+    CAN1_Send_One_Frame_Data(0x200+id, can_buf, 8);    // Çı¶¯Æ÷-µÍ×Ö½ÚÔÚÇ°
 
 }
 
@@ -209,7 +209,7 @@ static void _lift_canopen_senddata(u8 id, u8 mode, u16 ctl_word, s32 send_val)
   *
   * @retval  none
   *
-  * @note ä¸¾å‡CAN  å‘é€æ•°æ®
+  * @note ¾ÙÉıCAN  ·¢ËÍÊı¾İ
   *****************************************************************************/
 static void _lift_can_send_step(void)
 {
@@ -221,12 +221,12 @@ static void _lift_can_send_step(void)
 
     switch(Motor_Lift_Stru.lift_action_set)
     {
-        case EM_LIFT_ACT_START://å¯åŠ¨1
-            Output_Lift_Break = 0;//æŠ±é—¸æŠ±ç´§
+        case EM_LIFT_ACT_START://Æô¶¯1
+            Output_Lift_Break = 0;//±§Õ¢±§½ô
 
             can_buf[0] = 0x01;
             can_buf[1] = LIFT_CANID_1;
-            CAN1_Send_One_Frame_Data(0x000, can_buf, 2);//å¯åŠ¨èŠ‚ç‚¹1
+            CAN1_Send_One_Frame_Data(0x000, can_buf, 2);//Æô¶¯½Úµã1
             
             if(++timer_start[0] > 3)//*20ms
             {
@@ -235,7 +235,7 @@ static void _lift_can_send_step(void)
             }
             break;
             
-        case EM_LIFT_ACT_START+1://å¯åŠ¨2
+        case EM_LIFT_ACT_START+1://Æô¶¯2
             _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x06, 0);//shutdown1
             
             if(++timer_start[1] > 3)//*20ms
@@ -245,8 +245,8 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_START+2://å¯åŠ¨3
-            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x07, 0);//æ–­ä½¿èƒ½
+        case EM_LIFT_ACT_START+2://Æô¶¯3
+            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x07, 0);//¶ÏÊ¹ÄÜ
             
             if(++timer_start[2] > 3)//*20ms
             {
@@ -255,10 +255,10 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_START+3://å¯åŠ¨4
+        case EM_LIFT_ACT_START+3://Æô¶¯4
             can_buf[0] = 0x01;
             can_buf[1] = LIFT_CANID_2;
-            CAN1_Send_One_Frame_Data(0x000, can_buf, 2);//å¯åŠ¨èŠ‚ç‚¹2
+            CAN1_Send_One_Frame_Data(0x000, can_buf, 2);//Æô¶¯½Úµã2
             
             if(++timer_start[3] > 3)//*20ms
             {
@@ -267,7 +267,7 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_START+4://å¯åŠ¨5
+        case EM_LIFT_ACT_START+4://Æô¶¯5
             _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x06, 0);//shutdown1
             
             if(++timer_start[4] > 3)//*20ms
@@ -277,24 +277,24 @@ static void _lift_can_send_step(void)
             }
             break;
             
-        case EM_LIFT_ACT_START+5://å¯åŠ¨6
-            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x07, 0);//æ–­ä½¿èƒ½
+        case EM_LIFT_ACT_START+5://Æô¶¯6
+            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x07, 0);//¶ÏÊ¹ÄÜ
             
             if(++timer_start[5] > 3)//*20ms
             {
                 timer_start[5] = 0;
-                Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;//å®Œæˆååˆ‡æ¢åˆ°åœæ­¢
+                Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;//Íê³ÉºóÇĞ»»µ½Í£Ö¹
             }            
             break;
 
         
-        case EM_LIFT_ACT_RESET://å¤ä½1
+        case EM_LIFT_ACT_RESET://¸´Î»1
         
-            Output_Lift_Break = 0;//æŠ±é—¸æŠ±ç´§
+            Output_Lift_Break = 0;//±§Õ¢±§½ô
             
             can_buf[0] = 0x01;
             can_buf[1] = LIFT_CANID_1;
-            CAN1_Send_One_Frame_Data(0x000, can_buf, 2);//å¯åŠ¨èŠ‚ç‚¹1
+            CAN1_Send_One_Frame_Data(0x000, can_buf, 2);//Æô¶¯½Úµã1
             
             if(++timer_reset[0] > 3)//*20ms
             {
@@ -303,9 +303,9 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_RESET+1://å¤ä½2
+        case EM_LIFT_ACT_RESET+1://¸´Î»2
         
-            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x86, 0);//æ¸…é™¤æŠ¥è­¦1
+            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x86, 0);//Çå³ı±¨¾¯1
 
             if(++timer_reset[1] > 3)//*20ms
             {
@@ -314,7 +314,7 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_RESET+2://å¤ä½3
+        case EM_LIFT_ACT_RESET+2://¸´Î»3
         
             _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x06, 0);//shutdown1
             
@@ -325,9 +325,9 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_RESET+3://å¤ä½4
+        case EM_LIFT_ACT_RESET+3://¸´Î»4
         
-            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x07, 0);//æ–­ä½¿èƒ½
+            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x07, 0);//¶ÏÊ¹ÄÜ
             
             if(++timer_reset[3] > 3)//*20ms
             {
@@ -336,11 +336,11 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_RESET+4://å¤ä½5
+        case EM_LIFT_ACT_RESET+4://¸´Î»5
         
             can_buf[0] = 0x01;
             can_buf[1] = LIFT_CANID_2;
-            CAN1_Send_One_Frame_Data(0x000, can_buf, 2);//å¯åŠ¨èŠ‚ç‚¹2
+            CAN1_Send_One_Frame_Data(0x000, can_buf, 2);//Æô¶¯½Úµã2
             
             if(++timer_reset[4] > 3)//*20ms
             {
@@ -349,9 +349,9 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_RESET+5://å¤ä½6
+        case EM_LIFT_ACT_RESET+5://¸´Î»6
         
-            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x86, 0);//æ¸…é™¤æŠ¥è­¦1
+            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x86, 0);//Çå³ı±¨¾¯1
             
             if(++timer_reset[5] > 3)//*20ms
             {
@@ -360,7 +360,7 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_RESET+6://å¤ä½7
+        case EM_LIFT_ACT_RESET+6://¸´Î»7
         
             _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x06, 0);//shutdown1
             
@@ -371,22 +371,22 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_RESET+7://å¤ä½8
+        case EM_LIFT_ACT_RESET+7://¸´Î»8
         
-            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x07, 0);//æ–­ä½¿èƒ½
+            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x07, 0);//¶ÏÊ¹ÄÜ
             
             if(++timer_reset[7] > 3)//*20ms
             {
                 timer_reset[7] = 0;
-                Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;//å¤ä½å®Œæˆååˆ‡æ¢åˆ°åœæ­¢
+                Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;//¸´Î»Íê³ÉºóÇĞ»»µ½Í£Ö¹
             }            
             break;
 
             
-        case EM_LIFT_ACT_STOP://åœæ­¢
-            Output_Lift_Break = 0;//æŠ±é—¸æŠ±ç´§
-            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x0f, 0);//ä½¿èƒ½+é€Ÿåº¦0
-            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x0f, 0);//ä½¿èƒ½+é€Ÿåº¦0
+        case EM_LIFT_ACT_STOP://Í£Ö¹
+            Output_Lift_Break = 0;//±§Õ¢±§½ô
+            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x0f, 0);//Ê¹ÄÜ+ËÙ¶È0
+            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x0f, 0);//Ê¹ÄÜ+ËÙ¶È0
 
             if(++timer_stop >= 20)//*20ms
             {
@@ -395,17 +395,17 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_STOP+1://åœæ­¢+1
-            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x07, 0);//æ–­ä½¿èƒ½
-            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x07, 0);//æ–­ä½¿èƒ½
+        case EM_LIFT_ACT_STOP+1://Í£Ö¹+1
+            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x07, 0);//¶ÏÊ¹ÄÜ
+            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x07, 0);//¶ÏÊ¹ÄÜ
             break;
 
 
-        case EM_LIFT_ACT_RUN_UP://ä¸Šå‡
-        case EM_LIFT_ACT_RUN_DOWN://ä¸‹é™
-            Output_Lift_Break = 1;//æŠ±é—¸æ¾å¼€
-            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x0f, 0);//ä½¿èƒ½+é€Ÿåº¦
-            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x0f, 0);//ä½¿èƒ½+é€Ÿåº¦
+        case EM_LIFT_ACT_RUN_UP://ÉÏÉı
+        case EM_LIFT_ACT_RUN_DOWN://ÏÂ½µ
+            Output_Lift_Break = 1;//±§Õ¢ËÉ¿ª
+            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x0f, 0);//Ê¹ÄÜ+ËÙ¶È
+            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x0f, 0);//Ê¹ÄÜ+ËÙ¶È
 
             if(++timer_run >= 20)//*20ms
             {
@@ -414,10 +414,10 @@ static void _lift_can_send_step(void)
             }
             break;
 
-        case EM_LIFT_ACT_RUN_UP+1://ä¸Šå‡+1
-        case EM_LIFT_ACT_RUN_DOWN+1://ä¸‹é™+1
-            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x0f, Motor_Lift_Stru.set_speed_front);//ä½¿èƒ½+é€Ÿåº¦
-            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x0f, Motor_Lift_Stru.set_speed_back);//ä½¿èƒ½+é€Ÿåº¦
+        case EM_LIFT_ACT_RUN_UP+1://ÉÏÉı+1
+        case EM_LIFT_ACT_RUN_DOWN+1://ÏÂ½µ+1
+            _lift_canopen_senddata(LIFT_CANID_1, EM_MOTOR_MODE_PV, 0x0f, Motor_Lift_Stru.set_speed_front);//Ê¹ÄÜ+ËÙ¶È
+            _lift_canopen_senddata(LIFT_CANID_2, EM_MOTOR_MODE_PV, 0x0f, Motor_Lift_Stru.set_speed_back);//Ê¹ÄÜ+ËÙ¶È
 
             break;
 
@@ -442,155 +442,155 @@ void Lift_Task_Deal(void)
 {
     static u8 input_timer[4] = {0};
 
-    //ä¸Šç”µå»¶æ—¶2ç§’ï¼Œç­‰å¾…é©±åŠ¨å™¨å‡†å¤‡å°±ç»ª
+    //ÉÏµçÑÓÊ±2Ãë£¬µÈ´ıÇı¶¯Æ÷×¼±¸¾ÍĞ÷
     if(Motor_Lift_Stru.power_on_delay < 250)//250*20ms=5000ms=5s
     {
         Motor_Lift_Stru.power_on_delay++;
-        return;//å»¶æ—¶æœŸé—´ç›´æ¥è¿”å›ï¼Œä¸æ‰§è¡Œä»»ä½•ä¸¾å‡æ“ä½œ
+        return;//ÑÓÊ±ÆÚ¼äÖ±½Ó·µ»Ø£¬²»Ö´ĞĞÈÎºÎ¾ÙÉı²Ù×÷
     }
 
-    //ä¸Šç”µå¯åŠ¨èŠ‚ç‚¹
+    //ÉÏµçÆô¶¯½Úµã
     if(Motor_Lift_Stru.lift_action_set == 0)
         Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_START;
 
-    //å¯åŠ¨è¿è¡Œ
-    if(Motor_Lift_Stru.lift_en == ENABLE&&PLC_TO_HUB_Mesg_Stru.err_id == 0)//ä¸¾å‡ä½¿èƒ½ï¼Œæ— æŠ¥è­¦
+    //Æô¶¯ÔËĞĞ
+    if(Motor_Lift_Stru.lift_en == ENABLE&&PLC_TO_HUB_Mesg_Stru.err_id == 0)//¾ÙÉıÊ¹ÄÜ£¬ÎŞ±¨¾¯
     {
-        //ä¸Šå‡
+        //ÉÏÉı
         if(Motor_Lift_Stru.lift_target_highdata[0] > 0)
         {
-            //å‰åéƒ½æœªåˆ°ä½
+            //Ç°ºó¶¼Î´µ½Î»
             if(Input_Lift_Front_Upside == GET_INPUT_FALSE&&Input_Lift_Back_Upside == GET_INPUT_FALSE)
             {
                 input_timer[0] = 0;
-                if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_STOP+1)//åœæ­¢çŠ¶æ€ä¸‹
+                if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_STOP+1)//Í£Ö¹×´Ì¬ÏÂ
                 {
                     Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_RUN_UP;
                 }
-                else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_UP+1)//ä¸Šå‡çŠ¶æ€ä¸‹
+                else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_UP+1)//ÉÏÉı×´Ì¬ÏÂ
                 {
-                    Motor_Lift_Stru.set_speed_front = DEFAULT_LIFT_SPEED*LIFT_DIRET;//å‰
-                    Motor_Lift_Stru.set_speed_back = DEFAULT_LIFT_SPEED*LIFT_DIRET;//å
+                    Motor_Lift_Stru.set_speed_front = DEFAULT_LIFT_SPEED*LIFT_DIRET;//Ç°
+                    Motor_Lift_Stru.set_speed_back = DEFAULT_LIFT_SPEED*LIFT_DIRET;//ºó
                 }
-                else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_DOWN+1)//ä¸‹é™çŠ¶æ€ä¸‹
+                else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_DOWN+1)//ÏÂ½µ×´Ì¬ÏÂ
                 {
                     Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;
-                    Motor_Lift_Stru.set_speed_front = 0;//é€Ÿåº¦æ¸…é›¶
+                    Motor_Lift_Stru.set_speed_front = 0;//ËÙ¶ÈÇåÁã
                     Motor_Lift_Stru.set_speed_back = 0;
                 }
             }
 
-            //å‰æˆ–è€…åå·²å‡åˆ°ä½
+            //Ç°»òÕßºóÒÑÉıµ½Î»
             else if(Input_Lift_Front_Upside == GET_INPUT_TURE||Input_Lift_Back_Upside == GET_INPUT_TURE)
             {
-                if(++input_timer[0] > INPUT_UP_TIMESET)//åˆ°ä½æ¶ˆæŠ–
+                if(++input_timer[0] > INPUT_UP_TIMESET)//µ½Î»Ïû¶¶
                 {
                     input_timer[0] = 0;
-                    if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)//è¿è¡ŒçŠ¶æ€ä¸‹
+                    if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)//ÔËĞĞ×´Ì¬ÏÂ
                     {
                         Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;
-                        Motor_Lift_Stru.set_speed_front = 0;//é€Ÿåº¦æ¸…é›¶
+                        Motor_Lift_Stru.set_speed_front = 0;//ËÙ¶ÈÇåÁã
                         Motor_Lift_Stru.set_speed_back = 0;
                     }
                 }
             }
         }
 
-        //ä¸‹é™
+        //ÏÂ½µ
         else if(Motor_Lift_Stru.lift_target_highdata[0] == 0)
         {
-            //å‰åéƒ½æœªåˆ°ä½
+            //Ç°ºó¶¼Î´µ½Î»
             if(Input_Lift_Front_Downside == GET_INPUT_FALSE&&Input_Lift_Back_Downside == GET_INPUT_FALSE)
             {
                 input_timer[1] = 0;
                 input_timer[2] = 0;
                 input_timer[3] = 0;
 
-                if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_STOP+1)//åœæ­¢çŠ¶æ€ä¸‹
+                if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_STOP+1)//Í£Ö¹×´Ì¬ÏÂ
                 {
                     Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_RUN_DOWN;
                 }
-                else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_DOWN+1)//ä¸‹é™çŠ¶æ€ä¸‹
+                else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_DOWN+1)//ÏÂ½µ×´Ì¬ÏÂ
                 {
-                    Motor_Lift_Stru.set_speed_front = -DEFAULT_LIFT_SPEED*LIFT_DIRET;//é€Ÿåº¦å–å
+                    Motor_Lift_Stru.set_speed_front = -DEFAULT_LIFT_SPEED*LIFT_DIRET;//ËÙ¶ÈÈ¡·´
                     Motor_Lift_Stru.set_speed_back = -DEFAULT_LIFT_SPEED*LIFT_DIRET;
                 }
-                else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_UP+1)//ä¸Šå‡çŠ¶æ€ä¸‹
+                else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_UP+1)//ÉÏÉı×´Ì¬ÏÂ
                 {
                     Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;
-                    Motor_Lift_Stru.set_speed_front = 0;//é€Ÿåº¦æ¸…é›¶
+                    Motor_Lift_Stru.set_speed_front = 0;//ËÙ¶ÈÇåÁã
                     Motor_Lift_Stru.set_speed_back = 0;
                 }
             }
 
-            //å‰å·²é™åˆ°ä½ï¼Œåæœªé™åˆ°ä½
+            //Ç°ÒÑ½µµ½Î»£¬ºóÎ´½µµ½Î»
             else if(Input_Lift_Front_Downside == GET_INPUT_TURE&&Input_Lift_Back_Downside == GET_INPUT_FALSE)
             {
                 input_timer[2] = 0;
                 input_timer[3] = 0;
 
-                if(++input_timer[1] > INPUT_DOWN_TIMESET)//åˆ°ä½æ¶ˆæŠ–
+                if(++input_timer[1] > INPUT_DOWN_TIMESET)//µ½Î»Ïû¶¶
                 {
                     input_timer[1] = 0;
-                    if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_STOP+1)//åœæ­¢çŠ¶æ€ä¸‹
+                    if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_STOP+1)//Í£Ö¹×´Ì¬ÏÂ
                     {
                         Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_RUN_DOWN;
                     }
-                    else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_DOWN+1)//ä¸‹é™çŠ¶æ€ä¸‹
+                    else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_DOWN+1)//ÏÂ½µ×´Ì¬ÏÂ
                     {
                         Motor_Lift_Stru.set_speed_front = 0;
-                        Motor_Lift_Stru.set_speed_back = -DEFAULT_LIFT_SPEED*LIFT_DIRET;//é€Ÿåº¦å–å
+                        Motor_Lift_Stru.set_speed_back = -DEFAULT_LIFT_SPEED*LIFT_DIRET;//ËÙ¶ÈÈ¡·´
                     }
-                    else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_UP+1)//ä¸Šå‡çŠ¶æ€ä¸‹
+                    else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_UP+1)//ÉÏÉı×´Ì¬ÏÂ
                     {
                         Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;
-                        Motor_Lift_Stru.set_speed_front = 0;//é€Ÿåº¦æ¸…é›¶
+                        Motor_Lift_Stru.set_speed_front = 0;//ËÙ¶ÈÇåÁã
                         Motor_Lift_Stru.set_speed_back = 0;
                     }
 
                 }
             }
 
-            //å‰æœªé™åˆ°ä½ï¼Œåå·²é™åˆ°ä½
+            //Ç°Î´½µµ½Î»£¬ºóÒÑ½µµ½Î»
             else if(Input_Lift_Front_Downside == GET_INPUT_FALSE&&Input_Lift_Back_Downside == GET_INPUT_TURE)
             {
                 input_timer[1] = 0;
                 input_timer[3] = 0;
 
-                if(++input_timer[2] > INPUT_DOWN_TIMESET)//åˆ°ä½æ¶ˆæŠ–
+                if(++input_timer[2] > INPUT_DOWN_TIMESET)//µ½Î»Ïû¶¶
                 {
                     input_timer[2] = 0;
-                    if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_STOP+1)//åœæ­¢çŠ¶æ€ä¸‹
+                    if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_STOP+1)//Í£Ö¹×´Ì¬ÏÂ
                     {
                         Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_RUN_DOWN;
                     }
-                    else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_DOWN+1)//ä¸‹é™çŠ¶æ€ä¸‹
+                    else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_DOWN+1)//ÏÂ½µ×´Ì¬ÏÂ
                     {
-                        Motor_Lift_Stru.set_speed_front = -DEFAULT_LIFT_SPEED*LIFT_DIRET;//é€Ÿåº¦å–å
+                        Motor_Lift_Stru.set_speed_front = -DEFAULT_LIFT_SPEED*LIFT_DIRET;//ËÙ¶ÈÈ¡·´
                         Motor_Lift_Stru.set_speed_back = 0;
                     }
-                    else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_UP+1)//ä¸Šå‡çŠ¶æ€ä¸‹
+                    else if(Motor_Lift_Stru.lift_action_set == EM_LIFT_ACT_RUN_UP+1)//ÉÏÉı×´Ì¬ÏÂ
                     {
                         Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;
-                        Motor_Lift_Stru.set_speed_front = 0;//é€Ÿåº¦æ¸…é›¶
+                        Motor_Lift_Stru.set_speed_front = 0;//ËÙ¶ÈÇåÁã
                         Motor_Lift_Stru.set_speed_back = 0;
                     }
                 }
             }
 
-            //å‰åéƒ½å·²é™åˆ°ä½
+            //Ç°ºó¶¼ÒÑ½µµ½Î»
             else if(Input_Lift_Front_Downside == GET_INPUT_TURE&&Input_Lift_Back_Downside == GET_INPUT_TURE)
             {
                 input_timer[1] = 0;
                 input_timer[2] = 0;
 
-                if(++input_timer[3] > INPUT_DOWN_TIMESET)//åˆ°ä½æ¶ˆæŠ–
+                if(++input_timer[3] > INPUT_DOWN_TIMESET)//µ½Î»Ïû¶¶
                 {
                     input_timer[3] = 0;
-                    if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)//è¿è¡ŒçŠ¶æ€ä¸‹
+                    if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)//ÔËĞĞ×´Ì¬ÏÂ
                     {
                         Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;
-                        Motor_Lift_Stru.set_speed_front = 0;//é€Ÿåº¦æ¸…é›¶
+                        Motor_Lift_Stru.set_speed_front = 0;//ËÙ¶ÈÇåÁã
                         Motor_Lift_Stru.set_speed_back = 0;
                     }
                 }
@@ -598,65 +598,65 @@ void Lift_Task_Deal(void)
         }
 
     }
-    else//è¿è¡Œæ—¶æŠ¥è­¦//æ— ä½¿èƒ½
+    else//ÔËĞĞÊ±±¨¾¯//ÎŞÊ¹ÄÜ
     {
-        //è¿è¡Œæ—¶åœæ­¢è¿è¡Œ
+        //ÔËĞĞÊ±Í£Ö¹ÔËĞĞ
         if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)
         {
             Motor_Lift_Stru.lift_action_set = EM_LIFT_ACT_STOP;
-            Motor_Lift_Stru.set_speed_front = 0;//é€Ÿåº¦æ¸…é›¶
+            Motor_Lift_Stru.set_speed_front = 0;//ËÙ¶ÈÇåÁã
             Motor_Lift_Stru.set_speed_back = 0;
         }
     }
 
-    //å‡é™çŠ¶æ€-  æ€»
+    //Éı½µ×´Ì¬-  ×Ü
     if((Input_Lift_Front_Upside == GET_INPUT_TURE&&Input_Lift_Front_Downside == GET_INPUT_FALSE)
        ||(Input_Lift_Back_Upside == GET_INPUT_TURE&&Input_Lift_Back_Downside == GET_INPUT_FALSE))
     {
-        Motor_Lift_Stru.all_lift_state = EM_LIFT_STATE_UPSIDE;//å‡åˆ°ä½
-        Motor_Lift_Stru.high_real_data[0] = DEFAULT_LIFT_HIGH_DATA;//é«˜åº¦
-        Motor_Lift_Stru.high_real_data[1] = DEFAULT_LIFT_HIGH_DATA;//é«˜åº¦
+        Motor_Lift_Stru.all_lift_state = EM_LIFT_STATE_UPSIDE;//Éıµ½Î»
+        Motor_Lift_Stru.high_real_data[0] = DEFAULT_LIFT_HIGH_DATA;//¸ß¶È
+        Motor_Lift_Stru.high_real_data[1] = DEFAULT_LIFT_HIGH_DATA;//¸ß¶È
     }
     else if((Input_Lift_Front_Upside == GET_INPUT_FALSE&&Input_Lift_Front_Downside == GET_INPUT_TURE)
             &&(Input_Lift_Back_Upside == GET_INPUT_FALSE&&Input_Lift_Back_Downside == GET_INPUT_TURE))
     {
-        Motor_Lift_Stru.all_lift_state = EM_LIFT_STATE_DOWNSIDE;//é™åˆ°ä½
-        Motor_Lift_Stru.high_real_data[0] = 0;//é«˜åº¦
-        Motor_Lift_Stru.high_real_data[1] = 0;//é«˜åº¦
+        Motor_Lift_Stru.all_lift_state = EM_LIFT_STATE_DOWNSIDE;//½µµ½Î»
+        Motor_Lift_Stru.high_real_data[0] = 0;//¸ß¶È
+        Motor_Lift_Stru.high_real_data[1] = 0;//¸ß¶È
     }
     else
     {
         if(Motor_Lift_Stru.lift_action_set >= EM_LIFT_ACT_RUN_UP)
-            Motor_Lift_Stru.all_lift_state = EM_LIFT_STATE_RUNING;//è¿è¡Œä¸­
+            Motor_Lift_Stru.all_lift_state = EM_LIFT_STATE_RUNING;//ÔËĞĞÖĞ
         else
-            Motor_Lift_Stru.all_lift_state = EM_LIFT_STATE_STOP;//åœæ­¢ä¸­
+            Motor_Lift_Stru.all_lift_state = EM_LIFT_STATE_STOP;//Í£Ö¹ÖĞ
     }
 
-    _lift_err_check();//å¼‚å¸¸æ£€æµ‹
-    _lift_can_send_step();//CANå‘é€æ•°æ®
+    _lift_err_check();//Òì³£¼ì²â
+    _lift_can_send_step();//CAN·¢ËÍÊı¾İ
 
 }
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Motor_TY_CAN_RX_Handler(CanRxMsg* rxmessage)
-*åŠŸ    èƒ½:
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Motor_TY_CAN_RX_Handler(CanRxMsg* rxmessage)
+*¹¦    ÄÜ:
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Motor_TY_CAN_RX_Handler(CanRxMsg* rxmessage)
 {
     switch(rxmessage->StdId)
     {
-        case 0x180+LIFT_CANID_1://ä¸¾å‡1
-            Motor_Lift_Stru.comm_timer[0] = 0;//è®¡æ•°æ¸…é›¶
+        case 0x180+LIFT_CANID_1://¾ÙÉı1
+            Motor_Lift_Stru.comm_timer[0] = 0;//¼ÆÊıÇåÁã
 
-            // é©±åŠ¨å™¨-ç”µæµ
+            // Çı¶¯Æ÷-µçÁ÷
             Motor_Lift_Stru.current_data[0] = rxmessage->Data[0]+(u16)(rxmessage->Data[1]<<8);
 
-            // é©±åŠ¨å™¨æ•…éšœç 
+            // Çı¶¯Æ÷¹ÊÕÏÂë
             Motor_Lift_Stru.err_data[0] = rxmessage->Data[2]+(u16)(rxmessage->Data[3]<<8);
             if(Motor_Lift_Stru.err_data[0] > 0)
             {
@@ -667,19 +667,19 @@ void Motor_TY_CAN_RX_Handler(CanRxMsg* rxmessage)
                 }
             }
 
-            //é€Ÿåº¦åé¦ˆ--S32
+            //ËÙ¶È·´À¡--S32
             Motor_Lift_Stru.real_speed[0] = (s32)(rxmessage->Data[4]+(rxmessage->Data[5]<<8)+
                                                   (rxmessage->Data[6]<<16)+(rxmessage->Data[7]<<24));
 
             break;
 
-        case 0x180+LIFT_CANID_2://ä¸¾å‡2
-            Motor_Lift_Stru.comm_timer[1] = 0;//è®¡æ•°æ¸…é›¶
+        case 0x180+LIFT_CANID_2://¾ÙÉı2
+            Motor_Lift_Stru.comm_timer[1] = 0;//¼ÆÊıÇåÁã
 
-            // é©±åŠ¨å™¨-ç”µæµ
+            // Çı¶¯Æ÷-µçÁ÷
             Motor_Lift_Stru.current_data[1] = rxmessage->Data[0]+(u16)(rxmessage->Data[1]<<8);
 
-            // é©±åŠ¨å™¨æ•…éšœç 
+            // Çı¶¯Æ÷¹ÊÕÏÂë
             Motor_Lift_Stru.err_data[1] = rxmessage->Data[2]+(u16)(rxmessage->Data[3]<<8);
             if(Motor_Lift_Stru.err_data[1] > 0)
             {
@@ -690,7 +690,7 @@ void Motor_TY_CAN_RX_Handler(CanRxMsg* rxmessage)
                 }
             }
 
-            //é€Ÿåº¦åé¦ˆ--S32
+            //ËÙ¶È·´À¡--S32
             Motor_Lift_Stru.real_speed[1] = (s32)(rxmessage->Data[4]+(rxmessage->Data[5]<<8)+
                                                   (rxmessage->Data[6]<<16)+(rxmessage->Data[7]<<24));
 

@@ -1,25 +1,25 @@
 #include "iwdg.h"
 
 
-//åˆå§‹åŒ–ç‹¬ç«‹çœ‹é—¨ç‹—
-//prer:åˆ†é¢‘æ•°:0~6(åªæœ‰ä½3ä½æœ‰æ•ˆ!)
-//åˆ†é¢‘å› å­=4*2^prer.ä½†æœ€å¤§å€¼åªèƒ½æ˜¯256!
-//rlr:é‡è£…è½½å¯„å­˜å™¨å€¼:ä½11ä½æœ‰æ•ˆ.
-//æ—¶é—´è®¡ç®—(å¤§æ¦‚):Tout=((4*2^prer)*rlr)/40 (ms).
+//³õÊ¼»¯¶ÀÁ¢¿´ÃÅ¹·
+//prer:·ÖÆµÊı:0~6(Ö»ÓĞµÍ3Î»ÓĞĞ§!)
+//·ÖÆµÒò×Ó=4*2^prer.µ«×î´óÖµÖ»ÄÜÊÇ256!
+//rlr:ÖØ×°ÔØ¼Ä´æÆ÷Öµ:µÍ11Î»ÓĞĞ§.
+//Ê±¼ä¼ÆËã(´ó¸Å):Tout=((4*2^prer)*rlr)/40 (ms).
 void IWDG_Init(u8 prer,u16 rlr) 
 {	
- 	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);  //ä½¿èƒ½å¯¹å¯„å­˜å™¨IWDG_PRå’ŒIWDG_RLRçš„å†™æ“ä½œ
+ 	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);  //Ê¹ÄÜ¶Ô¼Ä´æÆ÷IWDG_PRºÍIWDG_RLRµÄĞ´²Ù×÷
 	
-	IWDG_SetPrescaler(prer);  //è®¾ç½®IWDGé¢„åˆ†é¢‘å€¼:è®¾ç½®IWDGé¢„åˆ†é¢‘å€¼ä¸º64
+	IWDG_SetPrescaler(prer);  //ÉèÖÃIWDGÔ¤·ÖÆµÖµ:ÉèÖÃIWDGÔ¤·ÖÆµÖµÎª64
 	
-	IWDG_SetReload(rlr);  //è®¾ç½®IWDGé‡è£…è½½å€¼
+	IWDG_SetReload(rlr);  //ÉèÖÃIWDGÖØ×°ÔØÖµ
 	
-	IWDG_ReloadCounter();  //æŒ‰ç…§IWDGé‡è£…è½½å¯„å­˜å™¨çš„å€¼é‡è£…è½½IWDGè®¡æ•°å™¨
+	IWDG_ReloadCounter();  //°´ÕÕIWDGÖØ×°ÔØ¼Ä´æÆ÷µÄÖµÖØ×°ÔØIWDG¼ÆÊıÆ÷
 	
-	IWDG_Enable();  //ä½¿èƒ½IWDG
+	IWDG_Enable();  //Ê¹ÄÜIWDG
 }
 
-//å–‚ç‹¬ç«‹çœ‹é—¨ç‹—
+//Î¹¶ÀÁ¢¿´ÃÅ¹·
 void IWDG_Feed(void)
 {   
  	IWDG_ReloadCounter();//reload										   

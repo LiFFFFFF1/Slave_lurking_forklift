@@ -1,19 +1,19 @@
 #include "encoder_tf_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "encoder_upper.h"
 
 
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Encoder_tf_SendAPI(void)
-*åŠŸ    èƒ½:
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼:
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void Encoder_tf_SendAPI(void)
+*¹¦    ÄÜ:
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ:
+*±¸    ×¢£º
 * 
 ****************************************************************************************/
 void Encoder_tf_SendAPI(void)
@@ -24,26 +24,26 @@ void Encoder_tf_SendAPI(void)
     if(Encoder_Mesg_Stru.com_timer[0] > 10)//*20ms
     {
         setbit(Encoder_Mesg_Stru.err_state, 0);
-        Encoder_Mesg_Stru.currt_data[0] = 0;//æ•°æ®æ¸…é›¶
+        Encoder_Mesg_Stru.currt_data[0] = 0;//Êı¾İÇåÁã
     }
     else    clrbit(Encoder_Mesg_Stru.err_state, 0);
 
     if(Encoder_Mesg_Stru.com_timer[1] > 10)//*20ms
     {
         setbit(Encoder_Mesg_Stru.err_state, 1);
-        Encoder_Mesg_Stru.currt_data[1] = 0;//æ•°æ®æ¸…é›¶
+        Encoder_Mesg_Stru.currt_data[1] = 0;//Êı¾İÇåÁã
     }
     else    clrbit(Encoder_Mesg_Stru.err_state, 1);
 
 }
 
 /***************************************************************************************
-*å‡½    æ•°: Encoder_tf_CAN_Isr(CanRxMsg* RxMessage)
-*åŠŸ    èƒ½:
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: Encoder_tf_CAN_Isr(CanRxMsg* RxMessage)
+*¹¦    ÄÜ:
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Encoder_tf_CAN_Isr(CanRxMsg* RxMessage)
 {
@@ -58,7 +58,7 @@ void Encoder_tf_CAN_Isr(CanRxMsg* RxMessage)
             if(RxMessage->DLC == 0x04)
             {
                 Encoder_Mesg_Stru.com_timer[i] = 0;
-                //å½“å‰ä½ç½®
+                //µ±Ç°Î»ÖÃ
                 Encoder_Mesg_Stru.currt_data[i] = (RxMessage->Data[3]<<24) + (RxMessage->Data[2]<<16)
                                                   + (RxMessage->Data[1]<<8) + RxMessage->Data[0];
             }

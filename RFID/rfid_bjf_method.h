@@ -16,7 +16,7 @@
 #endif  
 
 
-#define  RFID_BJF_REC_LEN            7  //å€åŠ ç¦RFIDè¯»å¡åä¸Šä¼ æ•°æ®é•¿åº¦
+#define  RFID_BJF_REC_LEN            7  //±¶¼Ó¸£RFID¶Á¿¨ºóÉÏ´«Êı¾İ³¤¶È
 
 
 RFID_BJF_EXT void RFID_BJF_485_RX_Complete_Handler(void);

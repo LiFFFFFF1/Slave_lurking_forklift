@@ -8,104 +8,104 @@
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: GPIOè¾“å…¥åˆå§‹åŒ–
-  * è¾“å…¥å‚æ•°ï¼šæ— 
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜:
+  * º¯Êı¹¦ÄÜ: GPIOÊäÈë³õÊ¼»¯
+  * ÊäÈë²ÎÊı£ºÎŞ
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷:
   */
 static void Input_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
 
-    //å¼€å¯ A-B-C-D-E çš„æ—¶é’Ÿ
+    //¿ªÆô A-B-C-D-E µÄÊ±ÖÓ
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |
                            RCC_APB2Periph_GPIOB |
                            RCC_APB2Periph_GPIOC |
                            RCC_APB2Periph_GPIOD |
                            RCC_APB2Periph_GPIOE,ENABLE);
 
-    /* PA5-6ä¸ªè¾“å…¥*/
+    /* PA5-6¸öÊäÈë*/
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_6;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //é€Ÿåº¦
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //ç«¯å£é…ç½®ä¸ºä¸‹æ‹‰è¾“å…¥
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;          //ç«¯å£é…ç½®ä¸ºä¸Šæ‹‰è¾“å…¥
-    GPIO_Init(GPIOA, &GPIO_InitStructure);                 //åˆå§‹åŒ–ç«¯å£
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //ËÙ¶È
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //¶Ë¿ÚÅäÖÃÎªÏÂÀ­ÊäÈë
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;          //¶Ë¿ÚÅäÖÃÎªÉÏÀ­ÊäÈë
+    GPIO_Init(GPIOA, &GPIO_InitStructure);                 //³õÊ¼»¯¶Ë¿Ú
 
-    /* PB0-1-2ä¸ªè¾“å…¥*/
+    /* PB0-1-2¸öÊäÈë*/
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //é€Ÿåº¦
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //ç«¯å£é…ç½®ä¸ºä¸‹æ‹‰è¾“å…¥
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;          //ç«¯å£é…ç½®ä¸ºä¸Šæ‹‰è¾“å…¥
-    GPIO_Init(GPIOB, &GPIO_InitStructure);                 //åˆå§‹åŒ–ç«¯å£
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //ËÙ¶È
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //¶Ë¿ÚÅäÖÃÎªÏÂÀ­ÊäÈë
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;          //¶Ë¿ÚÅäÖÃÎªÉÏÀ­ÊäÈë
+    GPIO_Init(GPIOB, &GPIO_InitStructure);                 //³õÊ¼»¯¶Ë¿Ú
 
-    /* PE7-8-9ä¸ªè¾“å…¥*/
+    /* PE7-8-9¸öÊäÈë*/
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //é€Ÿåº¦
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //ç«¯å£é…ç½®ä¸ºä¸‹æ‹‰è¾“å…¥
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;          //ç«¯å£é…ç½®ä¸ºä¸Šæ‹‰è¾“å…¥
-    GPIO_Init(GPIOE, &GPIO_InitStructure);                 //åˆå§‹åŒ–ç«¯å£
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //ËÙ¶È
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //¶Ë¿ÚÅäÖÃÎªÏÂÀ­ÊäÈë
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;          //¶Ë¿ÚÅäÖÃÎªÉÏÀ­ÊäÈë
+    GPIO_Init(GPIOE, &GPIO_InitStructure);                 //³õÊ¼»¯¶Ë¿Ú
 
 
-    /* PB9-8  2ä¸ªè¾“å…¥*/
+    /* PB9-8  2¸öÊäÈë*/
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_8;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //é€Ÿåº¦
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //ç«¯å£é…ç½®ä¸ºä¸‹æ‹‰è¾“å…¥
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;          //ç«¯å£é…ç½®ä¸ºä¸Šæ‹‰è¾“å…¥
-    GPIO_Init(GPIOB, &GPIO_InitStructure);                 //åˆå§‹åŒ–ç«¯å£
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //ËÙ¶È
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //¶Ë¿ÚÅäÖÃÎªÏÂÀ­ÊäÈë
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;          //¶Ë¿ÚÅäÖÃÎªÉÏÀ­ÊäÈë
+    GPIO_Init(GPIOB, &GPIO_InitStructure);                 //³õÊ¼»¯¶Ë¿Ú
 
-    // æ‹¨ç è¾“å…¥IO--å¤–éƒ¨æœ‰ä¸Šæ‹‰
+    // ²¦ÂëÊäÈëIO--Íâ²¿ÓĞÉÏÀ­
 
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //é€Ÿåº¦
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //ç«¯å£é…ç½®ä¸ºä¸‹æ‹‰è¾“å…¥
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;   //ç«¯å£é…ç½®ä¸ºæµ®ç©º-è¾“å…¥
-    GPIO_Init(GPIOC, &GPIO_InitStructure);                 //åˆå§‹åŒ–ç«¯å£
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //ËÙ¶È
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //¶Ë¿ÚÅäÖÃÎªÏÂÀ­ÊäÈë
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;   //¶Ë¿ÚÅäÖÃÎª¸¡¿Õ-ÊäÈë
+    GPIO_Init(GPIOC, &GPIO_InitStructure);                 //³õÊ¼»¯¶Ë¿Ú
 
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //é€Ÿåº¦
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //ç«¯å£é…ç½®ä¸ºä¸‹æ‹‰è¾“å…¥
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;  //ç«¯å£é…ç½®ä¸ºæµ®ç©º-è¾“å…¥
-    GPIO_Init(GPIOD, &GPIO_InitStructure);                 //åˆå§‹åŒ–ç«¯å£
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;      //ËÙ¶È
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;          //¶Ë¿ÚÅäÖÃÎªÏÂÀ­ÊäÈë
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;  //¶Ë¿ÚÅäÖÃÎª¸¡¿Õ-ÊäÈë
+    GPIO_Init(GPIOD, &GPIO_InitStructure);                 //³õÊ¼»¯¶Ë¿Ú
 
 }
 
 /**
-  * å‡½æ•°åŠŸèƒ½: GPIOè¾“å‡ºåˆå§‹åŒ–
-  * è¾“å…¥å‚æ•°ï¼šæ— 
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜:
+  * º¯Êı¹¦ÄÜ: GPIOÊä³ö³õÊ¼»¯
+  * ÊäÈë²ÎÊı£ºÎŞ
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷:
   */
 static void Output_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
 
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |
-                           RCC_APB2Periph_GPIOE, ENABLE);          //ä½¿èƒ½GPIOXç«¯å£æ—¶é’Ÿ
+                           RCC_APB2Periph_GPIOE, ENABLE);          //Ê¹ÄÜGPIOX¶Ë¿ÚÊ±ÖÓ
 
-    /* é¦–å…ˆè¦æ‰“å¼€GPIOAçš„AFIOæ—¶é’Ÿï¼šç”¨æ­¤è¯­å¥ä¹Ÿå¯ä½¿PA15ä½œä¸ºæ™®é€šIO */
+    /* Ê×ÏÈÒª´ò¿ªGPIOAµÄAFIOÊ±ÖÓ£ºÓÃ´ËÓï¾äÒ²¿ÉÊ¹PA15×÷ÎªÆÕÍ¨IO */
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);
-    GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable,ENABLE);        //å…³æ‰JTAGï¼Œä¸å…³SW
+    GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable,ENABLE);        //¹ØµôJTAG£¬²»¹ØSW
 
     /* PE2-3-4-5-6-11-12 */
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 |
                                   GPIO_Pin_5 | GPIO_Pin_6 |GPIO_Pin_11 | GPIO_Pin_12;           //
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;    //æ¨æŒ½è¾“å‡º
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;   //IOå£é€Ÿåº¦ä¸º50MHz
-    GPIO_Init(GPIOE, &GPIO_InitStructure);              //åˆå§‹åŒ–PBç«¯å£
-    GPIO_SetBits(GPIOE,GPIO_Pin_11);                    // ä½¿èƒ½ä¸Šç”µ
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;    //ÍÆÍìÊä³ö
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;   //IO¿ÚËÙ¶ÈÎª50MHz
+    GPIO_Init(GPIOE, &GPIO_InitStructure);              //³õÊ¼»¯PB¶Ë¿Ú
+    GPIO_SetBits(GPIOE,GPIO_Pin_11);                    // Ê¹ÄÜÉÏµç
     GPIO_ResetBits(GPIOE,GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 |
                    GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_12);
 
 
-    /* PA0-3-4ä¸ª  è¾“å‡º*/
+    /* PA0-3-4¸ö  Êä³ö*/
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_3 | GPIO_Pin_4;//
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;    //æ¨æŒ½è¾“å‡º
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;   //IOå£é€Ÿåº¦ä¸º50MHz
-    GPIO_Init(GPIOA, &GPIO_InitStructure);              //åˆå§‹åŒ–PDç«¯å£
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;    //ÍÆÍìÊä³ö
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;   //IO¿ÚËÙ¶ÈÎª50MHz
+    GPIO_Init(GPIOA, &GPIO_InitStructure);              //³õÊ¼»¯PD¶Ë¿Ú
     GPIO_ResetBits(GPIOA,GPIO_Pin_0 | GPIO_Pin_3);
     
-    //MCU_GPIO_OUT1 =1;                                 // ä¼‘çœ ä¸Šç”µ
-    //MCU_GPIO_OUT2 =1;                                 // é©±åŠ¨ä¸Šæ€»ç”µx
+    //MCU_GPIO_OUT1 =1;                                 // ĞİÃßÉÏµç
+    //MCU_GPIO_OUT2 =1;                                 // Çı¶¯ÉÏ×Üµçx
     MCU_GPIO_OUT7=0;
 }
 
@@ -113,27 +113,27 @@ static void Output_Init(void)
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: GPIOè¾“å…¥è¾“å‡ºé…ç½®
-  * è¾“å…¥å‚æ•°ï¼šæ— 
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜:
+  * º¯Êı¹¦ÄÜ: GPIOÊäÈëÊä³öÅäÖÃ
+  * ÊäÈë²ÎÊı£ºÎŞ
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷:
   */
 void Bsp_GPIO_Pin_Init(void)
 {
-    Input_Init();               // è¾“å…¥ å¼•è„šåˆå§‹åŒ–
-    Output_Init();              // è¾“å‡º å¼•è„šåˆå§‹åŒ–
+    Input_Init();               // ÊäÈë Òı½Å³õÊ¼»¯
+    Output_Init();              // Êä³ö Òı½Å³õÊ¼»¯
 }
 
 
-//  æŠ¥è­¦IOæ‰«æ
+//  ±¨¾¯IOÉ¨Ãè
 // void Bsp_Read_AlarmIO(void)
 // {
 //     static u8 key_cnt[3]= {0};
 //     // u8 ret_key_val=0;
 
 
-//     // bit3--0-??????1-Â·???
-//     if((PLC_TO_HUB_Mesg_Stru.set_custom_cmdbit &0x08)==0 && INPUT_ESTOP_SKIP)          // ????Â·???-- GPIO-I4---?Â¨???Â±??---??Â±?
+//     // bit3--0-??????1-¡¤???
+//     if((PLC_TO_HUB_Mesg_Stru.set_custom_cmdbit &0x08)==0 && INPUT_ESTOP_SKIP)          // ????¡¤???-- GPIO-I4---?¡§???¡À??---??¡À?
 //     {
 //         if(key_cnt[2]<50)
 //         {
@@ -142,7 +142,7 @@ void Bsp_GPIO_Pin_Init(void)
 //         if(key_cnt[2] == 10)
 //         {
 //             key_cnt[2] =0;
-//             PLC_TO_HUB_Mesg_Stru.upolad_general_alarm |=0X01;  // ?Â±??
+//             PLC_TO_HUB_Mesg_Stru.upolad_general_alarm |=0X01;  // ?¡À??
 //         }
 //     }
 //     else
@@ -150,7 +150,7 @@ void Bsp_GPIO_Pin_Init(void)
 //         key_cnt[2] =0;
 //     }
 
-//     if(INPUT_ESTOP)                                             // GPIO-I1---?Â±??---??Â±?
+//     if(INPUT_ESTOP)                                             // GPIO-I1---?¡À??---??¡À?
 //     {
 //         if(key_cnt[0]<50)
 //         {
@@ -158,7 +158,7 @@ void Bsp_GPIO_Pin_Init(void)
 //         }
 //         if(key_cnt[0] == 10)
 //         {
-//             PLC_TO_HUB_Mesg_Stru.upolad_general_alarm |=0X01;  //?Â±??
+//             PLC_TO_HUB_Mesg_Stru.upolad_general_alarm |=0X01;  //?¡À??
 //         }
 //     }
 //     else
@@ -181,14 +181,14 @@ void Bsp_GPIO_Pin_Init(void)
 //     {
 //         key_cnt[1] =0;
 //     }
-//     if(PLC_TO_HUB_Mesg_Stru.set_custom_cmdbit &0x02)                                         //  bit1--??????Â±?
+//     if(PLC_TO_HUB_Mesg_Stru.set_custom_cmdbit &0x02)                                         //  bit1--??????¡À?
 //     {
 //         key_cnt[1] =0;
 //     }
 
 //     if(PLC_TO_HUB_Mesg_Stru.upolad_general_alarm && PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02)   // ????????
 //     {
-//         /*if(INPUT_ESTOP == 0 && (PLC_TO_HUB_Mesg_Stru.upolad_general_alarm & 0x61))        // ?Â±??Â±Â¨??----??????Â·?
+//         /*if(INPUT_ESTOP == 0 && (PLC_TO_HUB_Mesg_Stru.upolad_general_alarm & 0x61))        // ?¡À??¡À¡§??----??????¡¤?
 //         {
 //             Motor_Walk_Stru.power_init_step =20;
 //             Motor_Walk_Stru.agv_pid_val.outval =0;
@@ -210,7 +210,7 @@ void Bsp_GPIO_Pin_Init(void)
 // }        
 
 
-//IOçŠ¶æ€æ›´æ–°
+//IO×´Ì¬¸üĞÂ
 static void Get_IO_State(void)
 {
     if(MCU_GPIO_IN1 == GET_INPUT_TURE)    setbit(PLC_TO_HUB_Mesg_Stru.inputL_state, 0);
@@ -256,7 +256,7 @@ static void Get_IO_State(void)
 
 
 
-//ä¸‰è‰²ç¯æ§åˆ¶
+//ÈıÉ«µÆ¿ØÖÆ
 void Light_Ctrl(void)
 {
     static u16 timer = 0;
@@ -440,7 +440,7 @@ void Light_Ctrl(void)
 
             Output_Light_Red = 0;
             Output_Light_Green = 0;
-            if(++timer > T_FLASH_BRUST)//çˆ†é—ª
+            if(++timer > T_FLASH_BRUST)//±¬ÉÁ
             {
                 timer = 0;
                 Output_Light_Yellow_L = !Output_Light_Yellow_L;
@@ -454,7 +454,7 @@ void Light_Ctrl(void)
             Output_Light_Red = 0;
             Output_Light_Yellow_L = 0;
             Output_Light_Yellow_R = 0;
-            if(++timer > T_FLASH_BRUST)//çˆ†é—ª
+            if(++timer > T_FLASH_BRUST)//±¬ÉÁ
             {
                 timer = 0;
                 Output_Light_Green = !Output_Light_Green;
@@ -576,7 +576,7 @@ void Light_Ctrl(void)
 }
 
 
-//æ§åˆ¶æŒ‡ä»¤
+//¿ØÖÆÖ¸Áî
 void Ctrl_Cmd_Deal(void)
 {
     //static u8 iap_start_flag = 0;
@@ -584,7 +584,7 @@ void Ctrl_Cmd_Deal(void)
     //static u8 input_timer = 0;
     static u16 timer = 0;
 
-    //å…³æœº
+    //¹Ø»ú
     if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 1) == 1)    
     {
 	if(timer < 1000)//*5ms
@@ -597,36 +597,36 @@ void Ctrl_Cmd_Deal(void)
     else 
     {
         Output_Ctrl_Shutdown = 0;
-        timer = 0;//æ¸…é›¶
+        timer = 0;//ÇåÁã
     }
 
 
-    //å……ç”µæ§åˆ¶
+    //³äµç¿ØÖÆ
     if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 4) == 1)
     {
-    	Output_Ctrl_Charge = 0;//å¼€å¯å……ç”µ
-	PLC_TO_HUB_Mesg_Stru.charge_state = EM_CHARGING_ON;//å……ç”µä¸­çŠ¶æ€
+    	Output_Ctrl_Charge = 0;//¿ªÆô³äµç
+	PLC_TO_HUB_Mesg_Stru.charge_state = EM_CHARGING_ON;//³äµçÖĞ×´Ì¬
     }
     else 
     {
-        Output_Ctrl_Charge = 1;//å…³é—­å……ç”µ
-	PLC_TO_HUB_Mesg_Stru.charge_state = EM_CHARGING_OFF;//å……ç”µåœæ­¢çŠ¶æ€
+        Output_Ctrl_Charge = 1;//¹Ø±Õ³äµç
+	PLC_TO_HUB_Mesg_Stru.charge_state = EM_CHARGING_OFF;//³äµçÍ£Ö¹×´Ì¬
     }
 
 
 }
 
 
-// IOå¤„ç†
+// IO´¦Àí
 void Bsp_IO_Deal_Task(void)
 {
-    //IOçŠ¶æ€æ›´æ–°
+    //IO×´Ì¬¸üĞÂ
     Get_IO_State();
 
-    //ä¸‰è‰²ç¯æ§åˆ¶
+    //ÈıÉ«µÆ¿ØÖÆ
     Light_Ctrl();
 
-    //æŒ‡ä»¤æ§åˆ¶
+    //Ö¸Áî¿ØÖÆ
     Ctrl_Cmd_Deal();
 
 }

@@ -2,18 +2,18 @@
 #define _MAGNET_MPLS_SENSOR_METHOD_H
 
 
-// åŒ…å«å‡½æ•°å‚æ•° èŠ¯ç‰‡å¤´æ–‡ä»¶
+// °üº¬º¯Êı²ÎÊı Ğ¾Æ¬Í·ÎÄ¼ş
 #include "stm32f10x.h"
 
 
 
-// å‘é€æŸ¥è¯¢å‡½æ•°
+// ·¢ËÍ²éÑ¯º¯Êı
 extern void MAGNET_Mpls_Send_Mesg_Task(void);
 
-// COMæ¥æ”¶å¤„ç†å‡½æ•°
+// COM½ÓÊÕ´¦Àíº¯Êı
 extern void MAGNET_Mpls_COM_RX_Task(void);
 
-/* CANæ¥æ”¶ä¸­æ–­ */
+/* CAN½ÓÊÕÖĞ¶Ï */
 extern void Magnet_MPLS_CAN_RX_Handler(CanRxMsg* RxMessage);
 
 #endif

@@ -23,19 +23,19 @@
 
 typedef struct
 {
-	unsigned int   front;                                   //é˜Ÿåˆ—å¤´ 	  
-	unsigned int   rear;                                    //é˜Ÿåˆ—å°¾	
-	unsigned int   RecLen;                                  //æ¥æ”¶æ•°æ®é•¿åº¦
+	unsigned int   front;                                   //¶ÓÁĞÍ· 	  
+	unsigned int   rear;                                    //¶ÓÁĞÎ²	
+	unsigned int   RecLen;                                  //½ÓÊÕÊı¾İ³¤¶È
 	unsigned char  fifo_bufferA[QUEUE_LENGTH];
 	unsigned char  fifo_bufferB[QUEUE_LENGTH];
-	unsigned char  FIFO_Status_FULL;                        //é˜Ÿåˆ—æ»¡çŠ¶æ€ä½
-	unsigned char  FIFO_buffer_status;                      //ç¼“å†²åŒºçŠ¶æ€  
-	unsigned char  read_buffer_status;                      //å‡ºé˜Ÿåˆ—è¯»ç¼“å†²åŒºæ•°æ®
+	unsigned char  FIFO_Status_FULL;                        //¶ÓÁĞÂú×´Ì¬Î»
+	unsigned char  FIFO_buffer_status;                      //»º³åÇø×´Ì¬  
+	unsigned char  read_buffer_status;                      //³ö¶ÓÁĞ¶Á»º³åÇøÊı¾İ
     volatile unsigned char  send_lock;
 }QUEUE;
-                                                            //æ¥å—ä¸²å£
+                                                            //½ÓÊÜ´®¿Ú
 FIFO__EXT QUEUE COM1_Serial,COM2_Serial,COM3_Serial,COM4_Serial,COM5_Serial,COM6_Serial;      
-                                                            //å‘é€ä¸²å£
+                                                            //·¢ËÍ´®¿Ú
 FIFO__EXT QUEUE Serialusart1,Serialusart2,Serialusart3,Serialusart4,Serialusart5,Serialusart6;
 
 FIFO__EXT void FIFO_ComQueueIn(QUEUE *QUEUE_com,u8 element) ;

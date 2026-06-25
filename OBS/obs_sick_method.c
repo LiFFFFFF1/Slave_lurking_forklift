@@ -1,16 +1,16 @@
 #include "obs_sick_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "obs_area_upper.h"
 #include "plc_hub_upper.h"
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_AreaSICK_IO_Send_Task(void)
-*åŠŸ    èƒ½: SICKé¿éšœå™¨è¾“å‡ºIO-è®¾ç½®é¿éšœåŒºåŸŸ
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Obs_AreaSICK_IO_Send_Task(void)
+*¹¦    ÄÜ: SICK±ÜÕÏÆ÷Êä³öIO-ÉèÖÃ±ÜÕÏÇøÓò
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Obs_AreaSICK_IO_Send_Task(void)
 {
@@ -133,28 +133,28 @@ void Obs_AreaSICK_IO_Send_Task(void)
     }
 
     OBS_Mesg_Stru.upload_cur_obs = OBS_XS_IO_IN4*8+OBS_XS_IO_IN3*4+
-                                   OBS_XS_IO_IN2*2+OBS_XS_IO_IN1+1;// å½“å‰é€šé“
+                                   OBS_XS_IO_IN2*2+OBS_XS_IO_IN1+1;// µ±Ç°Í¨µÀ
 
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_AreaSICK_IO_RX_Task(void)
-*åŠŸ    èƒ½: å…´é¢‚é¿éšœå™¨è¾“å…¥IO-é¿éšœçŠ¶æ€
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Obs_AreaSICK_IO_RX_Task(void)
+*¹¦    ÄÜ: ĞËËÌ±ÜÕÏÆ÷ÊäÈëIO-±ÜÕÏ×´Ì¬
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Obs_AreaSICK_IO_RX_Task(void)
 {
     static u16 start_timer = 0;
     static u16 timer = 0;
     
-    OBS_Mesg_Stru.upload_out1_state = OBS_XS_IO_OUT3;      // æœ€å¤–
-    OBS_Mesg_Stru.upload_out2_state = OBS_XS_IO_OUT2;      // ä¸­é—´
-    OBS_Mesg_Stru.upload_out3_state = OBS_XS_IO_OUT1;     // æœ€å†…
+    OBS_Mesg_Stru.upload_out1_state = OBS_XS_IO_OUT3;      // ×îÍâ
+    OBS_Mesg_Stru.upload_out2_state = OBS_XS_IO_OUT2;      // ÖĞ¼ä
+    OBS_Mesg_Stru.upload_out3_state = OBS_XS_IO_OUT1;     // ×îÄÚ
 
-    if(OBS_Mesg_Stru.upload_out3_state)                   // è¿œé¿éšœ
+    if(OBS_Mesg_Stru.upload_out3_state)                   // Ô¶±ÜÕÏ
     {
         PLC_TO_HUB_Mesg_Stru.upload_run_warning |=0x01;
     }
@@ -163,7 +163,7 @@ void Obs_AreaSICK_IO_RX_Task(void)
         PLC_TO_HUB_Mesg_Stru.upload_run_warning &=0xFE;
     }
 
-    if(OBS_Mesg_Stru.upload_out1_state)//è¿‘é¿éšœ
+    if(OBS_Mesg_Stru.upload_out1_state)//½ü±ÜÕÏ
     {
         PLC_TO_HUB_Mesg_Stru.upload_run_warning |=0x02;
     }
@@ -172,18 +172,18 @@ void Obs_AreaSICK_IO_RX_Task(void)
         PLC_TO_HUB_Mesg_Stru.upload_run_warning &=0xFD;
     }
     
-    //éšœç¢ç‰©æ•…éšœ
+    //ÕÏ°­Îï¹ÊÕÏ
     if(start_timer < 50000)    start_timer ++;
-    if(start_timer >= 20000&&OBS_XS_IO_OUT4)//å¯åŠ¨20såæ»¤æ³¢
+    if(start_timer >= 20000&&OBS_XS_IO_OUT4)//Æô¶¯20sºóÂË²¨
     {
         if(timer < 1000)    timer ++;//*1ms
     }
     else timer = 0;
     
-    if(timer > 200)    PLC_TO_HUB_Mesg_Stru.upload_obs_alarm = 1;//æ•…éšœ
+    if(timer > 200)    PLC_TO_HUB_Mesg_Stru.upload_obs_alarm = 1;//¹ÊÕÏ
 
-    //æ¸…é›¶
-    if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_obs_alarm)           //  å¤ä½
+    //ÇåÁã
+    if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_obs_alarm)           //  ¸´Î»
     {
         PLC_TO_HUB_Mesg_Stru.upload_obs_alarm = 0;
 	timer = 0;

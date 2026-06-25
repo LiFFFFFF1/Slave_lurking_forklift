@@ -1,21 +1,21 @@
 #include "magnet_lg_sensor_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "magnet_sensor_upper.h"
 
 
-// ç§æœ‰å®å®šä¹‰
+// Ë½ÓĞºê¶¨Òå
 #define  LG_SENSOR_REC_LEN            11
 
 static u8 lg_canopen_send_number=0;
 
 /***************************************************************************************
-*å‡½    æ•°: void Magnet_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Magnet_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æ
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 static void Magnet_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -32,7 +32,7 @@ static void Magnet_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 Serial->the_over_time =0;
                 if(Serial->step==0)
                 {
-                    if(dat <= 0x04)                                // èµ·å§‹ç 
+                    if(dat <= 0x04)                                // ÆğÊ¼Âë
                     {
                         Serial->step++;
                         Serial->recv_pbuffer[0] = dat;
@@ -41,7 +41,7 @@ static void Magnet_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step== 1)
                 {
-                    if(dat == 0x03)                             // åŠŸèƒ½ç 
+                    if(dat == 0x03)                             // ¹¦ÄÜÂë
                     {
                         Serial->step++;
                         Serial->recv_pbuffer[1] = dat;
@@ -55,7 +55,7 @@ static void Magnet_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step== 2)
                 {
-                    if(dat == 0x06)                             // å­—èŠ‚æ•°
+                    if(dat == 0x06)                             // ×Ö½ÚÊı
                     {
                         Serial->step++;
                         Serial->recv_pbuffer[2] = dat;
@@ -69,7 +69,7 @@ static void Magnet_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 else
                 {
                     Serial->recv_pbuffer[Serial->count++] = dat;
-                    if(Serial->count >= LG_SENSOR_REC_LEN)      // å­—èŠ‚æ•°+5
+                    if(Serial->count >= LG_SENSOR_REC_LEN)      // ×Ö½ÚÊı+5
                     {
 
                         Serial->recv_complete_bit=Serial->count;
@@ -99,12 +99,12 @@ static void Magnet_LG_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void MAGNET_LG_COM_RX_Task(void)
-*åŠŸ    èƒ½: æ¥æ”¶å¤„ç†
-*å‚    æ•°:  Serial-å¯¹åº”ä¸²å£å‘é€ç»“æ„ä½“ï¼ŒQUEUE_com-å¯¹åº”æ¥æ”¶ä¸²å£ç»“æ„ä½“
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void MAGNET_LG_COM_RX_Task(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êı:  Serial-¶ÔÓ¦´®¿Ú·¢ËÍ½á¹¹Ìå£¬QUEUE_com-¶ÔÓ¦½ÓÊÕ´®¿Ú½á¹¹Ìå
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void MAGNET_LG_COM_RX_Task(void)
 {
@@ -116,7 +116,7 @@ void MAGNET_LG_COM_RX_Task(void)
     USART_STRU *Serial;
     QUEUE *QUEUE_com;
 
-    if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN)   // CAN-æ¨¡å¼ä¸‹
+    if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN)   // CAN-Ä£Ê½ÏÂ
     {
         return;
     }
@@ -151,13 +151,13 @@ void MAGNET_LG_COM_RX_Task(void)
         return;
     }
 
-    Magnet_LG_ReadbufData(Serial,QUEUE_com);                   // è·å–å¯¹åº”ä¸²å£å¯¹æ¥æ•°æ®
+    Magnet_LG_ReadbufData(Serial,QUEUE_com);                   // »ñÈ¡¶ÔÓ¦´®¿Ú¶Ô½ÓÊı¾İ
 
     if(Serial->recv_complete_bit & 0x8000)
     {
-        /* CRCæ ¡éªŒåˆ¤æ–­ */
+        /* CRCĞ£ÑéÅĞ¶Ï */
         crc_val = Bsp_ModbusRTU_CRC(Serial->recv_pbuffer,LG_SENSOR_REC_LEN-2);
-        //  å…ˆåˆ¤æ–­IDï¼Œåœ¨åˆ¤æ–­æ ¡éªŒ
+        //  ÏÈÅĞ¶ÏID£¬ÔÚÅĞ¶ÏĞ£Ñé
         if(Serial->recv_pbuffer[0] >= 1 && Serial->recv_pbuffer[0] <= 4 &&
            (GET_LOW_BYTE(crc_val)==Serial->recv_pbuffer[LG_SENSOR_REC_LEN-2]) &&
            (GET_HIGH_BYTE(crc_val)==Serial->recv_pbuffer[LG_SENSOR_REC_LEN-1]))
@@ -166,69 +166,69 @@ void MAGNET_LG_COM_RX_Task(void)
 
             if(Serial->recv_pbuffer[1] == 0x03 && Serial->recv_pbuffer[2] == 0x06)
             {
-                // ç£æ®µ
+                // ´Å¶Î
                 Magnet_Upper_Stru.segment[adr_mpls] = Serial->recv_pbuffer[3];
-                // å·¦åç§»å€¼
+                // ×óÆ«ÒÆÖµ
                 Magnet_Upper_Stru.offset_left[adr_mpls] = Serial->recv_pbuffer[4];
-                // ä¸­åç§»å€¼
+                // ÖĞÆ«ÒÆÖµ
                 Magnet_Upper_Stru.offset_middle[adr_mpls] = Serial->recv_pbuffer[5];
-                // å³åç§»å€¼
+                // ÓÒÆ«ÒÆÖµ
                 Magnet_Upper_Stru.offset_right[adr_mpls] = Serial->recv_pbuffer[6];;
 
-                //é”™è¯¯ç 
+                //´íÎóÂë
                 //Magnet_Upper_Stru.error_state[adr_mpls] = Serial->recv_pbuffer[6];
 
-                // ç‚¹ä½å€¼
+                // µãÎ»Öµ
                 Magnet_Upper_Stru.io_high[adr_mpls] = Serial->recv_pbuffer[7];
                 Magnet_Upper_Stru.io_low[adr_mpls] = Serial->recv_pbuffer[8];
 
                 Magnet_Upper_Stru.magnet_comm_time[adr_mpls] = 0;
 
 
-                //åˆ†æ”¯é€‰æ‹©åä¸Šä¼ 
-                if(PLC_TO_HUB_Mesg_Stru.set_run_branch == EM_AGV_BRANCH_LEFT)//å·¦åˆ†æ”¯
+                //·ÖÖ§Ñ¡ÔñºóÉÏ´«
+                if(PLC_TO_HUB_Mesg_Stru.set_run_branch == EM_AGV_BRANCH_LEFT)//×ó·ÖÖ§
                 {
-                    if(Magnet_Upper_Stru.segment[adr_mpls] == 3)                //3æ®µç£æ¡
+                    if(Magnet_Upper_Stru.segment[adr_mpls] == 3)                //3¶Î´ÅÌõ
                         PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_right[adr_mpls];
-                    else if(Magnet_Upper_Stru.segment[adr_mpls] == 2)////2æ®µç£æ¡
+                    else if(Magnet_Upper_Stru.segment[adr_mpls] == 2)////2¶Î´ÅÌõ
                         PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_middle[adr_mpls];
-                    else////1æ®µç£æ¡
+                    else////1¶Î´ÅÌõ
                         PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[adr_mpls];
                 }
-                else if(PLC_TO_HUB_Mesg_Stru.set_run_branch == EM_AGV_BRANCH_RIGHT)//å³åˆ†æ”¯
+                else if(PLC_TO_HUB_Mesg_Stru.set_run_branch == EM_AGV_BRANCH_RIGHT)//ÓÒ·ÖÖ§
                 {
-                    if(Magnet_Upper_Stru.segment[adr_mpls] == 3)                //3æ®µç£æ¡
+                    if(Magnet_Upper_Stru.segment[adr_mpls] == 3)                //3¶Î´ÅÌõ
                         PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[adr_mpls];
-                    else if(Magnet_Upper_Stru.segment[adr_mpls] == 2)////2æ®µç£æ¡
+                    else if(Magnet_Upper_Stru.segment[adr_mpls] == 2)////2¶Î´ÅÌõ
                         PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[adr_mpls];
-                    else////1æ®µç£æ¡
+                    else////1¶Î´ÅÌõ
                         PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[adr_mpls];
                 }
-                else//æœªæŒ‡å®šé»˜è®¤ä¸­åˆ†æ”¯
+                else//Î´Ö¸¶¨Ä¬ÈÏÖĞ·ÖÖ§
                 {
-                    if(Magnet_Upper_Stru.segment[adr_mpls] == 3)//3æ®µç£æ¡
+                    if(Magnet_Upper_Stru.segment[adr_mpls] == 3)//3¶Î´ÅÌõ
                     {
                         left_temp = abs((s8)Magnet_Upper_Stru.offset_left[adr_mpls]);
                         middle_temp = abs((s8)Magnet_Upper_Stru.offset_middle[adr_mpls]);
                         right_temp = abs((s8)Magnet_Upper_Stru.offset_right[adr_mpls]);
 
-                        if(left_temp < middle_temp&&left_temp < right_temp)//å·¦ç»å¯¹å€¼æœ€å°
+                        if(left_temp < middle_temp&&left_temp < right_temp)//×ó¾ø¶ÔÖµ×îĞ¡
                         {
                             PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[adr_mpls];
                         }
-                        else if(middle_temp <= left_temp&&middle_temp <= right_temp)//ä¸­ç»å¯¹å€¼æœ€å°
+                        else if(middle_temp <= left_temp&&middle_temp <= right_temp)//ÖĞ¾ø¶ÔÖµ×îĞ¡
                         {
                             PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_middle[adr_mpls];
                         }
-                        else if(right_temp < left_temp&&right_temp < middle_temp)//å³ç»å¯¹å€¼æœ€å°
+                        else if(right_temp < left_temp&&right_temp < middle_temp)//ÓÒ¾ø¶ÔÖµ×îĞ¡
                         {
                             PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_right[adr_mpls];
                         }
                     }
 
-                    else if(Magnet_Upper_Stru.segment[adr_mpls] == 2)////2æ®µç£æ¡
+                    else if(Magnet_Upper_Stru.segment[adr_mpls] == 2)////2¶Î´ÅÌõ
                     {
-                        //ç»å¯¹å€¼æ¯”è¾ƒ
+                        //¾ø¶ÔÖµ±È½Ï
                         if(abs((s8)Magnet_Upper_Stru.offset_left[adr_mpls]) <= abs((s8)Magnet_Upper_Stru.offset_middle[adr_mpls]))
                         {
                             PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[adr_mpls];
@@ -237,7 +237,7 @@ void MAGNET_LG_COM_RX_Task(void)
                             PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_middle[adr_mpls];
                     }
 
-                    else////1æ®µç£æ¡
+                    else////1¶Î´ÅÌõ
                         PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[adr_mpls];
 
                 }
@@ -253,13 +253,13 @@ void MAGNET_LG_COM_RX_Task(void)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void MAGNET_LG_Send_Mesg_Task(void)
-*åŠŸ    èƒ½: æŸ¥è¯¢æ¨¡å¼
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šæ­¤å‡½æ•°æ ¹æ®æ¯è°ƒç”¨ä¸€æ¬¡å‘é€ä¸€æ¬¡æŸ¥è¯¢é€šä¿¡æŒ‡ä»¤(æŸ¥è¯¢æ¨¡å¼æœ‰æ•ˆ)
+*º¯    Êı: void MAGNET_LG_Send_Mesg_Task(void)
+*¹¦    ÄÜ: ²éÑ¯Ä£Ê½
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º´Ëº¯Êı¸ù¾İÃ¿µ÷ÓÃÒ»´Î·¢ËÍÒ»´Î²éÑ¯Í¨ĞÅÖ¸Áî(²éÑ¯Ä£Ê½ÓĞĞ§)
 ****************************************************************************************/
 void MAGNET_LG_Send_Mesg_Task(void)
 {
@@ -274,7 +274,7 @@ void MAGNET_LG_Send_Mesg_Task(void)
         {0x07,0x03,0x00,0x04,0x00,0x03,0x44,0x6C},
     };
 
-    //ç¦»çº¿è®¡æ—¶
+    //ÀëÏß¼ÆÊ±
     for(u8_index=0; u8_index<Magnet_Upper_Stru.id_number; u8_index++)
     {
         if(Magnet_Upper_Stru.magnet_comm_time[u8_index] < 3)        // *15ms
@@ -283,17 +283,17 @@ void MAGNET_LG_Send_Mesg_Task(void)
         }
         else
         {
-            Magnet_Upper_Stru.offline |= (1<<u8_index);              // æ‰çº¿æ ‡å¿—
+            Magnet_Upper_Stru.offline |= (1<<u8_index);              // µôÏß±êÖ¾
 
             Magnet_Upper_Stru.segment[u8_index] =0;
-            // å·¦åç§»å€¼
+            // ×óÆ«ÒÆÖµ
             Magnet_Upper_Stru.offset_left[u8_index]    = 0;
-            // ä¸­åç§»å€¼
+            // ÖĞÆ«ÒÆÖµ
             Magnet_Upper_Stru.offset_middle[u8_index]  = 0;
-            // ä¸­åç§»å€¼
+            // ÖĞÆ«ÒÆÖµ
             Magnet_Upper_Stru.offset_right[u8_index]  = 0;
 
-            // ä¸Šä¼ ç£æ®µ
+            // ÉÏ´«´Å¶Î
             PLC_TO_HUB_Mesg_Stru.set_run_segment =0;
 
         }
@@ -301,17 +301,17 @@ void MAGNET_LG_Send_Mesg_Task(void)
     }
 
 
-    //æŠ¥è­¦æ£€æµ‹
-    if(Magnet_Upper_Stru.offline)                                    // ç¦»çº¿
+    //±¨¾¯¼ì²â
+    if(Magnet_Upper_Stru.offline)                                    // ÀëÏß
     {
         PLC_TO_HUB_Mesg_Stru.upload_magnet_alarm = 0xff;
     }
-    else if(Magnet_Upper_Stru.error_state[0])                        // æ•…éšœä»£ç 
+    else if(Magnet_Upper_Stru.error_state[0])                        // ¹ÊÕÏ´úÂë
     {
         PLC_TO_HUB_Mesg_Stru.upload_magnet_alarm = Magnet_Upper_Stru.error_state[0];
     }
 
-    if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_magnet_alarm)                         // å¤ä½
+    if(PLC_TO_HUB_Mesg_Stru.set_cmd == 0x02 && PLC_TO_HUB_Mesg_Stru.upload_magnet_alarm)                         // ¸´Î»
     {
         PLC_TO_HUB_Mesg_Stru.upload_magnet_alarm = 0;
         Magnet_Upper_Stru.error_state[0] = 0;
@@ -321,17 +321,17 @@ void MAGNET_LG_Send_Mesg_Task(void)
         Magnet_Upper_Stru.magnet_comm_time[2] = 0;
         Magnet_Upper_Stru.magnet_comm_time[3] = 0;
 
-        Magnet_Upper_Stru.canpen_state =0;//é‡æ–°å¯åŠ¨èŠ‚ç‚¹
+        Magnet_Upper_Stru.canpen_state =0;//ÖØĞÂÆô¶¯½Úµã
     }
 
-    if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN)            // CANæ¨¡å¼ä¸‹-é‡Œæ ¼ä»…æ”¯æŒCANOpen
+    if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN)            // CANÄ£Ê½ÏÂ-Àï¸ñ½öÖ§³ÖCANOpen
     {
         switch(Magnet_Upper_Stru.canpen_state)
         {
             case 0:
 
-                magnet_canopen_buf[0] =0x01;                    // 01-å¯åŠ¨èŠ‚ç‚¹å‘½ä»¤
-                magnet_canopen_buf[1] =std_send_id+4;           // 00-æ‰€æœ‰åœ°å€ï¼Œxx-å¯¹åº”åœ°å€
+                magnet_canopen_buf[0] =0x01;                    // 01-Æô¶¯½ÚµãÃüÁî
+                magnet_canopen_buf[1] =std_send_id+4;           // 00-ËùÓĞµØÖ·£¬xx-¶ÔÓ¦µØÖ·
                 magnet_canopen_buf[2] =0x00;
                 magnet_canopen_buf[3] =0x00;
                 magnet_canopen_buf[4] =0x00;
@@ -342,7 +342,7 @@ void MAGNET_LG_Send_Mesg_Task(void)
 
                 lg_canopen_send_number ++;
 
-                if(lg_canopen_send_number >= 4)                 //  å‘é€å¤šæ¬¡å¯åŠ¨èŠ‚ç‚¹
+                if(lg_canopen_send_number >= 4)                 //  ·¢ËÍ¶à´ÎÆô¶¯½Úµã
                 {
                     lg_canopen_send_number =0;
                     if((std_send_id+1) < Magnet_Upper_Stru.id_number)
@@ -362,9 +362,9 @@ void MAGNET_LG_Send_Mesg_Task(void)
         }
 
     }
-    else if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_COM)       // RS485æ¨¡å¼ä¸‹
+    else if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_COM)       // RS485Ä£Ê½ÏÂ
     {
-        // ä¸»åŠ¨ä¸Šä¼ -é€€å‡º-æœªé…ç½®ç«¯å£
+        // Ö÷¶¯ÉÏ´«-ÍË³ö-Î´ÅäÖÃ¶Ë¿Ú
         if(Magnet_Upper_Stru.commun_port == NULL || Magnet_Upper_Stru.commun_ask_mode != EM_DEV_ASK_HAND)
         {
             return;
@@ -384,13 +384,13 @@ void MAGNET_LG_Send_Mesg_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void Magnet_LG_CAN_RX_Handler(CanRxMsg* RxMessage)
-*åŠŸ    èƒ½: é‡Œæ ¼èµ°å½¢-CANæ¥æ”¶å¤„ç†
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
-*          ä½å­—èŠ‚åœ¨å‰ï¼Œé«˜ä½åœ¨å
+*º¯    Êı: void Magnet_LG_CAN_RX_Handler(CanRxMsg* RxMessage)
+*¹¦    ÄÜ: Àï¸ñ×ßĞÎ-CAN½ÓÊÕ´¦Àí
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
+*          µÍ×Ö½ÚÔÚÇ°£¬¸ßÎ»ÔÚºó
 ****************************************************************************************/
 void Magnet_LG_CAN_RX_Handler(CanRxMsg* RxMessage)
 {
@@ -407,64 +407,64 @@ void Magnet_LG_CAN_RX_Handler(CanRxMsg* RxMessage)
 //        case 0x187:
             can_mpls_adr = 0;
 
-            /* LG_CANOPEN æ¨¡å¼*/
+            /* LG_CANOPEN Ä£Ê½*/
             {
-                Magnet_Upper_Stru.offline &= ~(1<<can_mpls_adr);       // åœ¨çº¿æ ‡å¿—
+                Magnet_Upper_Stru.offline &= ~(1<<can_mpls_adr);       // ÔÚÏß±êÖ¾
                 Magnet_Upper_Stru.magnet_comm_time[can_mpls_adr] = 0;
 
-                //æ®µæ•°
+                //¶ÎÊı
                 Magnet_Upper_Stru.segment[can_mpls_adr] = RxMessage->Data[1];
-                // å·¦åç§»å€¼
+                // ×óÆ«ÒÆÖµ
                 Magnet_Upper_Stru.offset_left[can_mpls_adr] = ((u16)(RxMessage->Data[3]<<8)+RxMessage->Data[2]);               
-                // ä¸­åç§»å€¼
+                // ÖĞÆ«ÒÆÖµ
                 Magnet_Upper_Stru.offset_middle[can_mpls_adr] = ((u16)(RxMessage->Data[5]<<8)+RxMessage->Data[4]);
-                // å³åç§»å€¼
+                // ÓÒÆ«ÒÆÖµ
                 Magnet_Upper_Stru.offset_right[can_mpls_adr] = ((u16)(RxMessage->Data[7]<<8)+RxMessage->Data[6]);
 
-                // åˆ†æ”¯é€‰æ‹©
+                // ·ÖÖ§Ñ¡Ôñ
                 switch(PLC_TO_HUB_Mesg_Stru.set_run_branch)
                 {
-                    case EM_AGV_BRANCH_LEFT:        // å·¦åˆ†æ”¯
-                        if(Magnet_Upper_Stru.segment[can_mpls_adr] == 3)                    // 3æ®µç£æ¡
+                    case EM_AGV_BRANCH_LEFT:        // ×ó·ÖÖ§
+                        if(Magnet_Upper_Stru.segment[can_mpls_adr] == 3)                    // 3¶Î´ÅÌõ
                         {
                             PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_right[can_mpls_adr];
                         }
-                        else if(Magnet_Upper_Stru.segment[can_mpls_adr] == 2)               // 2æ®µç£æ¡
+                        else if(Magnet_Upper_Stru.segment[can_mpls_adr] == 2)               // 2¶Î´ÅÌõ
                         {
                             PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_middle[can_mpls_adr];
                         }
-                        else                                                                // 1æ®µç£æ¡
+                        else                                                                // 1¶Î´ÅÌõ
                         {
                             PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[can_mpls_adr];
                         }
                         break;
-                    case EM_AGV_BRANCH_RIGHT:       //  å³åˆ†æ”¯
+                    case EM_AGV_BRANCH_RIGHT:       //  ÓÒ·ÖÖ§
                         PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[can_mpls_adr];
                         break;
-                    default:                        //   é»˜è®¤-ä¸­åˆ†æ”¯                
-                        if(Magnet_Upper_Stru.segment[can_mpls_adr] == 3)		            //  3æ®µç£æ¡
+                    default:                        //   Ä¬ÈÏ-ÖĞ·ÖÖ§                
+                        if(Magnet_Upper_Stru.segment[can_mpls_adr] == 3)		            //  3¶Î´ÅÌõ
                         {
                             left_temp   = abs((s8)Magnet_Upper_Stru.offset_left[can_mpls_adr]);
                             middle_temp = abs((s8)Magnet_Upper_Stru.offset_middle[can_mpls_adr]);
                             right_temp  = abs((s8)Magnet_Upper_Stru.offset_right[can_mpls_adr]);
 
-                            if(left_temp < middle_temp && left_temp < right_temp)           //  å·¦ç»å¯¹å€¼æœ€å°
+                            if(left_temp < middle_temp && left_temp < right_temp)           //  ×ó¾ø¶ÔÖµ×îĞ¡
                             {
                                 PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[can_mpls_adr];
                             }
-                            else if(middle_temp <= left_temp && middle_temp <= right_temp)  //  ä¸­ç»å¯¹å€¼æœ€å°
+                            else if(middle_temp <= left_temp && middle_temp <= right_temp)  //  ÖĞ¾ø¶ÔÖµ×îĞ¡
                             {
                                 PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_middle[can_mpls_adr];
                             }
-                            else if(right_temp < left_temp && right_temp < middle_temp)     // å³ç»å¯¹å€¼æœ€å°
+                            else if(right_temp < left_temp && right_temp < middle_temp)     // ÓÒ¾ø¶ÔÖµ×îĞ¡
                             {
                                 PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_right[can_mpls_adr];
                             }
 
                         }
-                        else if(Magnet_Upper_Stru.segment[can_mpls_adr] == 2)               // 2æ®µç£æ¡
+                        else if(Magnet_Upper_Stru.segment[can_mpls_adr] == 2)               // 2¶Î´ÅÌõ
                         {
-                            //ç»å¯¹å€¼æ¯”è¾ƒ
+                            //¾ø¶ÔÖµ±È½Ï
                             if(abs((s8)Magnet_Upper_Stru.offset_left[can_mpls_adr]) <= abs((s8)Magnet_Upper_Stru.offset_middle[can_mpls_adr]))
                             {
                                 PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[can_mpls_adr];
@@ -472,7 +472,7 @@ void Magnet_LG_CAN_RX_Handler(CanRxMsg* RxMessage)
                             else
                                 PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_middle[can_mpls_adr];
                         }
-                        else                                                            //1æ®µç£æ¡
+                        else                                                            //1¶Î´ÅÌõ
                         {
                             PLC_TO_HUB_Mesg_Stru.upload_run_magnet = Magnet_Upper_Stru.offset_left[can_mpls_adr];
                         }
@@ -490,50 +490,50 @@ void Magnet_LG_CAN_RX_Handler(CanRxMsg* RxMessage)
 //        case 0x287:
             can_mpls_adr = 0;
 
-            /* LG_CANOPEN æ¨¡å¼*/
+            /* LG_CANOPEN Ä£Ê½*/
             {
-                Magnet_Upper_Stru.offline &= ~(1<<can_mpls_adr);                        // åœ¨çº¿æ ‡å¿—
+                Magnet_Upper_Stru.offline &= ~(1<<can_mpls_adr);                        // ÔÚÏß±êÖ¾
                 Magnet_Upper_Stru.magnet_comm_time[can_mpls_adr] = 0;
 
-                // é‡Œæ ¼è€æ¬¾åè®®
+                // Àï¸ñÀÏ¿îĞ­Òé
                 /*
-                Magnet_Upper_Stru.err_code[can_mpls_adr] = RxMessage->Data[0];          // é”™è¯¯ä»£ç 
-                Magnet_Upper_Stru.err_data[can_mpls_adr] = RxMessage->Data[1];          // é”™è¯¯å‚æ•°
-                Magnet_Upper_Stru.magnet_width[can_mpls_adr] = RxMessage->Data[2];      // ç£æ¡å®½åº¦
-                Magnet_Upper_Stru.io_num[can_mpls_adr] = RxMessage->Data[3];            // ä¼ æ„Ÿå™¨ç‚¹ä½æ€»æ•°
+                Magnet_Upper_Stru.err_code[can_mpls_adr] = RxMessage->Data[0];          // ´íÎó´úÂë
+                Magnet_Upper_Stru.err_data[can_mpls_adr] = RxMessage->Data[1];          // ´íÎó²ÎÊı
+                Magnet_Upper_Stru.magnet_width[can_mpls_adr] = RxMessage->Data[2];      // ´ÅÌõ¿í¶È
+                Magnet_Upper_Stru.io_num[can_mpls_adr] = RxMessage->Data[3];            // ´«¸ĞÆ÷µãÎ»×ÜÊı
 
-                Magnet_Upper_Stru.new_io_low_low[can_mpls_adr] = RxMessage->Data[4];    // ç‚¹ä½ä¿¡æ¯
+                Magnet_Upper_Stru.new_io_low_low[can_mpls_adr] = RxMessage->Data[4];    // µãÎ»ĞÅÏ¢
                 Magnet_Upper_Stru.new_io_low_high[can_mpls_adr] = RxMessage->Data[5];   //
                 Magnet_Upper_Stru.new_io_high_low[can_mpls_adr] = RxMessage->Data[6];   //
                 Magnet_Upper_Stru.new_io_high_high[can_mpls_adr] = RxMessage->Data[7];  //
                 
-                //æ»¡ç£
+                //Âú´Å
                 if(Magnet_Upper_Stru.new_io_low_low[can_mpls_adr]   == 0xff &&
                    Magnet_Upper_Stru.new_io_low_high[can_mpls_adr]  == 0xff &&
                    Magnet_Upper_Stru.new_io_high_low[can_mpls_adr]  == 0x03 &&
                    Magnet_Upper_Stru.new_io_high_high[can_mpls_adr] == 0x00)
                 {
-                    PLC_TO_HUB_Mesg_Stru.set_run_segment = 1;                           //  ç£æ®µ=  1
-                    PLC_TO_HUB_Mesg_Stru.upload_run_magnet = 0;                         //  åè·=  0
+                    PLC_TO_HUB_Mesg_Stru.set_run_segment = 1;                           //  ´Å¶Î=  1
+                    PLC_TO_HUB_Mesg_Stru.upload_run_magnet = 0;                         //  Æ«¾à=  0
                 }
                 
                 */
                 
-                // é‡Œæ ¼æ–°æ¬¾-V2.1åè®®
-                Magnet_Upper_Stru.new_io_low_low[can_mpls_adr] = RxMessage->Data[0];    //  ç‚¹ä½ä¿¡æ¯
+                // Àï¸ñĞÂ¿î-V2.1Ğ­Òé
+                Magnet_Upper_Stru.new_io_low_low[can_mpls_adr] = RxMessage->Data[0];    //  µãÎ»ĞÅÏ¢
                 Magnet_Upper_Stru.new_io_low_high[can_mpls_adr] = RxMessage->Data[1];   //
                 Magnet_Upper_Stru.new_io_high_low[can_mpls_adr] = RxMessage->Data[2];   //
                 Magnet_Upper_Stru.new_io_high_high[can_mpls_adr] = RxMessage->Data[3];  //
-                Magnet_Upper_Stru.io_num[can_mpls_adr] = RxMessage->Data[4];            //  ä¼ æ„Ÿå™¨ç‚¹ä½æ€»æ•°
-                Magnet_Upper_Stru.magnet_width[can_mpls_adr] = RxMessage->Data[5];      //  ç£æ¡å®½åº¦
+                Magnet_Upper_Stru.io_num[can_mpls_adr] = RxMessage->Data[4];            //  ´«¸ĞÆ÷µãÎ»×ÜÊı
+                Magnet_Upper_Stru.magnet_width[can_mpls_adr] = RxMessage->Data[5];      //  ´ÅÌõ¿í¶È
                 
-                Magnet_Upper_Stru.err_code[can_mpls_adr] = RxMessage->Data[6];          //  é”™è¯¯ä»£ç 
-                Magnet_Upper_Stru.err_data[can_mpls_adr] = RxMessage->Data[7];          //  é”™è¯¯å‚æ•°
-                
-
+                Magnet_Upper_Stru.err_code[can_mpls_adr] = RxMessage->Data[6];          //  ´íÎó´úÂë
+                Magnet_Upper_Stru.err_data[can_mpls_adr] = RxMessage->Data[7];          //  ´íÎó²ÎÊı
                 
 
-                if(Magnet_Upper_Stru.err_code[can_mpls_adr])    //é0-é”å®šæ•…éšœ
+                
+
+                if(Magnet_Upper_Stru.err_code[can_mpls_adr])    //·Ç0-Ëø¶¨¹ÊÕÏ
                     Magnet_Upper_Stru.error_state[can_mpls_adr] = Magnet_Upper_Stru.err_code[can_mpls_adr];
 
             }

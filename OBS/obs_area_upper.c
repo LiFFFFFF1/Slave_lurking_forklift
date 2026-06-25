@@ -1,28 +1,28 @@
 #define OBS_AREA_GLOBALS
 #include "obs_area_upper.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_method.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_method.h
 #include "obs_xs_method.h"
 #include "obs_sick_method.h"
 
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_Area_UpperTX_Task(void)
-*åŠŸ    èƒ½: å‘é€è¿›ç¨‹
-*å‚    æ•°:       
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šç”µæ± æ”¯æŒä¸¤ç§ï¼š
-*   ç¬¬äºŒç§ è‡ªå®šä¹‰
+*º¯    Êı: void Obs_Area_UpperTX_Task(void)
+*¹¦    ÄÜ: ·¢ËÍ½ø³Ì
+*²Î    Êı:       
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£ºµç³ØÖ§³ÖÁ½ÖÖ£º
+*   µÚ¶şÖÖ ×Ô¶¨Òå
 ****************************************************************************************/
 void Obs_Area_UpperTX_Task(void)
 {
     switch(OBS_Mesg_Stru.device_type)                      
     {
-        case EM_DEVICE_DEV_OBS_XS_RS485:                               // è‡ªå®šä¹‰åè®®
-            Obs_AreaXs_Send_Task();								 //æŸ¥è¯¢
+        case EM_DEVICE_DEV_OBS_XS_RS485:                               // ×Ô¶¨ÒåĞ­Òé
+            Obs_AreaXs_Send_Task();								 //²éÑ¯
             break;
             
         case EM_DEVICE_DEV_OBS_SICK_IO: 
@@ -37,13 +37,13 @@ void Obs_Area_UpperTX_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void Obs_Area_UpperRX_Task(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šè‡ªå®šä¹‰åè®®æ¥æ”¶
+*º¯    Êı: void Obs_Area_UpperRX_Task(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æ
+*²Î    Êı:         
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º×Ô¶¨ÒåĞ­Òé½ÓÊÕ
 ****************************************************************************************/
 void Obs_Area_UpperRX_Task(void)
 {

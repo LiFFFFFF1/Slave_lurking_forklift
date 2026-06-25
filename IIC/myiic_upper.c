@@ -28,7 +28,7 @@
  *****************************************************************************/
 int myiic_read_24c64_api(u16 addr, u16 lenth,u8 *redbuf)
 {
-    device_m24C64_read(addr,redbuf,lenth);     // 璇诲彇鎸囧畾鍦板潃鏁版嵁
+    device_m24C64_read(addr,redbuf,lenth);     // 读取指定地址数据
     return 1;
 }
 
@@ -43,7 +43,7 @@ int myiic_read_24c64_api(u16 addr, u16 lenth,u8 *redbuf)
  *****************************************************************************/
 int myiic_write_24c64_api(u16 addr, u16 lenth,u8 *pbuf)
 {
-    device_m24C64_write(addr,pbuf,lenth);      // M24C64-iic鍐欏叆鏁版嵁
+    device_m24C64_write(addr,pbuf,lenth);      // M24C64-iic写入数据
     return 1;
 }
 
@@ -58,7 +58,7 @@ int myiic_write_24c64_api(u16 addr, u16 lenth,u8 *pbuf)
  *****************************************************************************/
 void Myiic_init_api(void)
 {
-    Bsp_My_IIC_Init();                                    // 鍒濆鍖朓IC
+    Bsp_My_IIC_Init();                                    // 初始化IIC
 }
 
 /*******************************************************************************

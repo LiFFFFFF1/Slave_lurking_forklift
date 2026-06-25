@@ -1,34 +1,34 @@
 #define GYR_COMM_GLOBALS
 #include "gyr_comm_upper.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_method.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_method.h
 #include "gyr_mpls_method.h"
 
 
 
 
 /***************************************************************************************
-*å‡½    æ•°: void GYR_UpperTX_Task(void)
-*åŠŸ    èƒ½: å‘é€è¿›ç¨‹
-*å‚    æ•°:  Bat_Mesg_Stru.commun_portéœ€è¦æŒ‡å®šç”µæ± ä¸²å£ç«¯å£       
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šç”µæ± æ”¯æŒä¸¤ç§ï¼š
-*   ç¬¬äºŒç§ è‡ªå®šä¹‰
+*º¯    Êı: void GYR_UpperTX_Task(void)
+*¹¦    ÄÜ: ·¢ËÍ½ø³Ì
+*²Î    Êı:  Bat_Mesg_Stru.commun_portĞèÒªÖ¸¶¨µç³Ø´®¿Ú¶Ë¿Ú       
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£ºµç³ØÖ§³ÖÁ½ÖÖ£º
+*   µÚ¶şÖÖ ×Ô¶¨Òå
 ****************************************************************************************/
 void GYR_UpperTX_Task(void)
 {
     switch(GYR_Mesg_Stru.device_type)                      
     {
-        case GYR_TYPE_MPI240:                               // è‡ªå®šä¹‰åè®®
+        case GYR_TYPE_MPI240:                               // ×Ô¶¨ÒåĞ­Òé
             if(GYR_Mesg_Stru.angle_clear_bit ==1)
             {
-                GYR_Mpls_ZeroSet_Task();// æ¸…0
+                GYR_Mpls_ZeroSet_Task();// Çå0
             }
             else
             {
-                GYR_Mpls_Send_Task();//æŸ¥è¯¢
+                GYR_Mpls_Send_Task();//²éÑ¯
             }
             break;
         
@@ -40,19 +40,19 @@ void GYR_UpperTX_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void GYR_UpperRX_Task(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šè‡ªå®šä¹‰åè®®æ¥æ”¶
+*º¯    Êı: void GYR_UpperRX_Task(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æ
+*²Î    Êı:         
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º×Ô¶¨ÒåĞ­Òé½ÓÊÕ
 ****************************************************************************************/
 void GYR_UpperRX_Task(void)
 {
     switch(GYR_Mesg_Stru.device_type)
     {
-        case GYR_TYPE_MPI240:                               //  MPI240é™€èºä»ª
+        case GYR_TYPE_MPI240:                               //  MPI240ÍÓÂİÒÇ
             if(GYR_Mesg_Stru.can_com_type == GYR_COM_MODE) 
             {
                 GYR_Mpls_RX_Task();
@@ -66,13 +66,13 @@ void GYR_UpperRX_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void GYR_UpperRX_CAN_Handler_Task(void)
-*åŠŸ    èƒ½: CANæ¥æ”¶-ä¸­æ–­æœåŠ¡
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void GYR_UpperRX_CAN_Handler_Task(void)
+*¹¦    ÄÜ: CAN½ÓÊÕ-ÖĞ¶Ï·şÎñ
+*²Î    Êı:         
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º
 ****************************************************************************************/
 void GYR_UpperRX_CAN_Handler_Task(CanRxMsg* RxMessage)
 {

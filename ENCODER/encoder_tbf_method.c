@@ -1,21 +1,30 @@
 #include "encoder_tbf_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "encoder_upper.h"
 #include "plc_hub_custom_method.h"
 #include "myiic_upper.h"
 #include "motor_upper.h"
 
-#define ENCODER_OFFSET_READ_DELAY_CNT 15    // 20ms*15=300msï¼Œç­‰ç”µæºå’Œ24C64å…ˆç«™ç¨³å†è¯»é›¶ä½
+#define ENCODER_OFFSET_READ_DELAY_CNT 15    // 20ms*15=300ms£¬µÈµçÔ´ºÍ24C64ÏÈÕ¾ÎÈÔÙ¶ÁÁãÎ»
+
+#define ENCODER_TBF_POS_COMP_L_MM     12    // ×óÀ­ÉşÈí¼şÎ»ÖÃ²¹³¥£¬ÕıÖµÈÃ×îÖÕ·´À¡Î»ÖÃ±ä´ó£¬²»±£´æµ½24C64
+#define ENCODER_TBF_POS_COMP_R_MM      8    // ÓÒÀ­ÉşÈí¼şÎ»ÖÃ²¹³¥£¬ÕıÖµÈÃ×îÖÕ·´À¡Î»ÖÃ±ä´ó£¬²»±£´æµ½24C64
+
+static const s32 encoder_tbf_pos_comp_mm[2] =
+{
+    ENCODER_TBF_POS_COMP_L_MM,
+    ENCODER_TBF_POS_COMP_R_MM
+};
 
 /***************************************************************************************
-*å‡½    æ•°: void Encoder_tbf_SendAPI(void)
-*åŠŸ    èƒ½:
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼:
-*å¤‡    æ³¨ï¼š
+*º¯    Êı: void Encoder_tbf_SendAPI(void)
+*¹¦    ÄÜ:
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ:
+*±¸    ×¢£º
 *
 ****************************************************************************************/
 void Encoder_tbf_SendAPI(void)
@@ -25,8 +34,8 @@ void Encoder_tbf_SendAPI(void)
     static u8 start_bit = 0;
     static u8 offset_read_delay_cnt =0;
 
-    //é›¶ä½è¯»å–
-    if(start_bit == 0)//åªæ‰§è¡Œä¸€æ¬¡
+    //ÁãÎ»¶ÁÈ¡
+    if(start_bit == 0)//Ö»Ö´ĞĞÒ»´Î
     {
         if(offset_read_delay_cnt < ENCODER_OFFSET_READ_DELAY_CNT)
         {
@@ -40,57 +49,57 @@ void Encoder_tbf_SendAPI(void)
         offset_temp[0] = ((u32)buf_temp[3]<<24) | ((u32)buf_temp[2]<<16) | ((u32)buf_temp[1]<<8) | buf_temp[0];
         offset_temp[1] = ((u32)buf_temp[7]<<24) | ((u32)buf_temp[6]<<16) | ((u32)buf_temp[5]<<8) | buf_temp[4];
 
-        if(offset_temp[0] == 0xffffffff)//åˆæ¬¡ä¸Šç”µ
+        if(offset_temp[0] == 0xffffffff)//³õ´ÎÉÏµç
         {
             buf_temp[0] = 0;
             buf_temp[1] = 0;
             buf_temp[2] = 0;
             buf_temp[3] = 0;
-            myiic_write_24c64_api(0, 4, &buf_temp[0]);//å†™å…¥0
+            myiic_write_24c64_api(0, 4, &buf_temp[0]);//Ğ´Èë0
             Encoder_Mesg_Stru.offset_data[0] = 0;
         }
         else Encoder_Mesg_Stru.offset_data[0] = offset_temp[0];
 
-        if(offset_temp[1] == 0xffffffff)//åˆæ¬¡ä¸Šç”µ
+        if(offset_temp[1] == 0xffffffff)//³õ´ÎÉÏµç
         {
             buf_temp[4] = 0;
             buf_temp[5] = 0;
             buf_temp[6] = 0;
             buf_temp[7] = 0;
-            myiic_write_24c64_api(4, 4, &buf_temp[4]);//å†™å…¥0
+            myiic_write_24c64_api(4, 4, &buf_temp[4]);//Ğ´Èë0
             Encoder_Mesg_Stru.offset_data[1] = 0;
         }
         else Encoder_Mesg_Stru.offset_data[1] = offset_temp[1];
 
     }
 
-    //é›¶ä½è®¾ç½®ä¿å­˜
+    //ÁãÎ»ÉèÖÃ±£´æ
     if(Encoder_Mesg_Stru.save_bit == 1)
     {
         Encoder_Mesg_Stru.save_bit = 0;
 
         if(Motor_Lift_Stru.unit_act_id == EM_UNIT_ACT_ID_LEFT
-           &&getbit(Encoder_Mesg_Stru.err_state, 6) == 0)//æŒ‡å®š1ï¼Œæ— æŠ¥è­¦
+           &&getbit(Encoder_Mesg_Stru.err_state, 6) == 0)//Ö¸¶¨1£¬ÎŞ±¨¾¯
         {
             Encoder_Mesg_Stru.offset_data[0] = Encoder_Mesg_Stru.currt_data[0];
             buf_temp[0] = Encoder_Mesg_Stru.offset_data[0]&0xff;
             buf_temp[1] = (Encoder_Mesg_Stru.offset_data[0]>>8)&0xff;
             buf_temp[2] = (Encoder_Mesg_Stru.offset_data[0]>>16)&0xff;
             buf_temp[3] = (Encoder_Mesg_Stru.offset_data[0]>>24)&0xff;
-            myiic_write_24c64_api(0, 4, &buf_temp[0]);//å†™å…¥ä¿å­˜
+            myiic_write_24c64_api(0, 4, &buf_temp[0]);//Ğ´Èë±£´æ
         }
         else if(Motor_Lift_Stru.unit_act_id == EM_UNIT_ACT_ID_RIGHT
-                &&getbit(Encoder_Mesg_Stru.err_state, 7) == 0)//æŒ‡å®š2ï¼Œæ— æŠ¥è­¦
+                &&getbit(Encoder_Mesg_Stru.err_state, 7) == 0)//Ö¸¶¨2£¬ÎŞ±¨¾¯
         {
             Encoder_Mesg_Stru.offset_data[1] = Encoder_Mesg_Stru.currt_data[1];
             buf_temp[4] = Encoder_Mesg_Stru.offset_data[1]&0xff;
             buf_temp[5] = (Encoder_Mesg_Stru.offset_data[1]>>8)&0xff;
             buf_temp[6] = (Encoder_Mesg_Stru.offset_data[1]>>16)&0xff;
             buf_temp[7] = (Encoder_Mesg_Stru.offset_data[1]>>24)&0xff;
-            myiic_write_24c64_api(4, 4, &buf_temp[4]);//å†™å…¥ä¿å­˜
+            myiic_write_24c64_api(4, 4, &buf_temp[4]);//Ğ´Èë±£´æ
         }
         else if(Motor_Lift_Stru.unit_act_id == EM_UNIT_ACT_ID_ALL
-                &&Encoder_Mesg_Stru.err_state == 0)//æŒ‡å®šæ‰€æœ‰ï¼Œæ— æŠ¥è­¦
+                &&Encoder_Mesg_Stru.err_state == 0)//Ö¸¶¨ËùÓĞ£¬ÎŞ±¨¾¯
         {
             Encoder_Mesg_Stru.offset_data[0] = Encoder_Mesg_Stru.currt_data[0];
             Encoder_Mesg_Stru.offset_data[1] = Encoder_Mesg_Stru.currt_data[1];
@@ -102,32 +111,32 @@ void Encoder_tbf_SendAPI(void)
             buf_temp[5] = (Encoder_Mesg_Stru.offset_data[1]>>8)&0xff;
             buf_temp[6] = (Encoder_Mesg_Stru.offset_data[1]>>16)&0xff;
             buf_temp[7] = (Encoder_Mesg_Stru.offset_data[1]>>24)&0xff;
-            myiic_write_24c64_api(0, 8, &buf_temp[0]);//å†™å…¥ä¿å­˜
+            myiic_write_24c64_api(0, 8, &buf_temp[0]);//Ğ´Èë±£´æ
         }
 
     }
 
-    //è¶…æ—¶æ£€æµ‹
+    //³¬Ê±¼ì²â
     if(Encoder_Mesg_Stru.com_timer[0] < 100)    Encoder_Mesg_Stru.com_timer[0]++;
     if(Encoder_Mesg_Stru.com_timer[1] < 100)    Encoder_Mesg_Stru.com_timer[1]++;
 
-    if(Encoder_Mesg_Stru.com_timer[0] > 10)//*20msè¶…æ—¶
+    if(Encoder_Mesg_Stru.com_timer[0] > 10)//*20ms³¬Ê±
     {
         Encoder_Mesg_Stru.com_timer[0] = 0;
         setbit(Encoder_Mesg_Stru.err_state, 6);
-        Encoder_Mesg_Stru.currt_data[0] = 0;//æ•°æ®æ¸…é›¶
+        Encoder_Mesg_Stru.currt_data[0] = 0;//Êı¾İÇåÁã
         Encoder_Mesg_Stru.real_data[0] = 0;
     }
 
-    if(Encoder_Mesg_Stru.com_timer[1] > 10)//*20msè¶…æ—¶
+    if(Encoder_Mesg_Stru.com_timer[1] > 10)//*20ms³¬Ê±
     {
         Encoder_Mesg_Stru.com_timer[1] = 0;
         setbit(Encoder_Mesg_Stru.err_state, 7);
-        Encoder_Mesg_Stru.currt_data[1] = 0;//æ•°æ®æ¸…é›¶
+        Encoder_Mesg_Stru.currt_data[1] = 0;//Êı¾İÇåÁã
         Encoder_Mesg_Stru.real_data[1] = 0;
     }
 
-    //å¤ä½æŠ¥è­¦
+    //¸´Î»±¨¾¯
     if(getbit(PLC_TO_HUB_Mesg_Stru.ctrl_cmd, 0) == 1
        &&Encoder_Mesg_Stru.err_state > 0)
     {
@@ -137,12 +146,12 @@ void Encoder_tbf_SendAPI(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: Encoder_tbf_CAN_Isr(CanRxMsg* RxMessage)
-*åŠŸ    èƒ½:
-*å‚    æ•°:
-*ä½œ    è€…:
-*ä¿®æ”¹æ—¶é—´:
-*è¿” å› å€¼: æ— 
+*º¯    Êı: Encoder_tbf_CAN_Isr(CanRxMsg* RxMessage)
+*¹¦    ÄÜ:
+*²Î    Êı:
+*×÷    Õß:
+*ĞŞ¸ÄÊ±¼ä:
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Encoder_tbf_CAN_Isr(CanRxMsg* RxMessage)
 {
@@ -159,13 +168,15 @@ void Encoder_tbf_CAN_Isr(CanRxMsg* RxMessage)
             {
                 Encoder_Mesg_Stru.com_timer[i] = 0;
 
-                //å½“å‰ä½ç½®-åŸå§‹å€¼
+                //µ±Ç°Î»ÖÃ-Ô­Ê¼Öµ
                 Encoder_Mesg_Stru.currt_data[i] = ((u32)RxMessage->Data[3]<<24)
                                                   | ((u32)RxMessage->Data[2]<<16)
                                                   | ((u32)RxMessage->Data[1]<<8)
                                                   | RxMessage->Data[0];
-                // å®é™…å€¼ï¼šå…ˆè½¬æˆæœ‰ç¬¦å·å†ç›¸å‡ï¼Œé¿å…é›¶ä½é™„è¿‘å›é€€ 1 ä¸ªè„‰å†²æ—¶æ— ç¬¦å·ä¸‹æº¢æˆå¤§æ­£æ•°
-                Encoder_Mesg_Stru.real_data[i] = ((s32)Encoder_Mesg_Stru.currt_data[i] - (s32)Encoder_Mesg_Stru.offset_data[i]) / 10;
+                // Êµ¼ÊÖµ£ºÏÈ×ª³ÉÓĞ·ûºÅÔÙÏà¼õ£¬±ÜÃâÁãÎ»¸½½ü»ØÍË 1 ¸öÂö³åÊ±ÎŞ·ûºÅÏÂÒç³É´óÕıÊı
+                // Èí¼ş²¹³¥Ö»¸Ä±äÔËĞĞ×ø±ê£¬²»¸Ä24C64ÀïµÄÓ²ÁãÎ»£»ÉìËõ¿ØÖÆºÍÉÏ´«·´À¡¶¼»áÊ¹ÓÃ²¹³¥ºóµÄÖµ
+                Encoder_Mesg_Stru.real_data[i] = ((s32)Encoder_Mesg_Stru.currt_data[i] - (s32)Encoder_Mesg_Stru.offset_data[i]) / 10
+                                                 + encoder_tbf_pos_comp_mm[i];
 
             }
             break;

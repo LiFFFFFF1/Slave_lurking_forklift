@@ -1,21 +1,21 @@
 #define BAT_COMM_UPPER_GLOBALS
 #include "bat_comm_upper.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_method.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_method.h
 #include "bat_comm_modebus_method.h"
 #include "bat_comm_custom_method.h"
 #include "bat_comm_mec_method.h"
 
 
 /***************************************************************************************
-*å‡½    æ•°: void Bat_Comm_UpperTX_Mesg_Task(void)
-*åŠŸ    èƒ½: å‘é€è¿›ç¨‹
-*å‚    æ•°:  Bat_Mesg_Stru.commun_portéœ€è¦æŒ‡å®šç”µæ± ä¸²å£ç«¯å£       
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šç”µæ± æ”¯æŒä¸¤ç§ï¼š
-*   ç¬¬äºŒç§ è‡ªå®šä¹‰
+*º¯    Êı: void Bat_Comm_UpperTX_Mesg_Task(void)
+*¹¦    ÄÜ: ·¢ËÍ½ø³Ì
+*²Î    Êı:  Bat_Mesg_Stru.commun_portĞèÒªÖ¸¶¨µç³Ø´®¿Ú¶Ë¿Ú       
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£ºµç³ØÖ§³ÖÁ½ÖÖ£º
+*   µÚ¶şÖÖ ×Ô¶¨Òå
 ****************************************************************************************/
 void Bat_Comm_UpperTX_Mesg_Task(void)
 { 
@@ -27,13 +27,13 @@ void Bat_Comm_UpperTX_Mesg_Task(void)
     
     switch(Bat_Mesg_Stru.device_type)                      
     {
-        case BAT_TYPE_CUSTOM:                               // è‡ªå®šä¹‰åè®®
+        case BAT_TYPE_CUSTOM:                               // ×Ô¶¨ÒåĞ­Òé
              Bat_Comm_HxCustomSend_Ask();
             break;
-        case BAT_TYPE_MODBUS:                               // è‡ªå®šä¹‰modebusåè®®
+        case BAT_TYPE_MODBUS:                               // ×Ô¶¨ÒåmodebusĞ­Òé
              Bat_Comm_Modbus_Send_Ask();                            
             break;
-        case BAT_TYPE_MEC:                               // è‡ªå®šä¹‰modebusåè®®
+        case BAT_TYPE_MEC:                               // ×Ô¶¨ÒåmodebusĞ­Òé
              Bat_Comm_MecSend_Ask();                            
             break;
         default:
@@ -44,25 +44,25 @@ void Bat_Comm_UpperTX_Mesg_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void Bat_Comm_UpperRX_Task(void)
-*åŠŸ    èƒ½: æ¥æ”¶å¤„ç†
-*å‚    æ•°:  Serial-å¯¹åº”ä¸²å£å‘é€ç»“æ„ä½“ï¼ŒQUEUE_com-å¯¹åº”æ¥æ”¶ä¸²å£ç»“æ„ä½“     
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Bat_Comm_UpperRX_Task(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êı:  Serial-¶ÔÓ¦´®¿Ú·¢ËÍ½á¹¹Ìå£¬QUEUE_com-¶ÔÓ¦½ÓÊÕ´®¿Ú½á¹¹Ìå     
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Bat_Comm_UpperRX_Task(void) 
 {
    
     switch(Bat_Mesg_Stru.device_type)                      
     {
-        case BAT_TYPE_CUSTOM:                               // è‡ªå®šä¹‰åè®®
+        case BAT_TYPE_CUSTOM:                               // ×Ô¶¨ÒåĞ­Òé
              Bat_Comm_HxCustom_Handler();
             break;
-        case BAT_TYPE_MODBUS:                               // è‡ªå®šä¹‰modebusåè®®
+        case BAT_TYPE_MODBUS:                               // ×Ô¶¨ÒåmodebusĞ­Òé
              Bat_Comm_Modebus_Handler();                            
             break;
-        case BAT_TYPE_MEC:                               // è‡ªå®šä¹‰mecåè®®
+        case BAT_TYPE_MEC:                               // ×Ô¶¨ÒåmecĞ­Òé
              Bat_Comm_Mec_Handler();                            
             break;
         default:

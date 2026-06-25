@@ -1,21 +1,21 @@
 #include "magnet_xs_sensor_method.h"
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 #include "magnet_sensor_upper.h"
 
   
-// ç§æœ‰å®å®šä¹‰
+// Ë½ÓĞºê¶¨Òå
 #define  XS_SENSOR_REC_LEN            21 
 
 static u16 xs_canopen_send_number=0;
 
 /***************************************************************************************
-*å‡½    æ•°: void Magnet_Xs_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
-*åŠŸ    èƒ½: è¯»å–ç¼“å­˜
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Magnet_Xs_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
+*¹¦    ÄÜ: ¶ÁÈ¡»º´æ
+*²Î    Êı:         
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 static void Magnet_Xs_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 {
@@ -32,7 +32,7 @@ static void Magnet_Xs_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 Serial->the_over_time =0;
                 if(Serial->step==0)
                 {
-                    if(dat<=0x04)                                // èµ·å§‹ç 
+                    if(dat<=0x04)                                // ÆğÊ¼Âë
                     {
                        Serial->step++;
                        Serial->recv_pbuffer[0] = dat;
@@ -41,7 +41,7 @@ static void Magnet_Xs_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step== 1)
                 {
-                    if(dat == 0x04)                             // åŠŸèƒ½ç 
+                    if(dat == 0x04)                             // ¹¦ÄÜÂë
                     {
                        Serial->step++;
                        Serial->recv_pbuffer[1] = dat;
@@ -55,7 +55,7 @@ static void Magnet_Xs_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 }
                 else if(Serial->step== 2)
                 {
-                    if(dat == 0x10)                             // å­—èŠ‚æ•°
+                    if(dat == 0x10)                             // ×Ö½ÚÊı
                     {
                        Serial->step++;
                        Serial->recv_pbuffer[2] = dat;
@@ -69,7 +69,7 @@ static void Magnet_Xs_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
                 else
                 {
                     Serial->recv_pbuffer[Serial->count++] = dat;
-                    if(Serial->count>=XS_SENSOR_REC_LEN)      // å­—èŠ‚æ•°+5
+                    if(Serial->count>=XS_SENSOR_REC_LEN)      // ×Ö½ÚÊı+5
                     {
                         
                         Serial->recv_complete_bit=Serial->count;
@@ -98,12 +98,12 @@ static void Magnet_Xs_ReadbufData(USART_STRU *Serial,QUEUE *QUEUE_com)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void MAGNET_Xs_COM_RX_Task(void)
-*åŠŸ    èƒ½: æ¥æ”¶å¤„ç†
-*å‚    æ•°:  Serial-å¯¹åº”ä¸²å£å‘é€ç»“æ„ä½“ï¼ŒQUEUE_com-å¯¹åº”æ¥æ”¶ä¸²å£ç»“æ„ä½“     
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void MAGNET_Xs_COM_RX_Task(void)
+*¹¦    ÄÜ: ½ÓÊÕ´¦Àí
+*²Î    Êı:  Serial-¶ÔÓ¦´®¿Ú·¢ËÍ½á¹¹Ìå£¬QUEUE_com-¶ÔÓ¦½ÓÊÕ´®¿Ú½á¹¹Ìå     
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void MAGNET_Xs_COM_RX_Task(void)
 {
@@ -113,7 +113,7 @@ void MAGNET_Xs_COM_RX_Task(void)
     USART_STRU *Serial;
     QUEUE *QUEUE_com;
     
-    if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN )  // CAN-æ¨¡å¼ä¸‹
+    if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN )  // CAN-Ä£Ê½ÏÂ
     {
         return;
     }
@@ -147,13 +147,13 @@ void MAGNET_Xs_COM_RX_Task(void)
         return;
     }
 
-    Magnet_Xs_ReadbufData(Serial,QUEUE_com);                   // è·å–å¯¹åº”ä¸²å£å¯¹æ¥æ•°æ®
+    Magnet_Xs_ReadbufData(Serial,QUEUE_com);                   // »ñÈ¡¶ÔÓ¦´®¿Ú¶Ô½ÓÊı¾İ
 
     if(Serial->recv_complete_bit & 0x8000)
     { 
-        /* CRCæ ¡éªŒåˆ¤æ–­ */
+        /* CRCĞ£ÑéÅĞ¶Ï */
         crc_val = Bsp_ModbusRTU_CRC(Serial->recv_pbuffer,XS_SENSOR_REC_LEN-2);
-                                                            //  å…ˆåˆ¤æ–­IDï¼Œåœ¨åˆ¤æ–­æ ¡éªŒ 
+                                                            //  ÏÈÅĞ¶ÏID£¬ÔÚÅĞ¶ÏĞ£Ñé 
         if(Serial->recv_pbuffer[0]>=1 && Serial->recv_pbuffer[0]<=4 &&          
            (GET_LOW_BYTE(crc_val)==Serial->recv_pbuffer[XS_SENSOR_REC_LEN-2]) &&     
            (GET_HIGH_BYTE(crc_val)==Serial->recv_pbuffer[XS_SENSOR_REC_LEN-1]))
@@ -161,38 +161,38 @@ void MAGNET_Xs_COM_RX_Task(void)
             adr_mpls =Serial->recv_pbuffer[0]-1;
             if(Serial->recv_pbuffer[1] == 0x04 && Serial->recv_pbuffer[2] == 0x10)
             {
-                // å…´é¢‚ä¸Šä¼ çš„åŸå§‹ç£æ®µ
+                // ĞËËÌÉÏ´«µÄÔ­Ê¼´Å¶Î
                 xs_segment = (u16)(Serial->recv_pbuffer[5]<<8)+Serial->recv_pbuffer[6]; 
 
-                if(xs_segment == 0)//æ— 
+                if(xs_segment == 0)//ÎŞ
                 {
                     Magnet_Upper_Stru.segment[adr_mpls] = 0;
                     Magnet_Upper_Stru.offset_left[adr_mpls] = 0;
                     Magnet_Upper_Stru.offset_middle[adr_mpls] = 0;
                     Magnet_Upper_Stru.offset_right[adr_mpls] = 0;
                 }
-                else if(xs_segment == 1 || xs_segment == 2 || xs_segment == 4)////1æ ¹ç£æ¡
+                else if(xs_segment == 1 || xs_segment == 2 || xs_segment == 4)////1¸ù´ÅÌõ
                 {
                     Magnet_Upper_Stru.segment[adr_mpls] = 1;
                     Magnet_Upper_Stru.offset_left[adr_mpls] = (u16)(Serial->recv_pbuffer[15]<<8)+Serial->recv_pbuffer[16];
                     Magnet_Upper_Stru.offset_middle[adr_mpls] = 0;
                     Magnet_Upper_Stru.offset_right[adr_mpls] = 0;
                 }
-                else if(xs_segment == 3)////2æ ¹ç£æ¡-å·¦ä¸­
+                else if(xs_segment == 3)////2¸ù´ÅÌõ-×óÖĞ
                 {
                     Magnet_Upper_Stru.segment[adr_mpls] = 2;
                     Magnet_Upper_Stru.offset_left[adr_mpls] = (u16)(Serial->recv_pbuffer[15]<<8)+Serial->recv_pbuffer[16];
                     Magnet_Upper_Stru.offset_middle[adr_mpls] = (u16)(Serial->recv_pbuffer[13]<<8)+Serial->recv_pbuffer[14];
                     Magnet_Upper_Stru.offset_right[adr_mpls] = 0;
                 }
-                else if(xs_segment == 6)////2æ ¹ç£æ¡-å³ä¸­
+                else if(xs_segment == 6)////2¸ù´ÅÌõ-ÓÒÖĞ
                 {
                     Magnet_Upper_Stru.segment[adr_mpls] = 2;
                     Magnet_Upper_Stru.offset_left[adr_mpls] = (u16)(Serial->recv_pbuffer[17]<<8)+Serial->recv_pbuffer[18];
                     Magnet_Upper_Stru.offset_middle[adr_mpls] = (u16)(Serial->recv_pbuffer[15]<<8)+Serial->recv_pbuffer[16];
                     Magnet_Upper_Stru.offset_right[adr_mpls] = 0;
                 }
-                else if(xs_segment == 7)////3æ ¹ç£æ¡-å·¦ä¸­å³
+                else if(xs_segment == 7)////3¸ù´ÅÌõ-×óÖĞÓÒ
                 {
                     Magnet_Upper_Stru.segment[adr_mpls] = 3;
                     Magnet_Upper_Stru.offset_left[adr_mpls] = (u16)(Serial->recv_pbuffer[17]<<8)+Serial->recv_pbuffer[18];
@@ -200,15 +200,15 @@ void MAGNET_Xs_COM_RX_Task(void)
                     Magnet_Upper_Stru.offset_right[adr_mpls] = (u16)(Serial->recv_pbuffer[13]<<8)+Serial->recv_pbuffer[14];
                 }
                 
-                // ç£æ®µ
+                // ´Å¶Î
                 //Magnet_Upper_Stru.segment[adr_mpls]          = (u16)(Serial->recv_pbuffer[5]<<8)+Serial->recv_pbuffer[6];   
-                // å·¦åç§»å€¼
+                // ×óÆ«ÒÆÖµ
                 //Magnet_Upper_Stru.offset_left[adr_mpls]      = (u16)(Serial->recv_pbuffer[13]<<8)+Serial->recv_pbuffer[14];
-                // ä¸­åç§»å€¼
+                // ÖĞÆ«ÒÆÖµ
                 //Magnet_Upper_Stru.offset_middle[adr_mpls]    = (u16)(Serial->recv_pbuffer[15]<<8)+Serial->recv_pbuffer[16];
-                // å³åç§»å€¼
+                // ÓÒÆ«ÒÆÖµ
                 //Magnet_Upper_Stru.offset_right[adr_mpls]     = (u16)(Serial->recv_pbuffer[17]<<8)+Serial->recv_pbuffer[18];
-                // ç‚¹ä½å€¼
+                // µãÎ»Öµ
                 //Magnet_Upper_Stru.io_low[adr_mpls]           = Serial->recv_pbuffer[7];
                 //Magnet_Upper_Stru.io_high[adr_mpls]          = Serial->recv_pbuffer[8];
 
@@ -227,13 +227,13 @@ void MAGNET_Xs_COM_RX_Task(void)
 
 
 /***************************************************************************************
-*å‡½    æ•°: void MAGNET_Xs_Send_Mesg_Task(void)
-*åŠŸ    èƒ½: æŸ¥è¯¢æ¨¡å¼
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
-*å¤‡    æ³¨ï¼šæ­¤å‡½æ•°æ ¹æ®æ¯è°ƒç”¨ä¸€æ¬¡å‘é€ä¸€æ¬¡æŸ¥è¯¢é€šä¿¡æŒ‡ä»¤(æŸ¥è¯¢æ¨¡å¼æœ‰æ•ˆ)
+*º¯    Êı: void MAGNET_Xs_Send_Mesg_Task(void)
+*¹¦    ÄÜ: ²éÑ¯Ä£Ê½
+*²Î    Êı:         
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
+*±¸    ×¢£º´Ëº¯Êı¸ù¾İÃ¿µ÷ÓÃÒ»´Î·¢ËÍÒ»´Î²éÑ¯Í¨ĞÅÖ¸Áî(²éÑ¯Ä£Ê½ÓĞĞ§)
 ****************************************************************************************/
 void MAGNET_Xs_Send_Mesg_Task(void)
 {
@@ -253,18 +253,18 @@ void MAGNET_Xs_Send_Mesg_Task(void)
     if(Magnet_Upper_Stru.magnet_comm_time[3]<1000)  Magnet_Upper_Stru.magnet_comm_time[3]++;
     
     
-    if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN )  // CANæ¨¡å¼ä¸‹
+    if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN )  // CANÄ£Ê½ÏÂ
     {
-	if(++xs_canopen_send_number >= 10)//*10mså‘é€é—´éš”
+	if(++xs_canopen_send_number >= 10)//*10ms·¢ËÍ¼ä¸ô
         {
 		xs_canopen_send_number = 0;
         
 		magnet_canopen_buf[0] =0x88;
-        	magnet_canopen_buf[1] =Magnet_Upper_Stru.branch_set;//åˆ†æ”¯
+        	magnet_canopen_buf[1] =Magnet_Upper_Stru.branch_set;//·ÖÖ§
         	CAN1_Send_One_Frame_Data((0x80+std_id), magnet_canopen_buf, 2);
 
 	        std_id++;
-                // æ ¹æ®è®¾ç½®åœ°å€è®¾å¤‡ä¸ªæ•°ï¼Œè‡ªåŠ¨åŒ¹é…
+                // ¸ù¾İÉèÖÃµØÖ·Éè±¸¸öÊı£¬×Ô¶¯Æ¥Åä
 	        if(std_id >= (4+Magnet_Upper_Stru.id_number))  std_id =4;       
 
 	}
@@ -272,19 +272,19 @@ void MAGNET_Xs_Send_Mesg_Task(void)
         /*
         switch(Magnet_Upper_Stru.canpen_state)
         {
-            case 0:                                        // é…ç½®1801-02-åŒæ­¥ç±»å‹
-                magnet_canopen_buf[0] =0x2F;               //å‘é€æ•°æ®ä¸º1ä¸ªå­—èŠ‚
-                magnet_canopen_buf[1] =0x01;               //å¯¹è±¡ç´¢å¼•-1801-TPDO2
+            case 0:                                        // ÅäÖÃ1801-02-Í¬²½ÀàĞÍ
+                magnet_canopen_buf[0] =0x2F;               //·¢ËÍÊı¾İÎª1¸ö×Ö½Ú
+                magnet_canopen_buf[1] =0x01;               //¶ÔÏóË÷Òı-1801-TPDO2
                 magnet_canopen_buf[2] =0x18;               // 
-                magnet_canopen_buf[3] =0x02;               // å­ç´¢å¼•-02
-                magnet_canopen_buf[4] =0xFE;               //254 å¼‚æ­¥
+                magnet_canopen_buf[3] =0x02;               // ×ÓË÷Òı-02
+                magnet_canopen_buf[4] =0xFE;               //254 Òì²½
                 magnet_canopen_buf[5] =0x00;
                 magnet_canopen_buf[6] =0x00;
                 magnet_canopen_buf[7] =0x00;
                 CAN1_Send_One_Frame_Data((0x600+std_id),magnet_canopen_buf,8);
                 
                 xs_canopen_send_number++;
-                if(xs_canopen_send_number >= 20)            //å‘é€å¤šæ¬¡
+                if(xs_canopen_send_number >= 20)            //·¢ËÍ¶à´Î
                 {
                     xs_canopen_send_number =0;
                     Magnet_Upper_Stru.canpen_state++;
@@ -293,11 +293,11 @@ void MAGNET_Xs_Send_Mesg_Task(void)
                
                 
                 break;
-            case 1:                                        // é…ç½®1801-03-å‘é€æœ€å°é—´éš”
+            case 1:                                        // ÅäÖÃ1801-03-·¢ËÍ×îĞ¡¼ä¸ô
                 magnet_canopen_buf[0] =0x2F;
                 magnet_canopen_buf[1] =0x01;
                 magnet_canopen_buf[2] =0x18;               // 1801
-                magnet_canopen_buf[3] =0x03;               // 03-å­ç´¢å¼•
+                magnet_canopen_buf[3] =0x03;               // 03-×ÓË÷Òı
                 magnet_canopen_buf[4] =0x64;               // 10ms
                 magnet_canopen_buf[5] =0x00;
                 magnet_canopen_buf[6] =0x00;
@@ -305,7 +305,7 @@ void MAGNET_Xs_Send_Mesg_Task(void)
                 CAN1_Send_One_Frame_Data((0x600+std_id),magnet_canopen_buf,8);
                 
                 xs_canopen_send_number++;
-                if(xs_canopen_send_number >= 20)            //å‘é€å¤šæ¬¡
+                if(xs_canopen_send_number >= 20)            //·¢ËÍ¶à´Î
                 {
                     xs_canopen_send_number =0;
                     Magnet_Upper_Stru.canpen_state++;
@@ -315,11 +315,11 @@ void MAGNET_Xs_Send_Mesg_Task(void)
                 
                 break;
                 
-            case 2:                                        // é…ç½®1801-05-å‘é€å‘¨æœŸ
+            case 2:                                        // ÅäÖÃ1801-05-·¢ËÍÖÜÆÚ
                 magnet_canopen_buf[0] =0x2B;
                 magnet_canopen_buf[1] =0x01;
                 magnet_canopen_buf[2] =0x18;               // 1801
-                magnet_canopen_buf[3] =0x05;               // 05-å­ç´¢å¼•
+                magnet_canopen_buf[3] =0x05;               // 05-×ÓË÷Òı
                 magnet_canopen_buf[4] =0x0A;               // 10ms
                 magnet_canopen_buf[5] =0x00;
                 magnet_canopen_buf[6] =0x00;
@@ -327,7 +327,7 @@ void MAGNET_Xs_Send_Mesg_Task(void)
                 CAN1_Send_One_Frame_Data((0x600+std_id),magnet_canopen_buf,8);
                 
                 xs_canopen_send_number++;
-                if(xs_canopen_send_number >= 20)            //å‘é€å¤šæ¬¡
+                if(xs_canopen_send_number >= 20)            //·¢ËÍ¶à´Î
                 {
                     xs_canopen_send_number =0;
                     Magnet_Upper_Stru.canpen_state++;
@@ -338,8 +338,8 @@ void MAGNET_Xs_Send_Mesg_Task(void)
                 break;
                 
             case 3:
-                magnet_canopen_buf[0] =0x01;               // 01-å¯åŠ¨èŠ‚ç‚¹å‘½ä»¤
-                magnet_canopen_buf[1] =0x00;               // 00-æ‰€æœ‰åœ°å€ï¼Œxx-å¯¹åº”åœ°å€
+                magnet_canopen_buf[0] =0x01;               // 01-Æô¶¯½ÚµãÃüÁî
+                magnet_canopen_buf[1] =0x00;               // 00-ËùÓĞµØÖ·£¬xx-¶ÔÓ¦µØÖ·
                 magnet_canopen_buf[2] =0x00;               
                 magnet_canopen_buf[3] =0x00;               
                 magnet_canopen_buf[4] =0x00;               
@@ -349,7 +349,7 @@ void MAGNET_Xs_Send_Mesg_Task(void)
                 CAN1_Send_One_Frame_Data(0x00, magnet_canopen_buf, 2);
                 
                 xs_canopen_send_number++;
-                if(xs_canopen_send_number >= 5)            //å‘é€å¤šæ¬¡
+                if(xs_canopen_send_number >= 5)            //·¢ËÍ¶à´Î
                 {
                     xs_canopen_send_number =0;
                     Magnet_Upper_Stru.canpen_state++;
@@ -368,7 +368,7 @@ void MAGNET_Xs_Send_Mesg_Task(void)
         if(Magnet_Upper_Stru.canpen_state < 4)
         {
             std_id++;
-            if(std_id >= (4+Magnet_Upper_Stru.id_number))         // æ ¹æ®è®¾ç½®åœ°å€è®¾å¤‡ä¸ªæ•°ï¼Œè‡ªåŠ¨åŒ¹é…
+            if(std_id >= (4+Magnet_Upper_Stru.id_number))         // ¸ù¾İÉèÖÃµØÖ·Éè±¸¸öÊı£¬×Ô¶¯Æ¥Åä
             {
                 std_id =4;
             }
@@ -377,9 +377,9 @@ void MAGNET_Xs_Send_Mesg_Task(void)
         
     }                
     
-    else if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_COM )      // RS485æ¨¡å¼ä¸‹     
+    else if(Magnet_Upper_Stru.can_com_type == EM_SET_PORT_COM )      // RS485Ä£Ê½ÏÂ     
     {
-        // ä¸»åŠ¨ä¸Šä¼ -é€€å‡º-æœªé…ç½®ç«¯å£
+        // Ö÷¶¯ÉÏ´«-ÍË³ö-Î´ÅäÖÃ¶Ë¿Ú
         if(Magnet_Upper_Stru.commun_port == NULL || Magnet_Upper_Stru.commun_ask_mode !=EM_DEV_ASK_HAND)
         {
             return;
@@ -399,12 +399,12 @@ void MAGNET_Xs_Send_Mesg_Task(void)
 }
 
 /***************************************************************************************
-*å‡½    æ•°: void Magnet_XS_CAN_RX_Handler(CanRxMsg* RxMessage)
-*åŠŸ    èƒ½: å…´é¢‚èµ°å½¢-CANæ¥æ”¶å¤„ç†
-*å‚    æ•°:         
-*ä½œ    è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯    Êı: void Magnet_XS_CAN_RX_Handler(CanRxMsg* RxMessage)
+*¹¦    ÄÜ: ĞËËÌ×ßĞÎ-CAN½ÓÊÕ´¦Àí
+*²Î    Êı:         
+*×÷    Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 void Magnet_XS_CAN_RX_Handler(CanRxMsg* RxMessage)
 {
@@ -417,26 +417,26 @@ void Magnet_XS_CAN_RX_Handler(CanRxMsg* RxMessage)
         case 0x06:
         case 0x07:
             can_mpls_adr = RxMessage->StdId-4;
-            //XS_CAN_HSåè®®
+            //XS_CAN_HSĞ­Òé
             if(Magnet_Upper_Stru.commun_ask_mode == EM_DEV_USE_CAN && 
                Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN &&
                Magnet_Upper_Stru.device_type  == EM_DEVICE_DEV_MAGNET_XS && 
                RxMessage->DLC == 0x04)
             {
-                //ä¼ æ„Ÿå™¨çŠ¶æ€
+                //´«¸ĞÆ÷×´Ì¬
                 Magnet_Upper_Stru.error_state[can_mpls_adr] = RxMessage->Data[0];   
                 
-                //ç£æ¡æ„Ÿåº”çŠ¶æ€
+                //´ÅÌõ¸ĞÓ¦×´Ì¬
                 if(RxMessage->Data[1] == 7)
-                	Magnet_Upper_Stru.segment[can_mpls_adr] = 3;//3æ®µç£æ¡
+                	Magnet_Upper_Stru.segment[can_mpls_adr] = 3;//3¶Î´ÅÌõ
                 else if(RxMessage->Data[1] == 3||RxMessage->Data[1] == 6)
-                	Magnet_Upper_Stru.segment[can_mpls_adr] = 2;//2æ®µç£æ¡
+                	Magnet_Upper_Stru.segment[can_mpls_adr] = 2;//2¶Î´ÅÌõ
                 else if(RxMessage->Data[1] > 0)
-                    Magnet_Upper_Stru.segment[can_mpls_adr] = 1;//1æ®µç£æ¡
+                    Magnet_Upper_Stru.segment[can_mpls_adr] = 1;//1¶Î´ÅÌõ
                 else if(RxMessage->Data[1] == 0)
-                    Magnet_Upper_Stru.segment[can_mpls_adr] = 0;//0æ®µç£æ¡
+                    Magnet_Upper_Stru.segment[can_mpls_adr] = 0;//0¶Î´ÅÌõ
                     
-                // åç§»å€¼
+                // Æ«ÒÆÖµ
                 //Magnet_Upper_Stru.datatemp = RxMessage->Data[3];
                 Magnet_Upper_Stru.offset_left[can_mpls_adr]   = (u8)(RxMessage->Data[3]+(u16)(RxMessage->Data[2]<<8));
 
@@ -468,18 +468,18 @@ void Magnet_XS_CAN_RX_Handler(CanRxMsg* RxMessage)
         case 0x287:
             can_mpls_adr = RxMessage->StdId-0x284;
             
-            //XS_CANOPEN æ¨¡å¼
+            //XS_CANOPEN Ä£Ê½
             if(Magnet_Upper_Stru.commun_ask_mode == EM_DEV_CANOPEN && 
                Magnet_Upper_Stru.can_com_type == EM_SET_PORT_CAN &&
                Magnet_Upper_Stru.device_type  == EM_DEVICE_DEV_MAGNET_XS && 
                RxMessage->DLC == 0x08)
             {
                 Magnet_Upper_Stru.segment[can_mpls_adr]         = RxMessage->Data[1];   
-                                                                    // å·¦åç§»å€¼
+                                                                    // ×óÆ«ÒÆÖµ
                 Magnet_Upper_Stru.offset_left[can_mpls_adr]     = (u8)(RxMessage->Data[2]+(u16)(RxMessage->Data[3]<<8));
-                                                                    // ä¸­åç§»å€¼
+                                                                    // ÖĞÆ«ÒÆÖµ
                 Magnet_Upper_Stru.offset_middle[can_mpls_adr]   = (u8)(RxMessage->Data[4]+(u16)(RxMessage->Data[5]<<8));
-                                                                    // å³åç§»å€¼
+                                                                    // ÓÒÆ«ÒÆÖµ
                 Magnet_Upper_Stru.offset_right[can_mpls_adr]    = (u8)(RxMessage->Data[6]+(u16)(RxMessage->Data[7]<<8));
 
                 Magnet_Upper_Stru.magnet_comm_time[can_mpls_adr] = 0;

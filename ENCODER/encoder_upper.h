@@ -2,7 +2,7 @@
 #define _ENCODER_UPPER_H
 
 
-// ä½¿ç”¨åˆ°çš„åº•å±‚åŸºç¡€æ–‡ä»¶
+// Ê¹ÓÃµ½µÄµ×²ã»ù´¡ÎÄ¼ş
 #include "bsp_can_dependency.h"
 #include "bsp_usart_dependency.h"	
 #include "bsp_modbusrtu.h"
@@ -18,15 +18,15 @@
     
 typedef enum
 {
-    ENCODER_TPYE_TF    = 1,// æ‰˜è²ç¼–ç å™¨:   500k, 20ms, id=1+x
-    ENCODER_TPYE_TBF    = 2,// ç‰¹å€ç¦ç¼–ç å™¨:   500k, 10ms, id=3+x
+    ENCODER_TPYE_TF    = 1,// ÍĞ·Æ±àÂëÆ÷:   500k, 20ms, id=1+x
+    ENCODER_TPYE_TBF    = 2,// ÌØ±¶¸£±àÂëÆ÷:   500k, 10ms, id=3+x
     
 } ENCODER_TYPE_MODE;   
 
 
 typedef enum
 {
-    ENCODER_TPYE_CANOPEN  = 1,                              // è‡ªå®šä¹‰--CANopen
+    ENCODER_TPYE_CANOPEN  = 1,                              // ×Ô¶¨Òå--CANopen
     
 }ENCODER_CAN_COM_MODE;
 
@@ -43,13 +43,13 @@ typedef __packed struct
     
     u8 err_state;
     
-    u16 com_timer[2];//é€šä¿¡è®¡æ—¶
+    u16 com_timer[2];//Í¨ĞÅ¼ÆÊ±
 
-    u32 currt_data[2];//å½“å‰ä½ç½®(åŸå§‹è®¡æ•°)
+    u32 currt_data[2];//µ±Ç°Î»ÖÃ(Ô­Ê¼¼ÆÊı)
 
-    u32 offset_data[2];//é›¶ä½å€¼(åŸå§‹è®¡æ•°)
+    u32 offset_data[2];//ÁãÎ»Öµ(Ô­Ê¼¼ÆÊı)
         
-    s32 real_data[2];//çœŸå®ä½ç½®(mm)
+    s32 real_data[2];//ÕæÊµÎ»ÖÃ(mm)
     
 }ENCODER_UPPER_STRU;
 

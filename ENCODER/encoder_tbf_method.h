@@ -6,13 +6,13 @@
 #include "bsp_usart_dependency.h"
 #include "bsp_modbusrtu.h"
 
-#define    TBF_CAN_ID    3//èµ·å§‹can id
+#define    TBF_CAN_ID    3//ÆğÊ¼can id
 
 
-/* å‘é€å¤„ç†ä»»åŠ¡ */
+/* ·¢ËÍ´¦ÀíÈÎÎñ */
 extern void Encoder_tbf_SendAPI(void);
 
-/* æ¥æ”¶å¤„ç†ä»»åŠ¡ */
+/* ½ÓÊÕ´¦ÀíÈÎÎñ */
 extern void Encoder_tbf_CAN_Isr(CanRxMsg* RxMessage);
 
 

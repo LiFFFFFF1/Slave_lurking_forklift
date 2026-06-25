@@ -16,7 +16,7 @@
 #endif 
 
 
-#define  RFID_XS_REC_LEN            18  //å…´é¢‚RFIDè¯»å¡åä¸Šä¼ æ•°æ®é•¿åº¦
+#define  RFID_XS_REC_LEN            18  //ĞËËÌRFID¶Á¿¨ºóÉÏ´«Êı¾İ³¤¶È
 
 
 RFID_XS_EXT void RFID_XS_485_RX_Complete_Handler(void);

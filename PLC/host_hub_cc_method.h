@@ -1,15 +1,15 @@
 #ifndef _HOST_HUB_CC_METHOD_H
 #define _HOST_HUB_CC_METHOD_H
 
-// åŒ…å«å‡½æ•°å‚æ•° èŠ¯ç‰‡å¤´æ–‡ä»¶
+// °üº¬º¯Êı²ÎÊı Ğ¾Æ¬Í·ÎÄ¼ş
 #include "stm32f10x.h"
 
 
 
-/* å‘é€å¤„ç†ä»»åŠ¡ */
+/* ·¢ËÍ´¦ÀíÈÎÎñ */
 extern void Host_Hub_CAN_TX_Task(void);
   
- /* æ¥æ”¶å¤„ç†ä»»åŠ¡ */
+ /* ½ÓÊÕ´¦ÀíÈÎÎñ */
 extern void Host_Hub_CAN_RX_Task(CanRxMsg* RxMessage);
 
 

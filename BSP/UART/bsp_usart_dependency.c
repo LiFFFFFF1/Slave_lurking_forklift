@@ -2,84 +2,84 @@
 #include "bsp_usart_dependency.h"	  
 
  
-/* ä¸²å£#1 å¼•è„š å®šä¹‰ */
+/* ´®¿Ú#1 Òı½Å ¶¨Òå */
 #define USART1_TX_PIN_GPIO           GPIOA
 #define USART1_TX_PIN                GPIO_Pin_9
 
 #define USART1_RX_PIN_GPIO           GPIOA
 #define USART1_RX_PIN                GPIO_Pin_10
 
-/* ä¸²å£#2 å¼•è„š å®šä¹‰ */
+/* ´®¿Ú#2 Òı½Å ¶¨Òå */
 #define USART2_TX_PIN_GPIO           GPIOD
 #define USART2_TX_PIN                GPIO_Pin_5
 
 #define USART2_RX_PIN_GPIO           GPIOD
 #define USART2_RX_PIN                GPIO_Pin_6
 
-/* ä¸²å£#3 å¼•è„š å®šä¹‰ */
+/* ´®¿Ú#3 Òı½Å ¶¨Òå */
 #define USART3_TX_PIN_GPIO           GPIOD
 #define USART3_TX_PIN                GPIO_Pin_8
 
 #define USART3_RX_PIN_GPIO           GPIOD
 #define USART3_RX_PIN                GPIO_Pin_9
 
-/* ä¸²å£#4 å¼•è„š å®šä¹‰ */
+/* ´®¿Ú#4 Òı½Å ¶¨Òå */
 #define UART4_TX_PIN_GPIO            GPIOC
 #define UART4_TX_PIN                 GPIO_Pin_10
 
 #define UART4_RX_PIN_GPIO            GPIOC
 #define UART4_RX_PIN                 GPIO_Pin_11
 
-/* ä¸²å£#5 å¼•è„š å®šä¹‰ */
+/* ´®¿Ú#5 Òı½Å ¶¨Òå */
 #define UART5_TX_PIN_GPIO            GPIOC
 #define UART5_TX_PIN                 GPIO_Pin_12
 
 #define UART5_RX_PIN_GPIO            GPIOD
 #define UART5_RX_PIN                 GPIO_Pin_2
 
-// ä¸²å£DMAé€šé“å‘é€-æ¥æ”¶ä¼˜å…ˆçº§
-#define  USART1_DMA_PRI_T     5        // å®šä¹‰DMAé€šé“ä¼˜å…ˆçº§--å‘é€
-#define  USART1_DMA_PRI_R     4        // å®šä¹‰DMAé€šé“ä¼˜å…ˆçº§--æ¥æ”¶
+// ´®¿ÚDMAÍ¨µÀ·¢ËÍ-½ÓÊÕÓÅÏÈ¼¶
+#define  USART1_DMA_PRI_T     5        // ¶¨ÒåDMAÍ¨µÀÓÅÏÈ¼¶--·¢ËÍ
+#define  USART1_DMA_PRI_R     4        // ¶¨ÒåDMAÍ¨µÀÓÅÏÈ¼¶--½ÓÊÕ
 
-#define  USART2_DMA_PRI_T     5        // å®šä¹‰DMAé€šé“ä¼˜å…ˆçº§--å‘é€
-#define  USART2_DMA_PRI_R     4        // å®šä¹‰DMAé€šé“ä¼˜å…ˆçº§--æ¥æ”¶
+#define  USART2_DMA_PRI_T     5        // ¶¨ÒåDMAÍ¨µÀÓÅÏÈ¼¶--·¢ËÍ
+#define  USART2_DMA_PRI_R     4        // ¶¨ÒåDMAÍ¨µÀÓÅÏÈ¼¶--½ÓÊÕ
 
-#define  USART3_DMA_PRI_T     5        // å®šä¹‰DMAé€šé“ä¼˜å…ˆçº§--å‘é€
-#define  USART3_DMA_PRI_R     4        // å®šä¹‰DMAé€šé“ä¼˜å…ˆçº§--æ¥æ”¶
+#define  USART3_DMA_PRI_T     5        // ¶¨ÒåDMAÍ¨µÀÓÅÏÈ¼¶--·¢ËÍ
+#define  USART3_DMA_PRI_R     4        // ¶¨ÒåDMAÍ¨µÀÓÅÏÈ¼¶--½ÓÊÕ
 
-#define  USART4_DMA_PRI_T     5        // å®šä¹‰DMAé€šé“ä¼˜å…ˆçº§--å‘é€
-#define  USART4_DMA_PRI_R     4        // å®šä¹‰DMAé€šé“ä¼˜å…ˆçº§--æ¥æ”¶
+#define  USART4_DMA_PRI_T     5        // ¶¨ÒåDMAÍ¨µÀÓÅÏÈ¼¶--·¢ËÍ
+#define  USART4_DMA_PRI_R     4        // ¶¨ÒåDMAÍ¨µÀÓÅÏÈ¼¶--½ÓÊÕ
 
-#define  USART5_ISR_PRI       4        // å®šä¹‰ISRé€šé“ä¼˜å…ˆçº§
+#define  USART5_ISR_PRI       4        // ¶¨ÒåISRÍ¨µÀÓÅÏÈ¼¶
 
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸­æ–­é…ç½®é€‰æ‹©
-  *å‚    æ•°:  Channel:é€šé“
-              PreemptionPriority :æŠ¢å ä¼˜å…ˆçº§
-              SubPriority:å­ä¼˜å…ˆçº§
+  * º¯Êı¹¦ÄÜ: ÖĞ¶ÏÅäÖÃÑ¡Ôñ
+  *²Î    Êı:  Channel:Í¨µÀ
+              PreemptionPriority :ÇÀÕ¼ÓÅÏÈ¼¶
+              SubPriority:×ÓÓÅÏÈ¼¶
 
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: 
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: 
   */
 static void Bsp_Usart_Nvic_Config(uint8_t Channel,uint8_t PreemptionPriority,uint8_t SubPriority)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
     
     NVIC_InitStructure.NVIC_IRQChannel = Channel;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=PreemptionPriority;//æŠ¢å ä¼˜å…ˆçº§3
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = SubPriority;	        //å­ä¼˜å…ˆçº§1
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;		                    //IRQé€šé“ä½¿èƒ½
-    NVIC_Init(&NVIC_InitStructure);                                         //æ ¹æ®æŒ‡å®šçš„å‚æ•°åˆå§‹åŒ–VICå¯„å­˜å™¨ 
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=PreemptionPriority;//ÇÀÕ¼ÓÅÏÈ¼¶3
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = SubPriority;	        //×ÓÓÅÏÈ¼¶1
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;		                    //IRQÍ¨µÀÊ¹ÄÜ
+    NVIC_Init(&NVIC_InitStructure);                                         //¸ù¾İÖ¸¶¨µÄ²ÎÊı³õÊ¼»¯VIC¼Ä´æÆ÷ 
 }
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£DMAæ”¶å‘é…ç½®
-  * USARTx:   ä¸²å£ç«¯å£å·
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: ä¸²å£5æ— DMA
+  * º¯Êı¹¦ÄÜ: ´®¿ÚDMAÊÕ·¢ÅäÖÃ
+  * USARTx:   ´®¿Ú¶Ë¿ÚºÅ
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: ´®¿Ú5ÎŞDMA
   */
 static void Bsp_Usart_DMA_Config(USART_TypeDef* USARTx)
 {
@@ -87,399 +87,399 @@ static void Bsp_Usart_DMA_Config(USART_TypeDef* USARTx)
     
     if(USARTx ==USART1)
     {
-        //-----------USART1_DMAæ¥æ”¶é…ç½®-------------------- 
+        //-----------USART1_DMA½ÓÊÕÅäÖÃ-------------------- 
         
-        /* ä½¿èƒ½DMA1æ—¶é’Ÿ */
+        /* Ê¹ÄÜDMA1Ê±ÖÓ */
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 
-        /* å°†DMA1é€šé“5é‡è®¾ä¸ºç¼ºçœå€¼ */
+        /* ½«DMA1Í¨µÀ5ÖØÉèÎªÈ±Ê¡Öµ */
         DMA_DeInit(DMA1_Channel5);
-        /* å¤–è®¾åŸºåœ°å€ */
+        /* ÍâÉè»ùµØÖ· */
         DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&USART1->DR);
-        /* ç¼“å­˜åŸºåœ°å€ */
+        /* »º´æ»ùµØÖ· */
         DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)COM1_Serial.fifo_bufferA;
-        /* å¤–è®¾ä½œä¸ºæ•°æ®ä¼ è¾“çš„æ¥æº */
+        /* ÍâÉè×÷ÎªÊı¾İ´«ÊäµÄÀ´Ô´ */
         DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-        /* ç¼“å­˜å¤§å° */
+        /* »º´æ´óĞ¡ */
         DMA_InitStructure.DMA_BufferSize = QUEUE_LENGTH;
-        /* å¤–è®¾åœ°å€å¯„å­˜å™¨ä¸å˜ */
+        /* ÍâÉèµØÖ·¼Ä´æÆ÷²»±ä */
         DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-        /* å†…å­˜åœ°å€å¯„å­˜å™¨é€’å¢ */
+        /* ÄÚ´æµØÖ·¼Ä´æÆ÷µİÔö */
         DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-        /* DMAæ•°æ®å®½åº¦8ä½ */
+        /* DMAÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-        /* å¤–è®¾æ•°æ®å®½åº¦8ä½ */
+        /* ÍâÉèÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-        /* å·¥ä½œåœ¨æ­£å¸¸ç¼“å­˜æ¨¡å¼ */
+        /* ¹¤×÷ÔÚÕı³£»º´æÄ£Ê½ */
         DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-        /* DMAé€šé“æ‹¥æœ‰-ä¼˜å…ˆçº§ */
+        /* DMAÍ¨µÀÓµÓĞ-ÓÅÏÈ¼¶ */
         DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;  
-        /* DMAé€šé“æ²¡æœ‰è®¾ç½®ä¸ºå†…å­˜åˆ°å†…å­˜ä¼ è¾“ */
+        /* DMAÍ¨µÀÃ»ÓĞÉèÖÃÎªÄÚ´æµ½ÄÚ´æ´«Êä */
         DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
  
-        /* åˆå§‹åŒ–è¯¥DMAé€šé“ */
+        /* ³õÊ¼»¯¸ÃDMAÍ¨µÀ */
         DMA_Init(DMA1_Channel5, &DMA_InitStructure);
         
-        /* ä½¿èƒ½ä¸²å£1 æ¥æ”¶DMA */
+        /* Ê¹ÄÜ´®¿Ú1 ½ÓÊÕDMA */
         USART_DMACmd(USART1, USART_DMAReq_Rx, ENABLE);
-        /* ä½¿èƒ½ä¼ è¾“å®Œæˆä¸­æ–­*/
+        /* Ê¹ÄÜ´«ÊäÍê³ÉÖĞ¶Ï*/
         DMA_ITConfig(DMA1_Channel5, DMA_IT_TC,ENABLE);
         
-        Bsp_Usart_Nvic_Config(DMA1_Channel5_IRQn,USART1_DMA_PRI_R,0);// ä¸²å£1DMA-é€šé“
+        Bsp_Usart_Nvic_Config(DMA1_Channel5_IRQn,USART1_DMA_PRI_R,0);// ´®¿Ú1DMA-Í¨µÀ
         
-        /* ä½¿èƒ½è¯¥DMAé€šé“ */
+        /* Ê¹ÄÜ¸ÃDMAÍ¨µÀ */
         DMA_Cmd(DMA1_Channel5, ENABLE);		
         
         
-        //-----------USART1_DMAå‘é€é…ç½®--------------------     
+        //-----------USART1_DMA·¢ËÍÅäÖÃ--------------------     
         
-        /* ä½¿èƒ½DMA1æ—¶é’Ÿ */
+        /* Ê¹ÄÜDMA1Ê±ÖÓ */
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 
-        /* å°†DMA1é€šé“4é‡è®¾ä¸ºç¼ºçœå€¼ */
+        /* ½«DMA1Í¨µÀ4ÖØÉèÎªÈ±Ê¡Öµ */
         DMA_DeInit(DMA1_Channel4);
-        /* å¤–è®¾åŸºåœ°å€ */
+        /* ÍâÉè»ùµØÖ· */
         DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&USART1->DR);
-        /* ç¼“å­˜åŸºåœ°å€ */
+        /* »º´æ»ùµØÖ· */
         DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)Serialusart1.fifo_bufferA;
-        /* å†…å­˜ä½œä¸ºæ•°æ®ä¼ è¾“çš„æ¥æº */
+        /* ÄÚ´æ×÷ÎªÊı¾İ´«ÊäµÄÀ´Ô´ */
         DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
-        /* ç¼“å­˜å¤§å° */
+        /* »º´æ´óĞ¡ */
         DMA_InitStructure.DMA_BufferSize = 0;
-        /* å¤–è®¾åœ°å€å¯„å­˜å™¨ä¸å˜ */
+        /* ÍâÉèµØÖ·¼Ä´æÆ÷²»±ä */
         DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-        /* å†…å­˜åœ°å€å¯„å­˜å™¨é€’å¢ */
+        /* ÄÚ´æµØÖ·¼Ä´æÆ÷µİÔö */
         DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-        /* DMAæ•°æ®å®½åº¦8ä½ */
+        /* DMAÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-        /* å¤–è®¾æ•°æ®å®½åº¦8ä½ */
+        /* ÍâÉèÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-        /* å·¥ä½œåœ¨æ­£å¸¸ç¼“å­˜æ¨¡å¼ */
+        /* ¹¤×÷ÔÚÕı³£»º´æÄ£Ê½ */
         DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-        /* DMAé€šé“æ‹¥æœ‰ ä¸­ ä¼˜å…ˆçº§ */
+        /* DMAÍ¨µÀÓµÓĞ ÖĞ ÓÅÏÈ¼¶ */
         DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
-        /* DMAé€šé“æ²¡æœ‰è®¾ç½®ä¸ºå†…å­˜åˆ°å†…å­˜ä¼ è¾“ */
+        /* DMAÍ¨µÀÃ»ÓĞÉèÖÃÎªÄÚ´æµ½ÄÚ´æ´«Êä */
         DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-        /* åˆå§‹åŒ–è¯¥DMAé€šé“ */
+        /* ³õÊ¼»¯¸ÃDMAÍ¨µÀ */
         DMA_Init(DMA1_Channel4, &DMA_InitStructure);
         
         
-        /* ä½¿èƒ½ä¸²å£1 å‘é€ DMA */
+        /* Ê¹ÄÜ´®¿Ú1 ·¢ËÍ DMA */
         USART_DMACmd(USART1, USART_DMAReq_Tx, ENABLE);
-        /* ä½¿èƒ½ä¼ è¾“å®Œæˆä¸­æ–­*/
+        /* Ê¹ÄÜ´«ÊäÍê³ÉÖĞ¶Ï*/
         DMA_ITConfig(DMA1_Channel4, DMA_IT_TC,ENABLE);	       
 
-        Bsp_Usart_Nvic_Config(DMA1_Channel4_IRQn,USART1_DMA_PRI_T,0);// ä¸²å£1DMA-é€šé“
+        Bsp_Usart_Nvic_Config(DMA1_Channel4_IRQn,USART1_DMA_PRI_T,0);// ´®¿Ú1DMA-Í¨µÀ
     }
     else if(USARTx ==USART2)
     {
-        //-----------USART2_DMAæ¥æ”¶é…ç½®-------------------- 
+        //-----------USART2_DMA½ÓÊÕÅäÖÃ-------------------- 
         
-        /* ä½¿èƒ½DMA1æ—¶é’Ÿ */
+        /* Ê¹ÄÜDMA1Ê±ÖÓ */
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 
-        /* å°†DMA1é€šé“6é‡è®¾ä¸ºç¼ºçœå€¼ */
+        /* ½«DMA1Í¨µÀ6ÖØÉèÎªÈ±Ê¡Öµ */
         DMA_DeInit(DMA1_Channel6);
-        /* å¤–è®¾åŸºåœ°å€ */
+        /* ÍâÉè»ùµØÖ· */
         DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&USART2->DR);
-        /* ç¼“å­˜åŸºåœ°å€ */
+        /* »º´æ»ùµØÖ· */
         DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)COM2_Serial.fifo_bufferA;
-        /* å¤–è®¾ä½œä¸ºæ•°æ®ä¼ è¾“çš„æ¥æº */
+        /* ÍâÉè×÷ÎªÊı¾İ´«ÊäµÄÀ´Ô´ */
         DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-        /* ç¼“å­˜å¤§å° */
+        /* »º´æ´óĞ¡ */
         DMA_InitStructure.DMA_BufferSize = QUEUE_LENGTH;
-        /* å¤–è®¾åœ°å€å¯„å­˜å™¨ä¸å˜ */
+        /* ÍâÉèµØÖ·¼Ä´æÆ÷²»±ä */
         DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-        /* å†…å­˜åœ°å€å¯„å­˜å™¨é€’å¢ */
+        /* ÄÚ´æµØÖ·¼Ä´æÆ÷µİÔö */
         DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-        /* DMAæ•°æ®å®½åº¦8ä½ */
+        /* DMAÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-        /* å¤–è®¾æ•°æ®å®½åº¦8ä½ */
+        /* ÍâÉèÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-        /* å·¥ä½œåœ¨æ­£å¸¸ç¼“å­˜æ¨¡å¼ */
+        /* ¹¤×÷ÔÚÕı³£»º´æÄ£Ê½ */
         DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-        /* DMAé€šé“æ‹¥æœ‰-ä¼˜å…ˆçº§ */
+        /* DMAÍ¨µÀÓµÓĞ-ÓÅÏÈ¼¶ */
         DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
-        /* DMAé€šé“æ²¡æœ‰è®¾ç½®ä¸ºå†…å­˜åˆ°å†…å­˜ä¼ è¾“ */
+        /* DMAÍ¨µÀÃ»ÓĞÉèÖÃÎªÄÚ´æµ½ÄÚ´æ´«Êä */
         DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-        /* åˆå§‹åŒ–è¯¥DMAé€šé“ */
+        /* ³õÊ¼»¯¸ÃDMAÍ¨µÀ */
         DMA_Init(DMA1_Channel6, &DMA_InitStructure);
         
-        /* ä½¿èƒ½ä¸²å£1 æ¥æ”¶DMA */
+        /* Ê¹ÄÜ´®¿Ú1 ½ÓÊÕDMA */
         USART_DMACmd(USART2, USART_DMAReq_Rx, ENABLE);
-        /* ä½¿èƒ½ä¼ è¾“å®Œæˆä¸­æ–­*/
+        /* Ê¹ÄÜ´«ÊäÍê³ÉÖĞ¶Ï*/
         DMA_ITConfig(DMA1_Channel6, DMA_IT_TC,ENABLE);
         
-        Bsp_Usart_Nvic_Config(DMA1_Channel6_IRQn,USART2_DMA_PRI_R,0);// ä¸²å£2DMA-é€šé“
+        Bsp_Usart_Nvic_Config(DMA1_Channel6_IRQn,USART2_DMA_PRI_R,0);// ´®¿Ú2DMA-Í¨µÀ
         
-        /* ä½¿èƒ½è¯¥DMAé€šé“ */
+        /* Ê¹ÄÜ¸ÃDMAÍ¨µÀ */
         DMA_Cmd(DMA1_Channel6, ENABLE);
         
         
-        //-----------USART2_DMAå‘é€é…ç½®--------------------     
+        //-----------USART2_DMA·¢ËÍÅäÖÃ--------------------     
         
-        /* ä½¿èƒ½ä¸²å£2 æ¥æ”¶DMA */
+        /* Ê¹ÄÜ´®¿Ú2 ½ÓÊÕDMA */
         USART_DMACmd(USART2, USART_DMAReq_Rx, ENABLE);
         
-        /* ä½¿èƒ½DMA1æ—¶é’Ÿ */
+        /* Ê¹ÄÜDMA1Ê±ÖÓ */
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 
-        /* å°†DMA1é€šé“7é‡è®¾ä¸ºç¼ºçœå€¼ */
+        /* ½«DMA1Í¨µÀ7ÖØÉèÎªÈ±Ê¡Öµ */
         DMA_DeInit(DMA1_Channel7);
-        /* å¤–è®¾åŸºåœ°å€ */
+        /* ÍâÉè»ùµØÖ· */
         DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&USART2->DR);
-        /* ç¼“å­˜åŸºåœ°å€ */
+        /* »º´æ»ùµØÖ· */
         DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)Serialusart2.fifo_bufferA;
-        /* å†…å­˜ä½œä¸ºæ•°æ®ä¼ è¾“çš„æ¥æº */
+        /* ÄÚ´æ×÷ÎªÊı¾İ´«ÊäµÄÀ´Ô´ */
         DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
-        /* ç¼“å­˜å¤§å° */
+        /* »º´æ´óĞ¡ */
         DMA_InitStructure.DMA_BufferSize = 0;
-        /* å¤–è®¾åœ°å€å¯„å­˜å™¨ä¸å˜ */
+        /* ÍâÉèµØÖ·¼Ä´æÆ÷²»±ä */
         DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-        /* å†…å­˜åœ°å€å¯„å­˜å™¨é€’å¢ */
+        /* ÄÚ´æµØÖ·¼Ä´æÆ÷µİÔö */
         DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-        /* DMAæ•°æ®å®½åº¦8ä½ */
+        /* DMAÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-        /* å¤–è®¾æ•°æ®å®½åº¦8ä½ */
+        /* ÍâÉèÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-        /* å·¥ä½œåœ¨æ­£å¸¸ç¼“å­˜æ¨¡å¼ */
+        /* ¹¤×÷ÔÚÕı³£»º´æÄ£Ê½ */
         DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-        /* DMAé€šé“æ‹¥æœ‰ ä¸­ ä¼˜å…ˆçº§ */
+        /* DMAÍ¨µÀÓµÓĞ ÖĞ ÓÅÏÈ¼¶ */
         DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
-        /* DMAé€šé“æ²¡æœ‰è®¾ç½®ä¸ºå†…å­˜åˆ°å†…å­˜ä¼ è¾“ */
+        /* DMAÍ¨µÀÃ»ÓĞÉèÖÃÎªÄÚ´æµ½ÄÚ´æ´«Êä */
         DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-        /* åˆå§‹åŒ–è¯¥DMAé€šé“ */
+        /* ³õÊ¼»¯¸ÃDMAÍ¨µÀ */
         DMA_Init(DMA1_Channel7, &DMA_InitStructure);
         
 
-        /* ä½¿èƒ½ä¸²å£2 å‘é€ DMA */
+        /* Ê¹ÄÜ´®¿Ú2 ·¢ËÍ DMA */
         USART_DMACmd(USART2, USART_DMAReq_Tx, ENABLE);
-        /* ä½¿èƒ½ä¼ è¾“å®Œæˆä¸­æ–­*/
+        /* Ê¹ÄÜ´«ÊäÍê³ÉÖĞ¶Ï*/
         DMA_ITConfig(DMA1_Channel7, DMA_IT_TC,ENABLE);
         
-        Bsp_Usart_Nvic_Config(DMA1_Channel7_IRQn,USART2_DMA_PRI_T,0);// ä¸²å£2DMA-é€šé“
+        Bsp_Usart_Nvic_Config(DMA1_Channel7_IRQn,USART2_DMA_PRI_T,0);// ´®¿Ú2DMA-Í¨µÀ
     }
     else if(USARTx ==USART3)
     {
-        //-----------USART3_DMAæ¥æ”¶é…ç½®-------------------- 
+        //-----------USART3_DMA½ÓÊÕÅäÖÃ-------------------- 
         
-        /* ä½¿èƒ½DMA1æ—¶é’Ÿ */
+        /* Ê¹ÄÜDMA1Ê±ÖÓ */
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 
-        /* å°†DMA1é€šé“3é‡è®¾ä¸ºç¼ºçœå€¼ */
+        /* ½«DMA1Í¨µÀ3ÖØÉèÎªÈ±Ê¡Öµ */
         DMA_DeInit(DMA1_Channel3);
-        /* å¤–è®¾åŸºåœ°å€ */
+        /* ÍâÉè»ùµØÖ· */
         DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&USART3->DR);
-        /* ç¼“å­˜åŸºåœ°å€ */
+        /* »º´æ»ùµØÖ· */
         DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)COM3_Serial.fifo_bufferA;
-        /* å¤–è®¾ä½œä¸ºæ•°æ®ä¼ è¾“çš„æ¥æº */
+        /* ÍâÉè×÷ÎªÊı¾İ´«ÊäµÄÀ´Ô´ */
         DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-        /* ç¼“å­˜å¤§å° */
+        /* »º´æ´óĞ¡ */
         DMA_InitStructure.DMA_BufferSize = QUEUE_LENGTH;
-        /* å¤–è®¾åœ°å€å¯„å­˜å™¨ä¸å˜ */
+        /* ÍâÉèµØÖ·¼Ä´æÆ÷²»±ä */
         DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-        /* å†…å­˜åœ°å€å¯„å­˜å™¨é€’å¢ */
+        /* ÄÚ´æµØÖ·¼Ä´æÆ÷µİÔö */
         DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-        /* DMAæ•°æ®å®½åº¦8ä½ */
+        /* DMAÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-        /* å¤–è®¾æ•°æ®å®½åº¦8ä½ */
+        /* ÍâÉèÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-        /* å·¥ä½œåœ¨æ­£å¸¸ç¼“å­˜æ¨¡å¼ */
+        /* ¹¤×÷ÔÚÕı³£»º´æÄ£Ê½ */
         DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-        /* DMAé€šé“æ‹¥æœ‰--ä¼˜å…ˆçº§ */
+        /* DMAÍ¨µÀÓµÓĞ--ÓÅÏÈ¼¶ */
         DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
-        /* DMAé€šé“æ²¡æœ‰è®¾ç½®ä¸ºå†…å­˜åˆ°å†…å­˜ä¼ è¾“ */
+        /* DMAÍ¨µÀÃ»ÓĞÉèÖÃÎªÄÚ´æµ½ÄÚ´æ´«Êä */
         DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-        /* åˆå§‹åŒ–è¯¥DMAé€šé“ */
+        /* ³õÊ¼»¯¸ÃDMAÍ¨µÀ */
         DMA_Init(DMA1_Channel3, &DMA_InitStructure);
         
-        /* ä½¿èƒ½ä¸²å£3 æ¥æ”¶DMA */
+        /* Ê¹ÄÜ´®¿Ú3 ½ÓÊÕDMA */
         USART_DMACmd(USART3, USART_DMAReq_Rx, ENABLE);
-        /* ä½¿èƒ½ä¼ è¾“å®Œæˆä¸­æ–­*/
+        /* Ê¹ÄÜ´«ÊäÍê³ÉÖĞ¶Ï*/
         DMA_ITConfig(DMA1_Channel3, DMA_IT_TC,ENABLE);
         
-        Bsp_Usart_Nvic_Config(DMA1_Channel3_IRQn,USART4_DMA_PRI_R,0);// ä¸²å£3-DMA-é€šé“
+        Bsp_Usart_Nvic_Config(DMA1_Channel3_IRQn,USART4_DMA_PRI_R,0);// ´®¿Ú3-DMA-Í¨µÀ
         
-        /* ä½¿èƒ½è¯¥DMAé€šé“ */
+        /* Ê¹ÄÜ¸ÃDMAÍ¨µÀ */
         DMA_Cmd(DMA1_Channel3, ENABLE);
         
         
         
-        //-----------USART3_DMAå‘é€é…ç½®-------------------- 
+        //-----------USART3_DMA·¢ËÍÅäÖÃ-------------------- 
         
-        /* ä½¿èƒ½DMA1æ—¶é’Ÿ */
+        /* Ê¹ÄÜDMA1Ê±ÖÓ */
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 
-        /* å°†DMA1é€šé“2é‡è®¾ä¸ºç¼ºçœå€¼ */
+        /* ½«DMA1Í¨µÀ2ÖØÉèÎªÈ±Ê¡Öµ */
         DMA_DeInit(DMA1_Channel2);
-        /* å¤–è®¾åŸºåœ°å€ */
+        /* ÍâÉè»ùµØÖ· */
         DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&USART3->DR);
-        /* ç¼“å­˜åŸºåœ°å€ */
+        /* »º´æ»ùµØÖ· */
         DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)Serialusart3.fifo_bufferA;
-        /* å†…å­˜ä½œä¸ºæ•°æ®ä¼ è¾“çš„æ¥æº */
+        /* ÄÚ´æ×÷ÎªÊı¾İ´«ÊäµÄÀ´Ô´ */
         DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
-        /* ç¼“å­˜å¤§å° */
+        /* »º´æ´óĞ¡ */
         DMA_InitStructure.DMA_BufferSize = 0;
-        /* å¤–è®¾åœ°å€å¯„å­˜å™¨ä¸å˜ */
+        /* ÍâÉèµØÖ·¼Ä´æÆ÷²»±ä */
         DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-        /* å†…å­˜åœ°å€å¯„å­˜å™¨é€’å¢ */
+        /* ÄÚ´æµØÖ·¼Ä´æÆ÷µİÔö */
         DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-        /* DMAæ•°æ®å®½åº¦8ä½ */
+        /* DMAÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-        /* å¤–è®¾æ•°æ®å®½åº¦8ä½ */
+        /* ÍâÉèÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-        /* å·¥ä½œåœ¨æ­£å¸¸ç¼“å­˜æ¨¡å¼ */
+        /* ¹¤×÷ÔÚÕı³£»º´æÄ£Ê½ */
         DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-        /* DMAé€šé“æ‹¥æœ‰ ä¸­ ä¼˜å…ˆçº§ */
+        /* DMAÍ¨µÀÓµÓĞ ÖĞ ÓÅÏÈ¼¶ */
         DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
-        /* DMAé€šé“æ²¡æœ‰è®¾ç½®ä¸ºå†…å­˜åˆ°å†…å­˜ä¼ è¾“ */
+        /* DMAÍ¨µÀÃ»ÓĞÉèÖÃÎªÄÚ´æµ½ÄÚ´æ´«Êä */
         DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-        /* åˆå§‹åŒ–è¯¥DMAé€šé“ */
+        /* ³õÊ¼»¯¸ÃDMAÍ¨µÀ */
         DMA_Init(DMA1_Channel2, &DMA_InitStructure);
         
-        /* ä½¿èƒ½ä¸²å£3 å‘é€ DMA */
+        /* Ê¹ÄÜ´®¿Ú3 ·¢ËÍ DMA */
         USART_DMACmd(USART3, USART_DMAReq_Tx, ENABLE);
         
-        /* ä½¿èƒ½ä¼ è¾“å®Œæˆä¸­æ–­*/
+        /* Ê¹ÄÜ´«ÊäÍê³ÉÖĞ¶Ï*/
         DMA_ITConfig(DMA1_Channel2, DMA_IT_TC,ENABLE);
-        /* ä¸²å£3-DMA1_Channel2_IRQn-é€šé“ */
+        /* ´®¿Ú3-DMA1_Channel2_IRQn-Í¨µÀ */
         Bsp_Usart_Nvic_Config(DMA1_Channel2_IRQn,USART3_DMA_PRI_T,0);
     }
     else if(USARTx ==UART4)
     {
-        //-----------UART4_DMAæ¥æ”¶é…ç½®-------------------- 
-        /* ä½¿èƒ½DMA2æ—¶é’Ÿ */
+        //-----------UART4_DMA½ÓÊÕÅäÖÃ-------------------- 
+        /* Ê¹ÄÜDMA2Ê±ÖÓ */
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE);
         
-        /* å°†DMA2é€šé“3é‡è®¾ä¸ºç¼ºçœå€¼ */
+        /* ½«DMA2Í¨µÀ3ÖØÉèÎªÈ±Ê¡Öµ */
         DMA_DeInit(DMA2_Channel3);       
-        /* å¤–è®¾åŸºåœ°å€ */
+        /* ÍâÉè»ùµØÖ· */
         DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&UART4->DR);
-        /* ç¼“å­˜åŸºåœ°å€ */
+        /* »º´æ»ùµØÖ· */
         DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)COM4_Serial.fifo_bufferA;
-        /* å¤–è®¾ä½œä¸ºæ•°æ®ä¼ è¾“çš„æ¥æº */
+        /* ÍâÉè×÷ÎªÊı¾İ´«ÊäµÄÀ´Ô´ */
         DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-        /* ç¼“å­˜å¤§å° */
+        /* »º´æ´óĞ¡ */
         DMA_InitStructure.DMA_BufferSize = QUEUE_LENGTH;
-        /* å¤–è®¾åœ°å€å¯„å­˜å™¨ä¸å˜ */
+        /* ÍâÉèµØÖ·¼Ä´æÆ÷²»±ä */
         DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-        /* å†…å­˜åœ°å€å¯„å­˜å™¨é€’å¢ */
+        /* ÄÚ´æµØÖ·¼Ä´æÆ÷µİÔö */
         DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-        /* DMAæ•°æ®å®½åº¦8ä½ */
+        /* DMAÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-        /* å¤–è®¾æ•°æ®å®½åº¦8ä½ */
+        /* ÍâÉèÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-        /* å·¥ä½œåœ¨æ­£å¸¸ç¼“å­˜æ¨¡å¼ */
+        /* ¹¤×÷ÔÚÕı³£»º´æÄ£Ê½ */
         DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-        /* DMAé€šé“æ‹¥æœ‰-ä¼˜å…ˆçº§ */
+        /* DMAÍ¨µÀÓµÓĞ-ÓÅÏÈ¼¶ */
         DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
-        /* DMAé€šé“æ²¡æœ‰è®¾ç½®ä¸ºå†…å­˜åˆ°å†…å­˜ä¼ è¾“ */
+        /* DMAÍ¨µÀÃ»ÓĞÉèÖÃÎªÄÚ´æµ½ÄÚ´æ´«Êä */
         DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-        /* åˆå§‹åŒ–è¯¥DMAé€šé“ */
+        /* ³õÊ¼»¯¸ÃDMAÍ¨µÀ */
         DMA_Init(DMA2_Channel3, &DMA_InitStructure);
         
-        /* ä½¿èƒ½ä¸²å£4 æ¥æ”¶DMA */
+        /* Ê¹ÄÜ´®¿Ú4 ½ÓÊÕDMA */
         USART_DMACmd(UART4, USART_DMAReq_Rx, ENABLE);
-        /* ä½¿èƒ½ä¼ è¾“å®Œæˆä¸­æ–­*/
+        /* Ê¹ÄÜ´«ÊäÍê³ÉÖĞ¶Ï*/
         DMA_ITConfig(DMA2_Channel3, DMA_IT_TC,ENABLE);
         
-        /* ä¸²å£4DMA-é€šé“ */
+        /* ´®¿Ú4DMA-Í¨µÀ */
         Bsp_Usart_Nvic_Config(DMA2_Channel3_IRQn,USART4_DMA_PRI_R,0);
         
-        /* ä½¿èƒ½è¯¥DMAé€šé“ */
+        /* Ê¹ÄÜ¸ÃDMAÍ¨µÀ */
         DMA_Cmd(DMA2_Channel3, ENABLE);
         
         
         
-        //-----------UART4_DMAå‘é€é…ç½®-------------------- 
+        //-----------UART4_DMA·¢ËÍÅäÖÃ-------------------- 
         
-        /* ä½¿èƒ½DMA2æ—¶é’Ÿ */
+        /* Ê¹ÄÜDMA2Ê±ÖÓ */
         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE);
 
-        /* å°†DMA2é€šé“5é‡è®¾ä¸ºç¼ºçœå€¼ */
+        /* ½«DMA2Í¨µÀ5ÖØÉèÎªÈ±Ê¡Öµ */
         DMA_DeInit(DMA2_Channel5);
-        /* å¤–è®¾åŸºåœ°å€ */
+        /* ÍâÉè»ùµØÖ· */
         DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&UART4->DR);
-        /* ç¼“å­˜åŸºåœ°å€ */
+        /* »º´æ»ùµØÖ· */
         DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)Serialusart4.fifo_bufferA;
-        /* å†…å­˜ä½œä¸ºæ•°æ®ä¼ è¾“çš„æ¥æº */
+        /* ÄÚ´æ×÷ÎªÊı¾İ´«ÊäµÄÀ´Ô´ */
         DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
-        /* ç¼“å­˜å¤§å° */
+        /* »º´æ´óĞ¡ */
         DMA_InitStructure.DMA_BufferSize = 0;
-        /* å¤–è®¾åœ°å€å¯„å­˜å™¨ä¸å˜ */
+        /* ÍâÉèµØÖ·¼Ä´æÆ÷²»±ä */
         DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-        /* å†…å­˜åœ°å€å¯„å­˜å™¨é€’å¢ */
+        /* ÄÚ´æµØÖ·¼Ä´æÆ÷µİÔö */
         DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-        /* DMAæ•°æ®å®½åº¦8ä½ */
+        /* DMAÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-        /* å¤–è®¾æ•°æ®å®½åº¦8ä½ */
+        /* ÍâÉèÊı¾İ¿í¶È8Î» */
         DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-        /* å·¥ä½œåœ¨æ­£å¸¸ç¼“å­˜æ¨¡å¼ */
+        /* ¹¤×÷ÔÚÕı³£»º´æÄ£Ê½ */
         DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-        /* DMAé€šé“æ‹¥æœ‰ ä¸­ ä¼˜å…ˆçº§ */
+        /* DMAÍ¨µÀÓµÓĞ ÖĞ ÓÅÏÈ¼¶ */
         DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
-        /* DMAé€šé“æ²¡æœ‰è®¾ç½®ä¸ºå†…å­˜åˆ°å†…å­˜ä¼ è¾“ */
+        /* DMAÍ¨µÀÃ»ÓĞÉèÖÃÎªÄÚ´æµ½ÄÚ´æ´«Êä */
         DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-        /* åˆå§‹åŒ–è¯¥DMAé€šé“ */
+        /* ³õÊ¼»¯¸ÃDMAÍ¨µÀ */
         DMA_Init(DMA2_Channel5, &DMA_InitStructure);
 
-        /* ä½¿èƒ½ä¸²å£4 å‘é€ DMA */
+        /* Ê¹ÄÜ´®¿Ú4 ·¢ËÍ DMA */
         USART_DMACmd(UART4, USART_DMAReq_Tx, ENABLE);
-        /* ä½¿èƒ½ä¼ è¾“å®Œæˆä¸­æ–­   */
+        /* Ê¹ÄÜ´«ÊäÍê³ÉÖĞ¶Ï   */
         DMA_ITConfig(DMA2_Channel5, DMA_IT_TC,ENABLE);
         
-        /* ä¸²å£4 DMA2_Channel4_5_IRQn é€šé“*/
+        /* ´®¿Ú4 DMA2_Channel4_5_IRQn Í¨µÀ*/
         Bsp_Usart_Nvic_Config(DMA2_Channel4_5_IRQn,USART4_DMA_PRI_T,0);
         
     }
     else if(USARTx ==UART5)
     {
-        /* ä¸²å£5   UART5_IRQn é€šé“  */
+        /* ´®¿Ú5   UART5_IRQn Í¨µÀ  */
         Bsp_Usart_Nvic_Config(UART5_IRQn,USART5_ISR_PRI,0);    
-        /* ä½¿èƒ½ä¸²å£5  USART_IT_RXNE */
+        /* Ê¹ÄÜ´®¿Ú5  USART_IT_RXNE */
         USART_ITConfig(UART5, USART_IT_RXNE, ENABLE);
     }
 }
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: dmaå‘é€é€šé“-è®¾ç½®åœ°å€å’Œæ•°æ®é•¿åº¦ï¼ˆDMAå‘é€é‡æ–°é…ç½®ï¼‰
-  * DMA_CHx:   DMAé€šé“
-  * cmar:  å­˜å‚¨åœ°å€
-  * len:   æ•°æ®é•¿åº¦
-  * è¯´    æ˜: ä¸²å£5æ— DMA
+  * º¯Êı¹¦ÄÜ: dma·¢ËÍÍ¨µÀ-ÉèÖÃµØÖ·ºÍÊı¾İ³¤¶È£¨DMA·¢ËÍÖØĞÂÅäÖÃ£©
+  * DMA_CHx:   DMAÍ¨µÀ
+  * cmar:  ´æ´¢µØÖ·
+  * len:   Êı¾İ³¤¶È
+  * Ëµ    Ã÷: ´®¿Ú5ÎŞDMA
   */
 static void Bsp_Usart_Dma_Send_Config(DMA_Channel_TypeDef *DMA_CHx ,u32 cmar, u16 len)
 { 
-	DMA_Cmd(DMA_CHx, DISABLE );  //å…³é—­USARTTX DMAæ‰€æŒ‡ç¤ºçš„é€šé“ 
-  // while (DMA_GetCmdStatus(DMA_CHx) != DISABLE){}	//ç¡®ä¿DMAå¯ä»¥è¢«è®¾ç½®  
-	DMA_CHx->CMAR=(u32)cmar;     //DMA,å­˜å‚¨å™¨0åœ°å€	
-    DMA_CHx->CNDTR= len;          //DMAä¼ è¾“é¡¹ä¸ªæ•°
+	DMA_Cmd(DMA_CHx, DISABLE );  //¹Ø±ÕUSARTTX DMAËùÖ¸Ê¾µÄÍ¨µÀ 
+  // while (DMA_GetCmdStatus(DMA_CHx) != DISABLE){}	//È·±£DMA¿ÉÒÔ±»ÉèÖÃ  
+	DMA_CHx->CMAR=(u32)cmar;     //DMA,´æ´¢Æ÷0µØÖ·	
+    DMA_CHx->CNDTR= len;          //DMA´«ÊäÏî¸öÊı
   
-	DMA_Cmd(DMA_CHx, ENABLE);   //ä½¿èƒ½USARTTX DMAæ‰€æŒ‡ç¤ºçš„é€šé“ 
+	DMA_Cmd(DMA_CHx, ENABLE);   //Ê¹ÄÜUSARTTX DMAËùÖ¸Ê¾µÄÍ¨µÀ 
 }
 /***************************************************************************************
-*å‡½æ•°åŠŸèƒ½: dmaæ¥æ”¶é€šé“-è®¾ç½®åœ°å€å’Œæ•°æ®é•¿åº¦ï¼ˆDMAæ¥æ”¶é‡æ–°é…ç½®ï¼‰
-*åŠŸ    èƒ½: DMAæ¥æ”¶é‡æ–°é…ç½®
-*å‚    æ•°: DMA_CHx:DMAé€šé“CHx
-           cmar:å†…å­˜åœ°å€
+*º¯Êı¹¦ÄÜ: dma½ÓÊÕÍ¨µÀ-ÉèÖÃµØÖ·ºÍÊı¾İ³¤¶È£¨DMA½ÓÊÕÖØĞÂÅäÖÃ£©
+*¹¦    ÄÜ: DMA½ÓÊÕÖØĞÂÅäÖÃ
+*²Î    Êı: DMA_CHx:DMAÍ¨µÀCHx
+           cmar:ÄÚ´æµØÖ·
 ****************************************************************************************/
 static void Bsp_Usart_Dma_Recv_Config(DMA_Channel_TypeDef *DMA_CHx ,u32 cmar)
 { 
-	DMA_Cmd(DMA_CHx, DISABLE);                              //å…³é—­USARTTX DMAæ‰€æŒ‡ç¤ºçš„é€šé“ 
+	DMA_Cmd(DMA_CHx, DISABLE);                              //¹Ø±ÕUSARTTX DMAËùÖ¸Ê¾µÄÍ¨µÀ 
 
-	DMA_CHx->CMAR=(u32)cmar;                                //DMA, å­˜å‚¨å™¨åœ°å€	
-    DMA_CHx->CNDTR=USART_REC_LEN;                           //DMA, æ¥æ”¶å­—èŠ‚æ•°
-	DMA_Cmd(DMA_CHx, ENABLE);                               //ä½¿èƒ½USARTTX DMAæ‰€æŒ‡ç¤ºçš„é€šé“ 
+	DMA_CHx->CMAR=(u32)cmar;                                //DMA, ´æ´¢Æ÷µØÖ·	
+    DMA_CHx->CNDTR=USART_REC_LEN;                           //DMA, ½ÓÊÕ×Ö½ÚÊı
+	DMA_Cmd(DMA_CHx, ENABLE);                               //Ê¹ÄÜUSARTTX DMAËùÖ¸Ê¾µÄÍ¨µÀ 
 }
 
 /**
-  * å‡½æ•°åŠŸèƒ½: å†™æ•°æ®åˆ°FIFOé˜Ÿåˆ—
-  * QUEUE_com:  å‘é€ç»“æ„ä½“
-  * buffer:    å†™å…¥æ•°æ®åœ°å€
-  * len:        å†™å…¥æ•°æ®é•¿åº¦
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: 
+  * º¯Êı¹¦ÄÜ: Ğ´Êı¾İµ½FIFO¶ÓÁĞ
+  * QUEUE_com:  ·¢ËÍ½á¹¹Ìå
+  * buffer:    Ğ´ÈëÊı¾İµØÖ·
+  * len:        Ğ´ÈëÊı¾İ³¤¶È
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: 
   */
 static void Bsp_Usart_WriteFIFO_Buffer(QUEUE *QUEUE_com,u8 *buffer,u16 len)
 {
@@ -498,13 +498,13 @@ static void Bsp_Usart_WriteFIFO_Buffer(QUEUE *QUEUE_com,u8 *buffer,u16 len)
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£ç«¯å£ç¡¬ä»¶åˆå§‹åŒ–
-  * USARTx: æŒ‡å®šä¸²å£å·
-  * baud_rateï¼šæ³¢ç‰¹ç‡
-  * wordlengthï¼šæ•°æ®å®½åº¦
-  * parityï¼šæ ¡éªŒä½
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: 
+  * º¯Êı¹¦ÄÜ: ´®¿Ú¶Ë¿ÚÓ²¼ş³õÊ¼»¯
+  * USARTx: Ö¸¶¨´®¿ÚºÅ
+  * baud_rate£º²¨ÌØÂÊ
+  * wordlength£ºÊı¾İ¿í¶È
+  * parity£ºĞ£ÑéÎ»
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: 
   */
 void Bsp_Usart_Config_Init(USART_TypeDef* USARTx,u32 baud_rate,u16 wordlength,u16 parity)
 {
@@ -512,151 +512,151 @@ void Bsp_Usart_Config_Init(USART_TypeDef* USARTx,u32 baud_rate,u16 wordlength,u1
 	USART_InitTypeDef USART_InitStructure;
 
     
-    /* ä½¿èƒ½ä¸²å£GPIOxæ—¶é’Ÿ*/
+    /* Ê¹ÄÜ´®¿ÚGPIOxÊ±ÖÓ*/
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);   
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	   
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);	    
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);	 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);       // ä½¿èƒ½æ˜ å°„IOæ—¶é’Ÿ	
-    /*  ä¸²å£-GPIOé…ç½®---*/
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);       // Ê¹ÄÜÓ³ÉäIOÊ±ÖÓ	
+    /*  ´®¿Ú-GPIOÅäÖÃ---*/
     if(USARTx == USART1)
     {
-        RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);  // ä½¿èƒ½ä¸²å£æ—¶é’Ÿ	
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);  // Ê¹ÄÜ´®¿ÚÊ±ÖÓ	
         
-        //-----------------USART1 GIPD é…ç½®--------------------------- 
+        //-----------------USART1 GIPD ÅäÖÃ--------------------------- 
         
-        /* è®¾ç½®RXä¸ºå¤ç”¨æ¨æŒ½è¾“å‡º */
+        /* ÉèÖÃRXÎª¸´ÓÃÍÆÍìÊä³ö */
         GPIO_InitStructure.GPIO_Pin = USART1_TX_PIN;   
         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;  
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  
         GPIO_Init(USART1_TX_PIN_GPIO, &GPIO_InitStructure);
 
-        /* è®¾ç½®RXä¸ºæµ®ç©ºè¾“å…¥ */
+        /* ÉèÖÃRXÎª¸¡¿ÕÊäÈë */
         GPIO_InitStructure.GPIO_Pin = USART1_RX_PIN;   
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;  
         GPIO_Init(USART1_RX_PIN_GPIO, &GPIO_InitStructure);
         
-        FIFO_BuffInit(&COM1_Serial);                            // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-æ¥æ”¶
-        FIFO_BuffInit(&Serialusart1);                           // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-å‘é€
+        FIFO_BuffInit(&COM1_Serial);                            // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-½ÓÊÕ
+        FIFO_BuffInit(&Serialusart1);                           // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-·¢ËÍ
     }
     else if(USARTx == USART2)
     {
         RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2,ENABLE); 
-        //-----------------USART2 GIPD é…ç½®--------------------------- 
+        //-----------------USART2 GIPD ÅäÖÃ--------------------------- 
 		
-		GPIO_PinRemapConfig(GPIO_Remap_USART2,ENABLE);		    // é…ç½®éƒ¨åˆ†æ˜ å°„
+		GPIO_PinRemapConfig(GPIO_Remap_USART2,ENABLE);		    // ÅäÖÃ²¿·ÖÓ³Éä
 		
-        /* è®¾ç½®RXä¸ºå¤ç”¨æ¨æŒ½è¾“å‡º */
+        /* ÉèÖÃRXÎª¸´ÓÃÍÆÍìÊä³ö */
         GPIO_InitStructure.GPIO_Pin = USART2_TX_PIN;   
         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;  
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  
         GPIO_Init(USART2_TX_PIN_GPIO, &GPIO_InitStructure);
 
-        /* è®¾ç½®RXä¸ºæµ®ç©ºè¾“å…¥ */
+        /* ÉèÖÃRXÎª¸¡¿ÕÊäÈë */
         GPIO_InitStructure.GPIO_Pin = USART2_RX_PIN;   
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;  
         GPIO_Init(USART2_RX_PIN_GPIO, &GPIO_InitStructure);
         
-        FIFO_BuffInit(&COM2_Serial);                            // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-æ¥æ”¶
-        FIFO_BuffInit(&Serialusart2);                           // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-å‘é€
+        FIFO_BuffInit(&COM2_Serial);                            // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-½ÓÊÕ
+        FIFO_BuffInit(&Serialusart2);                           // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-·¢ËÍ
     }
     else if(USARTx == USART3)
     {
         RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3,ENABLE);	    
-        //-----------------USART3 GIPD é…ç½®--------------------------- 
-        GPIO_PinRemapConfig(GPIO_FullRemap_USART3,ENABLE);		// é…ç½®å®Œå…¨æ˜ å°„
+        //-----------------USART3 GIPD ÅäÖÃ--------------------------- 
+        GPIO_PinRemapConfig(GPIO_FullRemap_USART3,ENABLE);		// ÅäÖÃÍêÈ«Ó³Éä
 		
-        /* è®¾ç½®RXä¸ºå¤ç”¨æ¨æŒ½è¾“å‡º */
+        /* ÉèÖÃRXÎª¸´ÓÃÍÆÍìÊä³ö */
         GPIO_InitStructure.GPIO_Pin = USART3_TX_PIN;   
         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;  
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  
         GPIO_Init(USART3_TX_PIN_GPIO, &GPIO_InitStructure);
 
-        /* è®¾ç½®RXä¸ºæµ®ç©ºè¾“å…¥ */
+        /* ÉèÖÃRXÎª¸¡¿ÕÊäÈë */
         GPIO_InitStructure.GPIO_Pin = USART3_RX_PIN;   
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;  
         GPIO_Init(USART3_RX_PIN_GPIO, &GPIO_InitStructure);
         
-        FIFO_BuffInit(&COM3_Serial);                            // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-æ¥æ”¶
-        FIFO_BuffInit(&Serialusart3);                           // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-å‘é€
+        FIFO_BuffInit(&COM3_Serial);                            // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-½ÓÊÕ
+        FIFO_BuffInit(&Serialusart3);                           // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-·¢ËÍ
     }
     else if(USARTx == UART4)
     {
         RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);      
     
-        //-----------------UART4 GIOPD é…ç½®--------------------------- 
+        //-----------------UART4 GIOPD ÅäÖÃ--------------------------- 
         
-        /* è®¾ç½®RXä¸ºå¤ç”¨æ¨æŒ½è¾“å‡º */
+        /* ÉèÖÃRXÎª¸´ÓÃÍÆÍìÊä³ö */
         GPIO_InitStructure.GPIO_Pin = UART4_TX_PIN;   
         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;  
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  
         GPIO_Init(UART4_TX_PIN_GPIO, &GPIO_InitStructure);
 
-        /* è®¾ç½®RXä¸ºæµ®ç©ºè¾“å…¥ */
+        /* ÉèÖÃRXÎª¸¡¿ÕÊäÈë */
         GPIO_InitStructure.GPIO_Pin = UART4_RX_PIN;   
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;  
         GPIO_Init(UART4_RX_PIN_GPIO, &GPIO_InitStructure);
         
-        FIFO_BuffInit(&COM4_Serial);                            // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-æ¥æ”¶
-        FIFO_BuffInit(&Serialusart4);                           // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-å‘é€
+        FIFO_BuffInit(&COM4_Serial);                            // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-½ÓÊÕ
+        FIFO_BuffInit(&Serialusart4);                           // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-·¢ËÍ
     }
     else if(USARTx == UART5)
     {
         RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
         
-        //-----------------UART5 GIPD é…ç½®--------------------------- 
-        /* è®¾ç½®RXä¸ºå¤ç”¨æ¨æŒ½è¾“å‡º */
+        //-----------------UART5 GIPD ÅäÖÃ--------------------------- 
+        /* ÉèÖÃRXÎª¸´ÓÃÍÆÍìÊä³ö */
         GPIO_InitStructure.GPIO_Pin = UART5_TX_PIN;   
         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;  
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  
         GPIO_Init(UART5_TX_PIN_GPIO, &GPIO_InitStructure);
 
-        /* è®¾ç½®RXä¸ºæµ®ç©ºè¾“å…¥ */
+        /* ÉèÖÃRXÎª¸¡¿ÕÊäÈë */
         GPIO_InitStructure.GPIO_Pin = UART5_RX_PIN;   
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;  
         GPIO_Init(UART5_RX_PIN_GPIO, &GPIO_InitStructure);
         
-        FIFO_BuffInit(&COM5_Serial);                        // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-æ¥æ”¶
-        FIFO_BuffInit(&Serialusart5);                       // åˆå§‹åŒ–å¾ªç¯é˜Ÿåˆ—-å‘é€
+        FIFO_BuffInit(&COM5_Serial);                        // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-½ÓÊÕ
+        FIFO_BuffInit(&Serialusart5);                       // ³õÊ¼»¯Ñ­»·¶ÓÁĞ-·¢ËÍ
     }
     else
     {
         return;
     }
     
-    /*  USART åˆå§‹åŒ–è®¾ç½®  */
-	USART_InitStructure.USART_BaudRate = baud_rate;         //ä¸²å£æ³¢ç‰¹ç‡
-	USART_InitStructure.USART_WordLength = wordlength;      //å­—é•¿ä¸º8ä½æ•°æ®æ ¼å¼
-	USART_InitStructure.USART_StopBits = USART_StopBits_1;  //ä¸€ä¸ªåœæ­¢ä½
-	USART_InitStructure.USART_Parity = parity;              //æ— å¥‡å¶æ ¡éªŒä½
-                                                            //æ— ç¡¬ä»¶æ•°æ®æµæ§åˆ¶
+    /*  USART ³õÊ¼»¯ÉèÖÃ  */
+	USART_InitStructure.USART_BaudRate = baud_rate;         //´®¿Ú²¨ÌØÂÊ
+	USART_InitStructure.USART_WordLength = wordlength;      //×Ö³¤Îª8Î»Êı¾İ¸ñÊ½
+	USART_InitStructure.USART_StopBits = USART_StopBits_1;  //Ò»¸öÍ£Ö¹Î»
+	USART_InitStructure.USART_Parity = parity;              //ÎŞÆæÅ¼Ğ£ÑéÎ»
+                                                            //ÎŞÓ²¼şÊı¾İÁ÷¿ØÖÆ
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-                                                            //æ”¶å‘æ¨¡å¼
+                                                            //ÊÕ·¢Ä£Ê½
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;	
 	
-	USART_Init(USARTx, &USART_InitStructure);               //åˆå§‹åŒ–ä¸²å£x
+	USART_Init(USARTx, &USART_InitStructure);               //³õÊ¼»¯´®¿Úx
     
 	
-	/* æ¸…é™¤ç©ºé—²ä¸­æ–­æŒ‚èµ· */
+	/* Çå³ı¿ÕÏĞÖĞ¶Ï¹ÒÆğ */
 	USART_ClearITPendingBit(USARTx, USART_IT_RXNE | USART_IT_IDLE | USART_IT_TC);
     
-    Bsp_Usart_DMA_Config(USARTx);                           // DMAé…ç½®
+    Bsp_Usart_DMA_Config(USARTx);                           // DMAÅäÖÃ
     
     
-    /* æ¸…é™¤ ä¸­æ–­  */
+    /* Çå³ı ÖĞ¶Ï  */
     USART_ClearITPendingBit(USARTx, USART_IT_TC);
     USART_ClearFlag(USARTx, USART_FLAG_TC);
     
-    /* ç¦æ­¢ä¸²å£å‘é€å®Œæˆä¸­æ–­ */
+    /* ½ûÖ¹´®¿Ú·¢ËÍÍê³ÉÖĞ¶Ï */
     USART_ITConfig(USARTx,USART_IT_TC, DISABLE);            // ENABLE,DISABLE
     
-    USART_Cmd(USARTx, ENABLE);                              //ä½¿èƒ½ä¸²å£x
+    USART_Cmd(USARTx, ENABLE);                              //Ê¹ÄÜ´®¿Úx
 } 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£è‡ªåŠ¨å‘é€åŠ è½½
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: å¾ªç¯é˜Ÿåˆ—-åŒç¼“å­˜å‘é€
+  * º¯Êı¹¦ÄÜ: ´®¿Ú×Ô¶¯·¢ËÍ¼ÓÔØ
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: Ñ­»·¶ÓÁĞ-Ë«»º´æ·¢ËÍ
   */
 void Bsp_Uart_Dma_SendCheck(void)
 {
@@ -667,12 +667,12 @@ void Bsp_Uart_Dma_SendCheck(void)
 			Serialusart1.send_lock = 1;
 			if (Serialusart1.FIFO_buffer_status == 0)
 			{
-                Bsp_Usart_Dma_Send_Config(DMA1_Channel4,(u32)Serialusart1.fifo_bufferA,Serialusart1.RecLen);//é‡æ–°å¯åŠ¨DMA				
+                Bsp_Usart_Dma_Send_Config(DMA1_Channel4,(u32)Serialusart1.fifo_bufferA,Serialusart1.RecLen);//ÖØĞÂÆô¶¯DMA				
 				Serialusart1.FIFO_buffer_status = 1;
 			}
 			else if (Serialusart1.FIFO_buffer_status == 1)
 			{
-				Bsp_Usart_Dma_Send_Config(DMA1_Channel4,(u32)Serialusart1.fifo_bufferB,Serialusart1.RecLen);//é‡æ–°å¯åŠ¨DMA		
+				Bsp_Usart_Dma_Send_Config(DMA1_Channel4,(u32)Serialusart1.fifo_bufferB,Serialusart1.RecLen);//ÖØĞÂÆô¶¯DMA		
 				Serialusart1.FIFO_buffer_status = 0;
 			}
 			
@@ -687,12 +687,12 @@ void Bsp_Uart_Dma_SendCheck(void)
 			Serialusart2.send_lock = 1;
 			if (Serialusart2.FIFO_buffer_status == 0)
 			{
-				Bsp_Usart_Dma_Send_Config(DMA1_Channel7,(u32)Serialusart2.fifo_bufferA,Serialusart2.RecLen);//é‡æ–°å¯åŠ¨DMA
+				Bsp_Usart_Dma_Send_Config(DMA1_Channel7,(u32)Serialusart2.fifo_bufferA,Serialusart2.RecLen);//ÖØĞÂÆô¶¯DMA
 				Serialusart2.FIFO_buffer_status = 1;
 			}
 			else if (Serialusart2.FIFO_buffer_status == 1)
 			{
-				Bsp_Usart_Dma_Send_Config(DMA1_Channel7,(u32)Serialusart2.fifo_bufferB,Serialusart2.RecLen);//é‡æ–°å¯åŠ¨DMA	
+				Bsp_Usart_Dma_Send_Config(DMA1_Channel7,(u32)Serialusart2.fifo_bufferB,Serialusart2.RecLen);//ÖØĞÂÆô¶¯DMA	
 				Serialusart2.FIFO_buffer_status = 0;
 			}
 			
@@ -707,12 +707,12 @@ void Bsp_Uart_Dma_SendCheck(void)
 			Serialusart3.send_lock = 1;
 			if (Serialusart3.FIFO_buffer_status == 0)
 			{
-				Bsp_Usart_Dma_Send_Config(DMA1_Channel2,(u32)Serialusart3.fifo_bufferA,Serialusart3.RecLen);//é‡æ–°å¯åŠ¨DMA
+				Bsp_Usart_Dma_Send_Config(DMA1_Channel2,(u32)Serialusart3.fifo_bufferA,Serialusart3.RecLen);//ÖØĞÂÆô¶¯DMA
 				Serialusart3.FIFO_buffer_status = 1;
 			}
 			else if (Serialusart3.FIFO_buffer_status == 1)
 			{
-				Bsp_Usart_Dma_Send_Config(DMA1_Channel2,(u32)Serialusart3.fifo_bufferB,Serialusart3.RecLen);//é‡æ–°å¯åŠ¨DMA
+				Bsp_Usart_Dma_Send_Config(DMA1_Channel2,(u32)Serialusart3.fifo_bufferB,Serialusart3.RecLen);//ÖØĞÂÆô¶¯DMA
 				Serialusart3.FIFO_buffer_status = 0;
 			}
 			
@@ -727,12 +727,12 @@ void Bsp_Uart_Dma_SendCheck(void)
 			Serialusart4.send_lock = 1;
 			if (Serialusart4.FIFO_buffer_status == 0)
 			{
-				Bsp_Usart_Dma_Send_Config(DMA2_Channel5,(u32)Serialusart4.fifo_bufferA,Serialusart4.RecLen);//é‡æ–°å¯åŠ¨DMA
+				Bsp_Usart_Dma_Send_Config(DMA2_Channel5,(u32)Serialusart4.fifo_bufferA,Serialusart4.RecLen);//ÖØĞÂÆô¶¯DMA
 				Serialusart4.FIFO_buffer_status = 1;
 			}
 			else if (Serialusart4.FIFO_buffer_status == 1)
 			{
-				Bsp_Usart_Dma_Send_Config(DMA2_Channel5,(u32)Serialusart4.fifo_bufferB,Serialusart4.RecLen);//é‡æ–°å¯åŠ¨DMA
+				Bsp_Usart_Dma_Send_Config(DMA2_Channel5,(u32)Serialusart4.fifo_bufferB,Serialusart4.RecLen);//ÖØĞÂÆô¶¯DMA
 				Serialusart4.FIFO_buffer_status = 0;
 			}
 			
@@ -743,12 +743,12 @@ void Bsp_Uart_Dma_SendCheck(void)
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ç”¨æˆ·å‘é€ä¸²å£æ•°æ®
-  * USARTx:   æŒ‡å®šä¸²å£
-  * data:     å†™å…¥æ•°æ®åœ°å€
-  * len:      å†™å…¥æ•°æ®é•¿åº¦
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: å¾ªç¯é˜Ÿåˆ—-åŒç¼“å­˜å‘é€
+  * º¯Êı¹¦ÄÜ: ÓÃ»§·¢ËÍ´®¿ÚÊı¾İ
+  * USARTx:   Ö¸¶¨´®¿Ú
+  * data:     Ğ´ÈëÊı¾İµØÖ·
+  * len:      Ğ´ÈëÊı¾İ³¤¶È
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: Ñ­»·¶ÓÁĞ-Ë«»º´æ·¢ËÍ
   */
 void Bsp_Usart_Usr_SendArray(USART_TypeDef* USARTx, u8 *data, u16 len)
 {	
@@ -782,42 +782,42 @@ void Bsp_Usart_Usr_SendArray(USART_TypeDef* USARTx, u8 *data, u16 len)
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£1-DMAæ¥æ”¶ä¸­æ–­
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: DMA1_Channel5
+  * º¯Êı¹¦ÄÜ: ´®¿Ú1-DMA½ÓÊÕÖĞ¶Ï
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: DMA1_Channel5
   */
 void DMA1_Channel5_IRQHandler(void)
 {
       if(DMA_GetFlagStatus(DMA1_FLAG_TC5))     
 	  { 	
-          DMA_ClearFlag(DMA1_FLAG_TC5);                     //æ¸…é™¤å®Œæˆæ ‡å¿—
+          DMA_ClearFlag(DMA1_FLAG_TC5);                     //Çå³ıÍê³É±êÖ¾
           
-          COM1_Serial.FIFO_Status_FULL = 1;                 //æ•°æ®å·²å¡«æ»¡
+          COM1_Serial.FIFO_Status_FULL = 1;                 //Êı¾İÒÑÌîÂú
           
 		
 		  	
 		  if(COM1_Serial.FIFO_buffer_status == 0) 
 		  {
-                COM1_Serial.FIFO_buffer_status = 1;         //é‡æ–°å¯åŠ¨DMA
+                COM1_Serial.FIFO_buffer_status = 1;         //ÖØĞÂÆô¶¯DMA
 				Bsp_Usart_Dma_Recv_Config(DMA1_Channel5,(u32)COM1_Serial.fifo_bufferB);
 		  }
 		  else
 		  {
-                COM1_Serial.FIFO_buffer_status = 0;         //é‡æ–°å¯åŠ¨DMA	
+                COM1_Serial.FIFO_buffer_status = 0;         //ÖØĞÂÆô¶¯DMA	
 				Bsp_Usart_Dma_Recv_Config(DMA1_Channel5,(u32)COM1_Serial.fifo_bufferA);				
 		  }
 	 }
 }
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£1-DMAå‘é€ä¸­æ–­
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: DMA1_Channel4
+  * º¯Êı¹¦ÄÜ: ´®¿Ú1-DMA·¢ËÍÖĞ¶Ï
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: DMA1_Channel4
   */
 void DMA1_Channel4_IRQHandler(void)
 {
       if(DMA_GetFlagStatus(DMA1_FLAG_TC4))    
 	  { 			
-          DMA_ClearFlag(DMA1_FLAG_TC4);                     //æ¸…é™¤å®Œæˆæ ‡å¿—
+          DMA_ClearFlag(DMA1_FLAG_TC4);                     //Çå³ıÍê³É±êÖ¾
           
           DMA_Cmd(DMA1_Channel4, DISABLE);
 		  Serialusart1.send_lock = 0;
@@ -826,43 +826,43 @@ void DMA1_Channel4_IRQHandler(void)
 }
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£2-DMAæ¥æ”¶ä¸­æ–­
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: DMA1_Channel6
+  * º¯Êı¹¦ÄÜ: ´®¿Ú2-DMA½ÓÊÕÖĞ¶Ï
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: DMA1_Channel6
   */
 void DMA1_Channel6_IRQHandler(void)
 {
       if(DMA_GetFlagStatus(DMA1_FLAG_TC6))     
 	  { 	
 		
-          DMA_ClearFlag(DMA1_FLAG_TC6);                     //æ¸…é™¤å®Œæˆæ ‡å¿—
+          DMA_ClearFlag(DMA1_FLAG_TC6);                     //Çå³ıÍê³É±êÖ¾
           
-          COM2_Serial.FIFO_Status_FULL = 1;                 //æ•°æ®å·²å¡«æ»¡
+          COM2_Serial.FIFO_Status_FULL = 1;                 //Êı¾İÒÑÌîÂú
           
 		
 		  	
 		  if(COM2_Serial.FIFO_buffer_status == 0) 
 		  {
-                COM2_Serial.FIFO_buffer_status = 1;         //é‡æ–°å¯åŠ¨DMA
+                COM2_Serial.FIFO_buffer_status = 1;         //ÖØĞÂÆô¶¯DMA
 				Bsp_Usart_Dma_Recv_Config(DMA1_Channel6,(u32)COM2_Serial.fifo_bufferB);
 		  }
 		  else
 		  {
-                COM2_Serial.FIFO_buffer_status = 0;         //é‡æ–°å¯åŠ¨DMA	
+                COM2_Serial.FIFO_buffer_status = 0;         //ÖØĞÂÆô¶¯DMA	
 				Bsp_Usart_Dma_Recv_Config(DMA1_Channel6,(u32)COM2_Serial.fifo_bufferA);				
 		  }
 	 }
 }
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£2-DMAå‘é€ä¸­æ–­
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: DMA1_Channel7
+  * º¯Êı¹¦ÄÜ: ´®¿Ú2-DMA·¢ËÍÖĞ¶Ï
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: DMA1_Channel7
   */
 void DMA1_Channel7_IRQHandler(void)
 {
       if(DMA_GetFlagStatus(DMA1_FLAG_TC7))     
 	  { 	
-          DMA_ClearFlag(DMA1_FLAG_TC7);                     //æ¸…é™¤å®Œæˆæ ‡å¿—
+          DMA_ClearFlag(DMA1_FLAG_TC7);                     //Çå³ıÍê³É±êÖ¾
           
           DMA_Cmd(DMA1_Channel7, DISABLE);
 		  Serialusart2.send_lock = 0;
@@ -872,43 +872,43 @@ void DMA1_Channel7_IRQHandler(void)
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£3-DMAæ¥æ”¶ä¸­æ–­
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: DMA1_Channel3
+  * º¯Êı¹¦ÄÜ: ´®¿Ú3-DMA½ÓÊÕÖĞ¶Ï
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: DMA1_Channel3
   */
 void DMA1_Channel3_IRQHandler(void)
 {
       if(DMA_GetFlagStatus(DMA1_FLAG_TC3))     
 	  { 	
 		
-          DMA_ClearFlag(DMA1_FLAG_TC3);                     //æ¸…é™¤å®Œæˆæ ‡å¿—
+          DMA_ClearFlag(DMA1_FLAG_TC3);                     //Çå³ıÍê³É±êÖ¾
           
-          COM3_Serial.FIFO_Status_FULL = 1;                 //æ•°æ®å·²å¡«æ»¡
+          COM3_Serial.FIFO_Status_FULL = 1;                 //Êı¾İÒÑÌîÂú
           
 		 
 		  	
 		  if(COM3_Serial.FIFO_buffer_status == 0) 
 		  {
-                COM3_Serial.FIFO_buffer_status = 1;         //é‡æ–°å¯åŠ¨DMA
+                COM3_Serial.FIFO_buffer_status = 1;         //ÖØĞÂÆô¶¯DMA
 				Bsp_Usart_Dma_Recv_Config(DMA1_Channel3,(u32)COM3_Serial.fifo_bufferB);
 		  }
 		  else
 		  {
-                COM3_Serial.FIFO_buffer_status = 0;         //é‡æ–°å¯åŠ¨DMA		
+                COM3_Serial.FIFO_buffer_status = 0;         //ÖØĞÂÆô¶¯DMA		
 				Bsp_Usart_Dma_Recv_Config(DMA1_Channel3,(u32)COM3_Serial.fifo_bufferA);			
 		  }
 	 }
 }
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£3-DMAå‘é€ä¸­æ–­
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: DMA1_Channel2
+  * º¯Êı¹¦ÄÜ: ´®¿Ú3-DMA·¢ËÍÖĞ¶Ï
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: DMA1_Channel2
   */
 void DMA1_Channel2_IRQHandler(void)
 {
       if(DMA_GetFlagStatus(DMA1_FLAG_TC2))     
 	  { 	
-          DMA_ClearFlag(DMA1_FLAG_TC2);                     //æ¸…é™¤å®Œæˆæ ‡å¿—      
+          DMA_ClearFlag(DMA1_FLAG_TC2);                     //Çå³ıÍê³É±êÖ¾      
           
           DMA_Cmd(DMA1_Channel2, DISABLE);
 		  Serialusart3.send_lock = 0;
@@ -920,42 +920,42 @@ void DMA1_Channel2_IRQHandler(void)
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£4-DMAæ¥æ”¶ä¸­æ–­
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: DMA2_Channel3
+  * º¯Êı¹¦ÄÜ: ´®¿Ú4-DMA½ÓÊÕÖĞ¶Ï
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: DMA2_Channel3
   */
 void DMA2_Channel3_IRQHandler(void)
 {
       if(DMA_GetFlagStatus(DMA2_FLAG_TC3))     
 	  { 	
 		
-          DMA_ClearFlag(DMA2_FLAG_TC3);                     // æ¸…é™¤å®Œæˆæ ‡å¿—
+          DMA_ClearFlag(DMA2_FLAG_TC3);                     // Çå³ıÍê³É±êÖ¾
           
-          COM4_Serial.FIFO_Status_FULL = 1;                 // æ•°æ®å·²å¡«æ»¡
+          COM4_Serial.FIFO_Status_FULL = 1;                 // Êı¾İÒÑÌîÂú
           
 		  	
 		  if(COM4_Serial.FIFO_buffer_status == 0) 
 		  {
-                COM4_Serial.FIFO_buffer_status = 1;         // é‡æ–°å¯åŠ¨DMA
+                COM4_Serial.FIFO_buffer_status = 1;         // ÖØĞÂÆô¶¯DMA
 				Bsp_Usart_Dma_Recv_Config(DMA2_Channel3,(u32)COM4_Serial.fifo_bufferB);
 		  }
 		  else
 		  {
-                COM4_Serial.FIFO_buffer_status = 0;         // é‡æ–°å¯åŠ¨DMA	
+                COM4_Serial.FIFO_buffer_status = 0;         // ÖØĞÂÆô¶¯DMA	
 				Bsp_Usart_Dma_Recv_Config(DMA2_Channel3,(u32)COM4_Serial.fifo_bufferA);				
 		  }
 	 }
 }
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£4-DMAå‘é€ä¸­æ–­
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: DMA2_Channel5
+  * º¯Êı¹¦ÄÜ: ´®¿Ú4-DMA·¢ËÍÖĞ¶Ï
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: DMA2_Channel5
   */
 void DMA2_Channel4_5_IRQHandler(void)
 {
      if(DMA_GetFlagStatus(DMA2_FLAG_TC5))     
 	 { 	
-          DMA_ClearFlag(DMA2_FLAG_TC5);                     //æ¸…é™¤å®Œæˆæ ‡å¿—
+          DMA_ClearFlag(DMA2_FLAG_TC5);                     //Çå³ıÍê³É±êÖ¾
           
           DMA_Cmd(DMA2_Channel5, DISABLE);
 		  Serialusart4.send_lock = 0;
@@ -965,30 +965,30 @@ void DMA2_Channel4_5_IRQHandler(void)
 }
 
 /**
-  * å‡½æ•°åŠŸèƒ½: ä¸²å£5-æ”¶å‘ä¸­æ–­
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜: 
+  * º¯Êı¹¦ÄÜ: ´®¿Ú5-ÊÕ·¢ÖĞ¶Ï
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷: 
   */
 void UART5_IRQHandler(void)   
 {
   u8 res_data;
   u8 readstatus;
         
-  if(USART_GetITStatus(UART5, USART_IT_RXNE) != RESET)  //æ¥æ”¶ä¸­æ–­(æ¥æ”¶åˆ°çš„æ•°æ®å¿…é¡»æ˜¯0x0d 0x0aç»“å°¾)
+  if(USART_GetITStatus(UART5, USART_IT_RXNE) != RESET)  //½ÓÊÕÖĞ¶Ï(½ÓÊÕµ½µÄÊı¾İ±ØĞëÊÇ0x0d 0x0a½áÎ²)
   {
-	res_data =USART_ReceiveData(UART5);                 //è¯»å–æ¥æ”¶åˆ°çš„æ•°æ®
+	res_data =USART_ReceiveData(UART5);                 //¶ÁÈ¡½ÓÊÕµ½µÄÊı¾İ
 	FIFO_ComQueueIn(&COM5_Serial,res_data);
   } 
-  if(USART_GetITStatus(UART5, USART_IT_TXE) != RESET)   //ä¸²å£å‘é€ä¸­æ–­
+  if(USART_GetITStatus(UART5, USART_IT_TXE) != RESET)   //´®¿Ú·¢ËÍÖĞ¶Ï
   {   
      readstatus = FIFO_ComQueueOut(&Serialusart5,&res_data);
      if(readstatus == FIFO_OK)
      {
-        USART_SendData(UART5,res_data);                 //å‘é€æ•°æ®
+        USART_SendData(UART5,res_data);                 //·¢ËÍÊı¾İ
      }
      else
      {
-        USART_ITConfig(UART5, USART_IT_TXE, DISABLE);   //å…³é—­å‘é€ä¸­æ–­
+        USART_ITConfig(UART5, USART_IT_TXE, DISABLE);   //¹Ø±Õ·¢ËÍÖĞ¶Ï
      }
   }
 }
@@ -1005,32 +1005,32 @@ void UART5_IRQHandler(void)
 
 
 /***************************************************************************************
-*å‡½	 æ•°:  int fputc(int ch, FILE *f)
-*åŠŸ	 èƒ½: é‡å®šå‘cåº“å‡½æ•°printfåˆ°USART1
-*å‚	 æ•°: æ— 
-*ä½œ	 è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯	 Êı:  int fputc(int ch, FILE *f)
+*¹¦	 ÄÜ: ÖØ¶¨Ïòc¿âº¯Êıprintfµ½USART1
+*²Î	 Êı: ÎŞ
+*×÷	 Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 /*int fputc(int ch, FILE *f)
 {
 		 
-	 USART_SendData(USART1, (uint8_t) ch);// å‘é€ä¸€ä¸ªå­—èŠ‚æ•°æ®åˆ°USART1 
-	 while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);	 //ç­‰å¾…å‘é€å®Œæ¯•  
+	 USART_SendData(USART1, (uint8_t) ch);// ·¢ËÍÒ»¸ö×Ö½ÚÊı¾İµ½USART1 
+	 while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);	 //µÈ´ı·¢ËÍÍê±Ï  
 	 return (ch);
 }*/
 /***************************************************************************************
-*å‡½	 æ•°: int fgetc(FILE *f)
-*åŠŸ	 èƒ½: é‡å®šå‘cåº“å‡½æ•°scanfåˆ°USART1
-*å‚	 æ•°: æ— 
-*ä½œ	 è€…: 
-*ä¿®æ”¹æ—¶é—´: 
-*è¿” å› å€¼: æ— 
+*º¯	 Êı: int fgetc(FILE *f)
+*¹¦	 ÄÜ: ÖØ¶¨Ïòc¿âº¯Êıscanfµ½USART1
+*²Î	 Êı: ÎŞ
+*×÷	 Õß: 
+*ĞŞ¸ÄÊ±¼ä: 
+*·µ »Ø Öµ: ÎŞ
 ****************************************************************************************/
 int fgetc(FILE *f)
 {
 		
-	while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);//ç­‰å¾…ä¸²å£1è¾“å…¥æ•°æ® 
+	while (USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);//µÈ´ı´®¿Ú1ÊäÈëÊı¾İ 
 	return (int)USART_ReceiveData(USART1);
 }
 

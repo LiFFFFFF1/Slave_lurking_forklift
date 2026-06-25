@@ -4,7 +4,7 @@
   * @author  zsq
   * @version V1.1.0
   * @date    14-04-2014
-  * @brief   Êìç‰Ωútm1650Â§ñÊé•Âè£ÂáΩÊï∞
+  * @brief   ≤Ÿ◊˜tm1650Õ‚Ω”ø⁄∫Ø ˝
   *
  @verbatim
   ******************************************************************************
@@ -19,15 +19,15 @@
 #define	DISP_COMMAND	0x80
 #define	ADDR_COMMAND	0XC0
 
-#define TM1650_BRIGHT1       0x11   /*1Á∫ß‰∫ÆÂ∫¶,ÂºÄLED*/
-#define TM1650_BRIGHT2       0x21   /*2Á∫ß‰∫ÆÂ∫¶,ÂºÄLED*/
-#define TM1650_BRIGHT3       0x31   /*3Á∫ß‰∫ÆÂ∫¶,ÂºÄLED*/
-#define TM1650_BRIGHT4       0x41   /*4Á∫ß‰∫ÆÂ∫¶,ÂºÄLED*/
-#define TM1650_BRIGHT5       0x51   /*5Á∫ß‰∫ÆÂ∫¶,ÂºÄLED*/
-#define TM1650_BRIGHT6       0x61   /*6Á∫ß‰∫ÆÂ∫¶,ÂºÄLED*/
-#define TM1650_BRIGHT7       0x71   /*7Á∫ß‰∫ÆÂ∫¶,ÂºÄLED*/
-#define TM1650_BRIGHT8       0x01   /*8Á∫ß‰∫ÆÂ∫¶,ÂºÄLED*/
-#define TM1650_DSP_OFF       0x00   /*ÂÖ≥LED*/
+#define TM1650_BRIGHT1       0x11   /*1º∂¡¡∂»,ø™LED*/
+#define TM1650_BRIGHT2       0x21   /*2º∂¡¡∂»,ø™LED*/
+#define TM1650_BRIGHT3       0x31   /*3º∂¡¡∂»,ø™LED*/
+#define TM1650_BRIGHT4       0x41   /*4º∂¡¡∂»,ø™LED*/
+#define TM1650_BRIGHT5       0x51   /*5º∂¡¡∂»,ø™LED*/
+#define TM1650_BRIGHT6       0x61   /*6º∂¡¡∂»,ø™LED*/
+#define TM1650_BRIGHT7       0x71   /*7º∂¡¡∂»,ø™LED*/
+#define TM1650_BRIGHT8       0x01   /*8º∂¡¡∂»,ø™LED*/
+#define TM1650_DSP_OFF       0x00   /*πÿLED*/
 
 #define TM1650_DIG1     0
 #define TM1650_DIG2     1

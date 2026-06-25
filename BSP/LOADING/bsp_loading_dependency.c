@@ -2,14 +2,14 @@
 #include "bsp_loading_dependency.h"
 #include "delay.h"
 
-// åº•å±‚åŸºç¡€
+// µ×²ã»ù´¡
 #include "bsp_can_dependency.h"
 #include "bsp_gpio_dependency.h"
 #include "bsp_time_dependency.h"
 #include "bsp_usart_dependency.h"
 
 
-// åŒ…å«ä½¿ç”¨æ¨¡å— xxx_xxx_upper.h
+// °üº¬Ê¹ÓÃÄ£¿é xxx_xxx_upper.h
 
 #include "magnet_sensor_upper.h"
 #include "plc_hub_upper.h"
@@ -21,33 +21,33 @@
 #include "public_def_type.h"
 
 
-/* CANæ¥æ”¶å®Œæˆå¤„ç†*/
+/* CAN½ÓÊÕÍê³É´¦Àí*/
 void(*CAN_RX_Complete_Process[CAN_RX_API_LEN])(CanRxMsg* RxMessage);
 
 
 
 /**
-  * å‡½æ•°åŠŸèƒ½: å‚æ•°é…ç½®åŠ è½½
-  * è¿” å› å€¼: æ— 
-  * è¯´    æ˜:
+  * º¯Êı¹¦ÄÜ: ²ÎÊıÅäÖÃ¼ÓÔØ
+  * ·µ »Ø Öµ: ÎŞ
+  * Ëµ    Ã÷:
 */
 void Bsp_Loading_Config_Parameters(void)
 {
 
-    //-------------------------COMç«¯å£é…ç½®----------------------------
-    //ä¸Šä½æœºé…ç½® 
-    PLC_TO_HUB_Mesg_Stru.device_type  = EM_DEVICE_DEV_HOST_MCU_RS232;// è®¾å¤‡å‚æ•°é…ç½®
-    PLC_TO_HUB_Mesg_Stru.over_time_set = 10000;//ä¸»æœºè¶…æ—¶æ—¶é—´*1ms
+    //-------------------------COM¶Ë¿ÚÅäÖÃ----------------------------
+    //ÉÏÎ»»úÅäÖÃ 
+    PLC_TO_HUB_Mesg_Stru.device_type  = EM_DEVICE_DEV_HOST_MCU_RS232;// Éè±¸²ÎÊıÅäÖÃ
+    PLC_TO_HUB_Mesg_Stru.over_time_set = 10000;//Ö÷»ú³¬Ê±Ê±¼ä*1ms
     
-    //é˜²æ’é…ç½®
+    //·À×²ÅäÖÃ
     ANTICO_Mesg_Stru.device_type = EM_ANTICO_TYPE_KND;
     ANTICO_Mesg_Stru.can_com_type = EM_ANTICO_COM_MODE;
     
     //--------------------------COM end--------------------------
 
 
-    //----------------CANç«¯å£é…ç½®-------------------------
-    //å‰é½¿æœºæ„
+    //----------------CAN¶Ë¿ÚÅäÖÃ-------------------------
+    //²æ³İ»ú¹¹
     Motor_Lift_Stru.device_type = EM_DEVICE_DEV_MOTOR_FORK_WC2;
     Motor_Lift_Stru.can_com_type = EM_SET_PORT_CAN;
     Motor_Lift_Stru.fork_motor_max_rpm =3000.0f;
@@ -57,7 +57,7 @@ void Bsp_Loading_Config_Parameters(void)
     Motor_Lift_Stru.fork_max_speed_mm_s =(Motor_Lift_Stru.fork_motor_max_rpm/Motor_Lift_Stru.fork_gear_ratio)*
                                          3.14f*Motor_Lift_Stru.fork_wheel_diameter_mm/60.0f;
 
-    //ç¼–ç å™¨
+    //±àÂëÆ÷
     Encoder_Mesg_Stru.device_type = ENCODER_TPYE_TBF;
     Encoder_Mesg_Stru.can_com_type = EM_SET_PORT_CAN;
     //----------------CAN end-----------------------------
@@ -65,24 +65,24 @@ void Bsp_Loading_Config_Parameters(void)
 
 
 
-    /*********************ä»¥ä¸‹ä¸ºå…·ä½“å‚æ•°é…ç½®*********************/
+    /*********************ÒÔÏÂÎª¾ßÌå²ÎÊıÅäÖÃ*********************/
 
-    /*-------------------------------ä¸Šä½æœºé€šä¿¡---------------------------------*/
+    /*-------------------------------ÉÏÎ»»úÍ¨ĞÅ---------------------------------*/
     switch(PLC_TO_HUB_Mesg_Stru.device_type)
     {
         case EM_DEVICE_DEV_HOST_MCU_RS232:
-            PLC_TO_HUB_Mesg_Stru.commun_ask_mode = EM_DEV_ASK_AUTO;    //ä¸»åŠ¨ä¸Šä¼ æ¨¡å¼
-            PLC_TO_HUB_Mesg_Stru.commun_port   = USART3;                // æ˜ å°„
+            PLC_TO_HUB_Mesg_Stru.commun_ask_mode = EM_DEV_ASK_AUTO;    //Ö÷¶¯ÉÏ´«Ä£Ê½
+            PLC_TO_HUB_Mesg_Stru.commun_port   = USART3;                // Ó³Éä
             PLC_TO_HUB_Mesg_Stru.baud_rate      = 115200;
-            PLC_TO_HUB_Mesg_Stru.wordlength     = USART_WordLength_8b;  // æ•°æ®é•¿åº¦
-            PLC_TO_HUB_Mesg_Stru.parity         = USART_Parity_No;      // æ— æ ¡éªŒ
+            PLC_TO_HUB_Mesg_Stru.wordlength     = USART_WordLength_8b;  // Êı¾İ³¤¶È
+            PLC_TO_HUB_Mesg_Stru.parity         = USART_Parity_No;      // ÎŞĞ£Ñé
 
             Bsp_Usart_Config_Init(PLC_TO_HUB_Mesg_Stru.commun_port, PLC_TO_HUB_Mesg_Stru.baud_rate,
                               PLC_TO_HUB_Mesg_Stru.wordlength, PLC_TO_HUB_Mesg_Stru.parity);
             break;
             
         case EM_DEVICE_DEV_HOST_MCU_CAN:
-            PLC_TO_HUB_Mesg_Stru.commun_ask_mode = EM_DEV_CANOPEN;    //ä¸»åŠ¨ä¸Šä¼ æ¨¡å¼
+            PLC_TO_HUB_Mesg_Stru.commun_ask_mode = EM_DEV_CANOPEN;    //Ö÷¶¯ÉÏ´«Ä£Ê½
             //CAN1_Init(6);// 3M/6=500K
             CAN_RX_Complete_Process[0] = Host_UpperRX_CAN_Handler_Task;
             
@@ -94,17 +94,17 @@ void Bsp_Loading_Config_Parameters(void)
     }
     
 
-    /*-------------------------------é˜²æ’é€šä¿¡---------------------------------*/
+    /*-------------------------------·À×²Í¨ĞÅ---------------------------------*/
     switch(ANTICO_Mesg_Stru.device_type)
     {
 	case EM_ANTICO_TYPE_KND:
     	    ANTICO_Mesg_Stru.commun_ask_mode = EM_ANTICO_ASK_MODBUS;
     	    ANTICO_Mesg_Stru.device_adr = 0x01;
             
-            ANTICO_Mesg_Stru.commun_port   = UART5;                // æ˜ å°„
+            ANTICO_Mesg_Stru.commun_port   = UART5;                // Ó³Éä
             ANTICO_Mesg_Stru.baud_rate      = 9600;
-            ANTICO_Mesg_Stru.wordlength     = USART_WordLength_8b;  // æ•°æ®é•¿åº¦
-            ANTICO_Mesg_Stru.parity         = USART_Parity_No;      // æ— æ ¡éªŒ
+            ANTICO_Mesg_Stru.wordlength     = USART_WordLength_8b;  // Êı¾İ³¤¶È
+            ANTICO_Mesg_Stru.parity         = USART_Parity_No;      // ÎŞĞ£Ñé
 
             Bsp_Usart_Config_Init(ANTICO_Mesg_Stru.commun_port, ANTICO_Mesg_Stru.baud_rate,
                               ANTICO_Mesg_Stru.wordlength, ANTICO_Mesg_Stru.parity);
@@ -115,12 +115,12 @@ void Bsp_Loading_Config_Parameters(void)
     }
 
 
-    //---------------------------------ä¸¾å‡é©±åŠ¨å™¨æ§åˆ¶---------------------
+    //---------------------------------¾ÙÉıÇı¶¯Æ÷¿ØÖÆ---------------------
     switch(Motor_Lift_Stru.device_type)
     {
         case EM_DEVICE_DEV_MOTOR_LIFT_TY2:
         case EM_DEVICE_DEV_MOTOR_FORK_WC2:
-            if(Motor_Lift_Stru.can_com_type == EM_SET_PORT_CAN)      //  CANé€šä¿¡
+            if(Motor_Lift_Stru.can_com_type == EM_SET_PORT_CAN)      //  CANÍ¨ĞÅ
             {
                 Motor_Lift_Stru.commun_ask_mode   =  EM_DEV_CANOPEN;    //
                 CAN_RX_Complete_Process[1] = Motor_UpperRX_CAN_Handler_Task;
@@ -133,11 +133,11 @@ void Bsp_Loading_Config_Parameters(void)
 
     //--------------------------------end---------------------------------------------
 
-    //-----------------------------ç¼–ç å™¨------------------------------------------------
+    //-----------------------------±àÂëÆ÷------------------------------------------------
     switch(Encoder_Mesg_Stru.device_type)
     {
         case ENCODER_TPYE_TBF:
-            if(Encoder_Mesg_Stru.can_com_type == EM_SET_PORT_CAN)      //  CANé€šä¿¡
+            if(Encoder_Mesg_Stru.can_com_type == EM_SET_PORT_CAN)      //  CANÍ¨ĞÅ
             {
                 Encoder_Mesg_Stru.commun_ask_mode = EM_DEV_CANOPEN;    //
                 CAN_RX_Complete_Process[2] = Encoder_UpperRX_CAN_Task;
@@ -151,12 +151,12 @@ void Bsp_Loading_Config_Parameters(void)
 
 
 
-    //485-1,  UART4è®¾ç½®åˆå§‹åŒ–-  é›¶åŠ¨æ’­æ”¾å™¨
+    //485-1,  UART4ÉèÖÃ³õÊ¼»¯-  Áã¶¯²¥·ÅÆ÷
     Bsp_Usart_Config_Init(UART4, 9600, USART_WordLength_8b, USART_Parity_No);
 
 
 
-    //CANåˆå§‹åŒ–é…ç½®
+    //CAN³õÊ¼»¯ÅäÖÃ
     if(PLC_TO_HUB_Mesg_Stru.device_type == EM_DEVICE_DEV_HOST_MCU_CAN
         ||Encoder_Mesg_Stru.can_com_type == EM_SET_PORT_CAN
             ||Motor_Lift_Stru.can_com_type == EM_SET_PORT_CAN)// || Motor_Lift_Stru.device_type
