@@ -1,0 +1,56 @@
+#include "sys.h"
+#include "delay.h"
+
+#include "bsp_loading_dependency.h"
+#include "bsp_can_dependency.h"
+#include "bsp_gpio_dependency.h"
+#include "bsp_time_dependency.h"
+#include "bsp_usart_dependency.h"
+
+#include "plc_hub_upper.h"
+
+
+/*******************************************************************************
+  * @brief   main
+  *
+  * @param      
+  *
+  * @retval  
+  *
+  * @note   主函数入口
+  *****************************************************************************/
+int main(void)
+{
+    Bsp_Delay_Init(72000000);                                       // 延时函数初始化  72M
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
+    Bsp_GPIO_Pin_Init();                                            // 初始化IO
+
+    Bsp_Delay_MS(3000);
+    Bsp_Loading_Config_Parameters();                                // 读取拨码-加载配置
+    
+    while(1)
+    {
+        if(Tick_Time_Stru.rx_deal_ms_bit)
+        {
+            Tick_Time_Stru.rx_deal_ms_bit =0;
+
+            Bsp_Uart_Dma_SendCheck();                       // 检测DMA发送队列
+        }
+		
+			  if(Tick_Time_Stru.plc_to_hub_ask_bit)      			// 5ms
+        {
+            Tick_Time_Stru.plc_to_hub_ask_bit =0;
+            PLC_Hub_UpperTX_Mesg_Task();                            // HUB上传数据到主机
+            Bsp_IO_Deal_Task();                                     // IO处理
+        }
+
+        if(Tick_Time_Stru.time_sys_ms)                              // 500ms
+        {
+            Tick_Time_Stru.time_sys_ms =0;
+            RUN_SYS =! RUN_SYS;                                     // sys-指示灯
+        }
+
+    }
+    
+}
+

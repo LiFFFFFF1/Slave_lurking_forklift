@@ -1,0 +1,164 @@
+/**
+  ******************************************************************************
+  * @file    public_def_type.c
+  * @author  zsq
+  * @version  v1
+  * @date    2022-10-24
+  * @brief   1、所有定义的函数名都采用小写；
+             2、局部函数定义采用 下划线开头 _xxx_method();
+             3、提供对外使用函数采用 文件前3-5个字符 如 public_xxx_method();
+             4、注意对外函数体内部主要有的信息读写具体互斥性保护；
+             5、局部变量都是小写；
+  *
+  ******************************************************************************
+  */
+
+#define PUBLIC_GLOBALS_EXT
+#include "public_def_type.h"
+
+
+
+
+/**************************************************************************************************************************
+*
+*@brief:   public_pid_read_val
+*@param:   NowPlace:实际值
+           Point：  期望值
+           PID =Kp[e(k)-e(k-1)]+Ki*e(k)+kd*[e(k)-2e(k-1)+e(k-2)]
+*@retval   None
+*@note     增量式PID
+**************************************************************************************************************************/
+void public_pid_read_val(s8 NowPlace, s8 Point,PID_VAL_STRU *set_cur_pid)
+{
+    s8 iError=0;                                                                    // 当前误差
+
+    //iError =Point-NowPlace;                                                       // 计算当前误差--
+    iError =NowPlace-Point;                                                         // 取决变化方向
+
+    set_cur_pid->outval +=                                                      // 得出的实际增量值
+        ((set_cur_pid->ukp*(iError-set_cur_pid->last_err)+                    	// 比例P
+          set_cur_pid->uki*iError+                                              // 积分I
+          set_cur_pid->ukd*(iError-2*set_cur_pid->last_err+
+                            set_cur_pid->previous_err)));                       // 微分D
+	
+	
+	
+    set_cur_pid->previous_err =set_cur_pid->last_err;                           // 跟新前次误差
+    set_cur_pid->last_err =iError;                                              // 跟新上次误差
+
+    if(set_cur_pid->outval > set_cur_pid->throsd)
+    {
+        set_cur_pid->outval = set_cur_pid->throsd;
+    }
+    else if(set_cur_pid->outval < -set_cur_pid->throsd)
+    {
+        set_cur_pid->outval = -set_cur_pid->throsd;
+    }
+}
+/*******************************************************************************
+  * @brief  public_out_io_bit_read
+  *
+  * @param  read_num-指定IO
+  *
+  * @retval
+  *
+  * @note   读取输出IO
+  *******************************************************************************/
+/*bool public_out_io_bit_read(u8 read_num)
+{
+    bool read_val=0;
+
+
+    switch(read_num)
+    {
+        default:
+            read_val =0;
+            break;
+        case 0:
+            read_val =GPIO_ReadOutputDataBit(GPIOC,0);
+            break;
+        case 1:
+            read_val =GPIO_ReadOutputDataBit(GPIOC,2);
+            break;
+        case 2:
+            read_val =GPIO_ReadOutputDataBit(GPIOC,3);
+            break;
+        case 3:
+            read_val =GPIO_ReadOutputDataBit(GPIOA,5);
+            break;
+        case 4:
+            read_val =GPIO_ReadOutputDataBit(GPIOA,6);
+            break;
+        case 5:
+            read_val =GPIO_ReadOutputDataBit(GPIOB,0);
+            break;
+        case 6:
+            read_val =GPIO_ReadOutputDataBit(GPIOB,1);
+            break;
+        case 7:
+            read_val =GPIO_ReadOutputDataBit(GPIOB,2);
+            break;
+        case 8:
+            read_val =GPIO_ReadOutputDataBit(GPIOF,11);
+            break;
+        case 9:
+            read_val =GPIO_ReadOutputDataBit(GPIOF,12);
+            break;
+        case 10:
+            read_val =GPIO_ReadOutputDataBit(GPIOF,13);
+            break;
+        case 11:
+            read_val =GPIO_ReadOutputDataBit(GPIOF,14);
+            break;
+        case 12:
+            read_val =GPIO_ReadOutputDataBit(GPIOF,15);
+            break;
+        case 13:
+            read_val =GPIO_ReadOutputDataBit(GPIOG,0);
+            break;
+        case 14:
+            read_val =GPIO_ReadOutputDataBit(GPIOG,1);
+            break;
+        case 15:
+            read_val =GPIO_ReadOutputDataBit(GPIOE,7);
+            break;
+        case 16:
+            read_val =GPIO_ReadOutputDataBit(GPIOE,8);
+            break;
+        case 17:
+            read_val =GPIO_ReadOutputDataBit(GPIOE,9);
+            break;
+        case 18:
+            read_val =GPIO_ReadOutputDataBit(GPIOE,10);
+            break;
+        case 19:
+            read_val =GPIO_ReadOutputDataBit(GPIOE,11);
+            break;
+        case 20:
+            read_val =GPIO_ReadOutputDataBit(GPIOE,12);
+            break;
+        case 21:
+            read_val =GPIO_ReadOutputDataBit(GPIOE,13);
+            break;
+        case 22:
+            read_val =GPIO_ReadOutputDataBit(GPIOE,14);
+            break;
+        case 23:
+            read_val =GPIO_ReadOutputDataBit(GPIOE,15);
+            break;
+
+    }
+
+    return read_val;
+
+
+} */
+
+
+
+
+
+
+
+
+
